@@ -11,25 +11,25 @@ const Navbar = ({ isOpen, handleIsOpen }) => {
                         <MenuLink to={'/'}>HOME</MenuLink>
                     </MenuItems>
                     <MenuItems>
-                        <MenuLink to={''}>BUSINESS</MenuLink>
+                        <MenuLink to={'/category/1'}>BUSINESS</MenuLink>
                     </MenuItems>
                     <MenuItems>
-                        <MenuLink to={''}>ENTERTAINMENT</MenuLink>
+                        <MenuLink to={'/category/2'}>ENTERTAINMENT</MenuLink>
                     </MenuItems>
                     <MenuItems>
-                        <MenuLink to={''}>FASHION </MenuLink>
+                        <MenuLink to={'/category/3'}>FASHION </MenuLink>
                     </MenuItems>
                     <MenuItems>
-                        <MenuLink to={''}>LIFESTYLE</MenuLink>
+                        <MenuLink to={'/category/4'}>LIFESTYLE</MenuLink>
                     </MenuItems>
                     <MenuItems>
-                        <MenuLink to={''}>SPORT</MenuLink>
+                        <MenuLink to={'/category/5'}>SPORT</MenuLink>
                     </MenuItems>
                     <MenuItems>
-                        <MenuLink to={''}>NEWS</MenuLink>
+                        <MenuLink to={'/category/6'}>NEWS</MenuLink>
                     </MenuItems>
                     <MenuItems>
-                        <MenuLink to={''}>TRAVEL</MenuLink>
+                        <MenuLink to={'/category/7'}>TRAVEL</MenuLink>
                     </MenuItems>
                 </NavMenu>
                 <Search>

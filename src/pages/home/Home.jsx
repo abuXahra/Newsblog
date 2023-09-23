@@ -470,8 +470,6 @@ const Home = () => {
                                 </FashionCat>
                             ))
                         }
-
-
                     </CatWrapper>
                 </PostCategory>
             </RecentWrapper>
