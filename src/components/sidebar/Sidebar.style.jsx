@@ -14,7 +14,7 @@ flex-direction: column;
 `
 export const MarginTop = styled.div`
     width: 100%;
-    height: 30px;
+    height: ${({ mt }) => mt || "30px"};
 `
 export const CategorList = styled.div`
     display: flex;

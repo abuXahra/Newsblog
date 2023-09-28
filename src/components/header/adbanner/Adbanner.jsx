@@ -5,9 +5,9 @@ import BannerImage from '../../../images/banner-top-2.jpg'
 
 const Adbanner = (props) => {
     return (
-        <BannerWrapper >
+        <BannerWrapper bgImg={props.bgImg}>
             <BannerWrapperOverlay pTB={props.pTB}>
-                <BannerAds>
+                <BannerAds bdr={props.bdr}>
                     <img src={BannerImage} alt="" srcset="" />
                 </BannerAds>
             </BannerWrapperOverlay>

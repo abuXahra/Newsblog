@@ -26,8 +26,8 @@ export const PostcardContent = styled.div`
 position: absolute;
 width: 100%;
 bottom: 0;   
-padding-left: 20px;
-padding-bottom: 20px;
+padding-left:${({ pl }) => pl || "20px"};
+padding-bottom: ${({ pb }) => pb || "20px"};
 `
 
 

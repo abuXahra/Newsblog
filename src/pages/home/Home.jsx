@@ -60,7 +60,7 @@ const Home = () => {
                         linkColor={"#E46B45"}
                         headingColor={"white"}
                         iconColor={"white"}
-                        linkUrl={'/contact'}
+                        linkUrl={'/post/1'}
                         editIcon={<AiFillEdit />}
                         postAuthor={singlePost.postAuthor}
                         dateIcon={<FaRegClock />}

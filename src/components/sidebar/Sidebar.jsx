@@ -12,7 +12,7 @@ import { CATEGORY } from '../../data/Category'
 import { FASHION } from '../../data/Posts'
 import { SOCIALMEDIA } from '../../data/SocialMedias'
 
-const Sidebar = () => {
+const Sidebar = ({ fxTp }) => {
 
     const [posts, setPosts] = useState(POSTS)
     const [socialMedia, setSocialMedia] = useState(SOCIALMEDIA)
@@ -77,7 +77,7 @@ const Sidebar = () => {
                 <MarginTop />
 
                 {/* ADS */}
-                <CatWrapper flDir={"column"} gp={"0px"} fxTp={'0'}>
+                <CatWrapper flDir={"column"} gp={"0px"} fxTp={fxTp}>
                     <Ads>
                         <img src={posts[0].postImg} alt="" />
                     </Ads>
