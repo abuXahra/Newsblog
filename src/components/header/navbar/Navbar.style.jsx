@@ -67,5 +67,31 @@ export const MenuLink = styled(Link)`
 
 
 
-export const Search = styled.input`
+export const SearchContainer = styled.div`
+ display: flex;
+ //flex-direction: column;
+ position: relative;
+ align-items: center;
+ gap: 10px;
+
+
+ input{
+    padding: 10px 20px;
+    background-color: #00000097;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    transition: width 10s ease-in-out;
+
+    &:focus{
+        outline: none;
+    }
+
+
+ }
+
+ span{
+    color: white;
+    cursor: pointer;
+ }
 `

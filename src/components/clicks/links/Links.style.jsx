@@ -5,7 +5,7 @@ import { styled } from "styled-components";
 
 
 export const LinkWrapper = styled(Link)`
-    padding: 10px;
+    padding:  ${({ linkPd }) => linkPd || "10px"};
     background-color: ${({ linkColor }) => linkColor || "red"};
     color: white;
     border: none;

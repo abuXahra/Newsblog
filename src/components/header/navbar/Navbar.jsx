@@ -1,8 +1,22 @@
-import React from 'react';
-import { NavbarWrapper, NavbarContent, NavMenu, MenuItems, Search, MenuLink } from './Navbar.style';
+import React, { useState } from 'react';
+import { NavbarWrapper, NavbarContent, NavMenu, MenuItems, Search, MenuLink, SearchContainer } from './Navbar.style';
 import { Link } from 'react-router-dom'
+import { FaSearch } from 'react-icons/fa';
 
 const Navbar = ({ isOpen, handleIsOpen }) => {
+    const [sdisp, setSdisp] = useState(false)
+
+    const dispHandler = () => {
+        if (sdisp === false) {
+            setSdisp(true)
+        } else {
+            setSdisp(false)
+        }
+
+
+    }
+
+    const user = false;
     return (
         <NavbarWrapper isOpen={isOpen} >
             <NavbarContent>
@@ -31,9 +45,21 @@ const Navbar = ({ isOpen, handleIsOpen }) => {
                     <MenuItems>
                         <MenuLink to={'/category/7'}>TRAVEL</MenuLink>
                     </MenuItems>
+                    <MenuItems>
+                        {user ? <MenuLink to={'/write'}>WRITE</MenuLink> : <MenuLink to={'/login'}>LOGIN</MenuLink>}
+                    </MenuItems>
+                    <MenuItems>
+                        {user ? <MenuLink to={'/profile'}>PROFILE</MenuLink> : <MenuLink to={'/register'}>REGISTER</MenuLink>}
+                    </MenuItems>
                 </NavMenu>
-                <Search>
-                </Search>
+                <SearchContainer>
+                    {
+                        sdisp && <input type="text" name="" id="" placeholder='search' />
+                    }
+                    <span onClick={dispHandler}><FaSearch /></span>
+                </SearchContainer>
+
+
             </NavbarContent>
         </NavbarWrapper>
     );

@@ -6,6 +6,7 @@ import Trending from '../trending/Trending';
 import Navbar from '../navbar/Navbar';
 import { CgMenuRound } from 'react-icons/cg';
 import { AiOutlineCloseCircle } from 'react-icons/ai'
+import HideAdbanner from '../../hideadbanner/hideAdbanner';
 
 const Head = () => {
 
@@ -28,10 +29,12 @@ const Head = () => {
     return (
         <HeaderWrapper>
             <Topbar />
-            <Adbanner />
+            <HideAdbanner><Adbanner /></HideAdbanner>  {/* show banner on the homepage only */}
             <Trending spanItem={spanItem} handleIsOpen={handleIsOpen} />
             <Navbar isOpen={isOpen} handleIsOpen={handleIsOpen} />
+
         </HeaderWrapper>
+
     );
 }
 
