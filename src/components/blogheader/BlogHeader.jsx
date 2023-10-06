@@ -13,7 +13,7 @@ const BlogHeader = () => {
     return (
         <BlogHeaderWrapper>
             <LeftContent>
-                <Linkstyled to={"/contact"}>
+                <Linkstyled to={"/posts/1'}"}>
                     <Container>
                         <img src={fringilla} alt="" srcset="" />
                         <Overlay></Overlay>
@@ -24,7 +24,7 @@ const BlogHeader = () => {
                                 contentHeader={"Fringilla Ipsum Ligula Tortor Magna"}
                                 headerColor={"white"}
                                 IconColor={"white"}
-                                linkUrl={'/contact'}
+                                linkUrl={'/category/4'}
                                 editIcon={<AiFillEdit />}
                                 editText={'Rebecca Smith'}
                                 dateIcon={<FaRegClock />}

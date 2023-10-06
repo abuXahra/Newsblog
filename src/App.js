@@ -9,6 +9,8 @@ import Login from "./pages/login/login";
 import HideNavbar from "./components/hidenavbar/HideNavbar";
 import Reset from "./pages/password-reset/Reset";
 import Register from "./pages/register/Register";
+import CreatePost from "./pages/createpost/CreatePost";
+import Ct from "./pages/createpost/ct/ct";
 
 
 
@@ -21,10 +23,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/category/:categoryId" element={<Category />} />
-        <Route path="/post/:postId" element={<SinglePost />} />
+        <Route path="/posts/:postId" element={<SinglePost />} />
         <Route path="/login" element={<Login />} />
         <Route path="/reset" element={<Reset />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/createpost" element={<CreatePost />} />
       </Routes>
 
       <HideNavbar><Footer /></HideNavbar> {/*hide footer for login page */}

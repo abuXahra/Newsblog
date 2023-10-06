@@ -291,4 +291,17 @@ export const SinglePostSidebar = styled.div`
 
 `
 
+export const RecentComment = styled.div`
+width: 100%;
+display: flex;
+flex-direction: column;
+`
+
+export const RecentPostImg = styled.div`
+    width: 100px;
+    img{
+        width: 100%;
+   
+         }     
+        `
 

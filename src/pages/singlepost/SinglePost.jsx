@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Postcard from '../../components/postcard/Postcard';
 import single from '../../images/single.jpg';
-import { AuthorContainer, AuthorDetail, AutorImage, CommentForm, NextPost, PostCat, PostLink, PostNavigation, PostWriteUp, PreviousPost, RecentLinks, RecentPostCat, RecentPostImg, RecentPosts, RecentPostsContents, ShareIcon, ShareText, SingRecentPost, SinglePostContent, SinglePostImage, SinglePostPost, SinglePostShare, SinglePostSidebar, SinglePostWrapper, SocialLink } from './SinglePost.style';
+import { AuthorContainer, AuthorDetail, AutorImage, CommentForm, NextPost, PostCat, PostLink, PostNavigation, PostWriteUp, PreviousPost, RecentComment, RecentLinks, RecentPostCat, RecentPostImg, RecentPosts, RecentPostsContents, ShareIcon, ShareText, SingRecentPost, SinglePostContent, SinglePostImage, SinglePostPost, SinglePostShare, SinglePostSidebar, SinglePostWrapper, SocialLink } from './SinglePost.style';
 import { AiFillEdit } from 'react-icons/ai';
 import { FaFacebookF, FaGooglePlusG, FaInstagramSquare, FaRegClock, FaRegComment, FaTwitter, FaYoutube } from 'react-icons/fa';
 import Sidebar from '../../components/sidebar/Sidebar';
@@ -13,6 +13,7 @@ import Adbanner from '../../components/header/adbanner/Adbanner';
 import Title from '../../components/section-title/Title';
 import Links from '../../components/clicks/links/Links';
 import Button from '../../components/clicks/button/Button';
+import { DateIconStyled, DateStyled, DateTitledStyled, EditIconStyled, EditStyled, EditTitledStyled, PostIconStyled, PostTitleStyled, RecentPost, RecentPostContent } from '../home/Home.style';
 
 
 
@@ -20,6 +21,7 @@ import Button from '../../components/clicks/button/Button';
 const SinglePost = () => {
     // const [posts, SetPosts] = useState(POSTS)
     const singlePost = {
+        id: 1,
         postImg: single,
         postCat: "Sport News",
         postTitle: "Single Ranking Vertical Style",
@@ -181,11 +183,11 @@ const SinglePost = () => {
                     </SingRecentPost>
 
                     {/* Comments */}
-                    <MarginTop mt={"50px"} />
+                    <MarginTop mt={"30px"} />
                     <CommentForm>
-                        <h4>LEAVE A REPLY</h4>
+                        <h4>LEAVE A COMMENT</h4>
                         <form action="">
-                            <textarea name="" id="" cols="30" rows="10" placeholder='comment'></textarea>
+                            <textarea name="" id="" cols="30" rows="10" placeholder='Add comment'></textarea>
                             <span>
                                 <input type="name" name="" id="" placeholder='name*' />
                                 <input type="email" name="" id="" placeholder='email*' />
@@ -206,6 +208,46 @@ const SinglePost = () => {
                 </SinglePostPost>
                 <SinglePostSidebar>
                     <Sidebar fxTp={"0"} />
+
+                    {/* RECENT COMMENT */}
+                    <MarginTop />
+                    <RecentComment>
+                        <Title title={'RECENT COMMENTS'} mb={"8px"} />
+
+                        <PostLink to='/contact'>
+                            <RecentPost pdtop={singlePost.id === 1 && "0"} lastItemBorder={singlePost.id === singlePost.length && "0"}>
+                                <RecentPostImg>
+                                    <img src={singlePost.postImg} alt="" />
+                                </RecentPostImg>
+
+                                <RecentPostContent>
+                                    <PostTitleStyled>Magna Dapibus Sollicitudin Consectetur Lorem</PostTitleStyled>
+                                    <PostIconStyled>
+                                        <EditStyled>
+                                            <EditIconStyled>
+                                                {<AiFillEdit />}
+                                            </EditIconStyled>
+                                            <EditTitledStyled>
+                                                {singlePost.postAuthor}
+                                            </EditTitledStyled>
+                                        </EditStyled>
+
+                                        <DateStyled>
+                                            <DateIconStyled>
+                                                {<FaRegClock />}
+                                            </DateIconStyled>
+                                            <DateTitledStyled>
+                                                {singlePost.postDate}
+                                            </DateTitledStyled>
+                                        </DateStyled>
+                                    </PostIconStyled>
+                                </RecentPostContent>
+                            </RecentPost>
+                        </PostLink>
+                    </RecentComment>
+                    {/* End of Recent Comment */}
+
+
                 </SinglePostSidebar>
             </SinglePostContent>
 

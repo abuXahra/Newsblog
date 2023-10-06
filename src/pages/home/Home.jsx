@@ -60,7 +60,7 @@ const Home = () => {
                         linkColor={"#E46B45"}
                         headingColor={"white"}
                         iconColor={"white"}
-                        linkUrl={'/post/1'}
+                        linkUrl={'/posts/1'}
                         editIcon={<AiFillEdit />}
                         postAuthor={singlePost.postAuthor}
                         dateIcon={<FaRegClock />}
@@ -74,6 +74,7 @@ const Home = () => {
                         {posts && posts.map((post, index) => (
                             <WrapperDiv key={index}>
                                 <Postcard
+                                    postUrl={'/posts/1'}
                                     w={"100%"}
                                     size={'18px'}
                                     text={post.postCat}
@@ -228,9 +229,11 @@ const Home = () => {
 
                             </form>
                         </SubscibeWrapper>
+
                     </CatWrapper>
 
                     <MarginTop />
+
                 </RecentPostWrapper>
                 {/*================ HomePage Sidebar End*=============/}
 
