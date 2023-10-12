@@ -23,7 +23,7 @@ const Register = () => {
         setPassword(e.target.value);
     }
 
-    const loginHandler = (e) => {
+    const registerHandler = (e) => {
         e.preventDefault();
 
         setName('');
@@ -35,7 +35,7 @@ const Register = () => {
     return (
         <RegisterWrapper>
             <RegisterConst><Links linkColor="#1c6875" linkText={'Login'} linkUrl={'/login'} /></RegisterConst>
-            <RegisterContent onClick={loginHandler}>
+            <RegisterContent onClick={registerHandler}>
                 <h2>Register</h2>
                 <Input inputType={'text'} inputValue={name} onchangeHandler={nameHandler} placeHolder={'name*'} />
                 <Input inputType={'email'} inputValue={email} onchangeHandler={emailHandler} placeHolder={'email*'} />

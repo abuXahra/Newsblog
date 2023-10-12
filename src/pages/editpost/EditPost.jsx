@@ -1,20 +1,13 @@
 
-
-// -  post title
-// - image
-// - category
-// - Decription
-
-
 import React, { useState } from 'react';
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa';
-import { CreateCatOptions, CreateCatOptionsWrapper, CreatePostCat, CreatePostForm, CreatePostWrapper, PostPicture } from './CreatePost.style';
+import { CreateCatOptions, CreateCatOptionsWrapper, CreatePostCat, CreatePostForm, CreatePostWrapper, PostPicture } from '../createpost/CreatePost.style';
 import { AiFillPicture } from 'react-icons/ai';
 import { CATEGORY } from '../../data/Category'
 import { set } from 'mongoose';
 import Button from '../../components/clicks/button/Button';
 
-const CreatePost = () => {
+const EditPost = () => {
 
     const [checkedValues, setValues] = useState([]);
     const [category, setCategory] = useState(CATEGORY);
@@ -57,7 +50,7 @@ const CreatePost = () => {
 
     return (
         <CreatePostWrapper>
-            <h2>Create Post</h2>
+            <h2>Edit Post</h2>
             <CreatePostForm onSubmit={handleSubmit}>
                 <span>
                     <input type='text' placeHolder={'Title'} value={title} onChange={(e) => { setTitle(e.target.value) }} />
@@ -82,12 +75,11 @@ const CreatePost = () => {
                         ))
                     }
                 </CreateCatOptionsWrapper>
-                <div><Button btnText={'CREATE'} btnPd={'15px 30px'} /></div>
+                <div><Button btnText={'UPDATE'} btnPd={'15px 30px'} /></div>
             </CreatePostForm>
         </CreatePostWrapper>
     );
 }
 
-export default CreatePost;
 
-
+export default EditPost;

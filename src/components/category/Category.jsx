@@ -3,9 +3,9 @@ import { AiFillEdit } from 'react-icons/ai';
 import { FaRegClock } from 'react-icons/fa';
 import { FASHION } from '../../data/Posts'
 import { POSTS } from '../../data/Posts';
-import { PostLink } from '../home/Home.style';
+import { PostLink } from '../../pages/home/Home.style';
 import { CategoryContent, CategoryPosts, CategoryPostsImag, CategoryPostsText, CategoryPostsWrapper, CategorySidbar, CategoryTitle, CategoryWraper, DateIconStyled, DateStyled, DateTitledStyled, EditIconStyled, EditStyled, EditTitledStyled, PostIconStyled, PostTitleStyled } from './Category.style';
-import Sidebar from '../../components/sidebar/Sidebar';
+import Sidebar from '../sidebar/Sidebar';
 
 const Category = () => {
     const [fashion, setFashion] = useState(FASHION)
