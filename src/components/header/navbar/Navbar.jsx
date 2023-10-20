@@ -49,7 +49,7 @@ const Navbar = ({ isOpen, handleIsOpen }) => {
                         {user ? <MenuLink to={'/write'}>WRITE</MenuLink> : <MenuLink to={'/login'}>LOGIN</MenuLink>}
                     </MenuItems>
                     <MenuItems>
-                        {user ? <MenuLink to={'/profile'}>PROFILE</MenuLink> : <MenuLink to={'/register'}>REGISTER</MenuLink>}
+                        {user ? <MenuLink to={'/profile/sssdsds'}>PROFILE</MenuLink> : <MenuLink to={'/register'}>REGISTER</MenuLink>}
                     </MenuItems>
                 </NavMenu>
                 <SearchContainer>

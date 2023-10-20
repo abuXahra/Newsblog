@@ -36,4 +36,7 @@ h2{
 }
 `
 
-
+export const ErrorStyled = styled.span`
+font-size: 14px;
+color: red;
+`
