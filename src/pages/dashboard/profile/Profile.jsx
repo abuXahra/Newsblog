@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { ProfileContent, ProfileCredentials, ProfileData, ProfilePicture, ProfilePost, ProfileWrapper } from './Profile.style';
 import { CategoryPosts, CategoryPostsImag, CategoryPostsText } from '../../../components/category/Category.style';
 import { DateIconStyled, DateStyled, DateTitledStyled, EditIconStyled, EditStyled, EditTitledStyled, PostIconStyled, PostLink, PostTitleStyled } from '../../home/Home.style';
-import { AiFillEdit } from 'react-icons/ai';
+import { AiFillEdit, AiOutlineLogout } from 'react-icons/ai';
 import { FaRegClock } from 'react-icons/fa';
 import { FASHION } from '../../../data/Posts'
 import placeHolder from '../../../images/placeholder_image.png'
 import { MarginTop } from '../../../components/sidebar/Sidebar.style';
 import Input from '../../../components/input/Input';
 import Button from '../../../components/clicks/button/Button';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../../components/context/UserContext';
+import axios from 'axios';
 
 const Profile = () => {
 
@@ -19,6 +22,9 @@ const Profile = () => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const navigate = useNavigate()
+    const { user } = useContext(UserContext);
+    const { setUser } = useContext(UserContext)
 
 
     const nameHandler = (e) => {
@@ -51,6 +57,19 @@ const Profile = () => {
         setPassword('');
     }
 
+
+
+    // Logout function
+    const handleLogout = async () => {
+        try {
+            const res = await axios.get(URL + '/api/auth/logout', { withCredentials: true })
+            setUser(null)
+            navigate('/login')
+
+        } catch (err) {
+            console.log(err)
+        }
+    }
     return (
         <ProfileWrapper>
             <ProfileContent>
@@ -128,19 +147,29 @@ const Profile = () => {
                         <span>
                             <Button
                                 btnBorder={"none"}
-                                btnColor={"black"}
+                                btnColor={"green"}
                                 btnText={'UPDATE'}
                                 btnTxtClr={'white'}
-                                btnPd={"10px 20px"}
+                                btnPd={"8px 10px"}
                             />
                             <Button
                                 btnBorder={"none"}
                                 btnColor={"red"}
                                 btnText={'DELETE'}
                                 btnTxtClr={'white'}
-                                btnPd={"10px 20px"}
+                                btnPd={"8px 10px"}
                             />
+                            <Button
+                                onClick={handleLogout}
+                                btnBorder={"none"}
+                                btnColor={"black"}
+                                btnText={'LOGOUT'}
+                                btnTxtClr={'white'}
+                                btnPd={"8px 10px"}
+                            />
+                            {user && <span onClick={handleLogout} style={{ cursor: "pointer", color: "white" }}><AiOutlineLogout /></span>}
                         </span>
+
                     </ProfileCredentials>
                 </ProfileData>
             </ProfileContent>

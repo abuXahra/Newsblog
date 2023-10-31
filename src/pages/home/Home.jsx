@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../../components/clicks/button/Button';
 import Links from '../../components/clicks/links/Links';
 import { HomePostSlideSection, HomeTopSection, HomeTopSectionContent, HomeTopSectionLeft, HomeTopSectionRight, HomeTopSectionRightContent, HomeWrapper, PostCategory, RecentPostWrapper, RecentWrapper, WrapperDiv, RecentPost, RecentPostImg, RecentPostContent, PostTitleStyled, PostIconStyled, EditStyled, EditIconStyled, EditTitledStyled, AuthorStyled, AuthorIconStyled, AuthorTitledStyled, DateStyled, DateIconStyled, DateTitledStyled, PostLink, EnternCat, EnterRecent, EnterCat, EntertainCatWrapper, CatWrapper, CategorList, CategoryListItem, MarginTop, FashionCat, FashionCatImag, FashionCatText, Ads, SocialMedia, SocialListItem, Subscibe, SubscibeWrapper, InputStyled } from './Home.style';
@@ -21,12 +21,18 @@ import single from '../../images/single.jpg';
 import Title from '../../components/section-title/Title';
 import Adbanner from '../../components/header/adbanner/Adbanner';
 import Sidebar from '../../components/sidebar/Sidebar';
+import axios, { Axios } from 'axios';
+import { URL } from '../../url';
+import { useLocation } from 'react-router-dom';
+import Loader from '../../components/loader/Loader';
 
 
+// 3:34:51
 
 
 const Home = () => {
     const [posts, setPosts] = useState(POSTS)
+    const [myposts, setMyPosts] = useState([])
     const [entertainment, setEntertainment] = useState(ENTERNAINMENT)
     const [tech, setTech] = useState(TECH)
     const [business, setBusiness] = useState(BUSINESS)
@@ -36,6 +42,11 @@ const Home = () => {
     const [category, setCategory] = useState(CATEGORY)
     const [videoPosts, setVideoPosts] = useState(VIDEOPOSTS)
 
+    const { search } = useLocation(); //for search
+    const [noResults, setNoResults] = useState(false)
+
+    const [loader, setLoader] = useState(false) //Loader
+
     const singlePost = {
         postImg: single,
         postCat: "Sport News",
@@ -43,6 +54,36 @@ const Home = () => {
         postAuthor: "John Maxwell",
         postDate: new Date().toDateString()
     }
+
+
+
+    const fetchPost = async () => {
+
+        setLoader(true)
+
+        try {
+            const res = await axios.get(URL + "/api/posts" + search)
+            setMyPosts(res.data)
+
+            if (res.data.length === 0) { //if search result not dund
+                setNoResults(true)
+            } else {
+                setNoResults(false)
+            }
+            setLoader(false)
+        } catch (err) {
+            console.log(err)
+            setLoader(true)
+        }
+    }
+
+
+    useEffect(() => {
+        fetchPost()
+    }, [search])
+
+
+
 
     return (
         <HomeWrapper>
@@ -53,46 +94,46 @@ const Home = () => {
             <HomeTopSection>
                 {/* Left Content */}
                 <HomeTopSectionLeft>
-                    <Postcard
+                    {/* <Postcard
                         w={"100%"}
-                        text={singlePost.postCat}
-                        content={singlePost.postTitle}
+                        text={last.categories[0]}
+                        content={last.title}
                         linkColor={"#E46B45"}
                         headingColor={"white"}
                         iconColor={"white"}
                         linkUrl={'/posts/1'}
                         editIcon={<AiFillEdit />}
-                        postAuthor={singlePost.postAuthor}
+                        postAuthor={last.username}
                         dateIcon={<FaRegClock />}
-                        dateText={singlePost.postDate}
+                        dateText={new Date(last.createdAt).toDateString()}
                         commentIcon={<FaRegComment />}
                         commentCounter={'0'}
                         linkDisplay={'inline-block'}
-                        imgUrl={singlePost.postImg} />
+                        imgUrl={last.photo} /> */}
 
                     <HomeTopSectionContent>
-                        {posts && posts.map((post, index) => (
+                        {loader ? <Loader /> : !noResults ? (myposts && myposts.map((post, index) => (
                             <WrapperDiv key={index}>
                                 <Postcard
                                     postUrl={'/posts/1'}
                                     w={"100%"}
                                     size={'18px'}
-                                    text={post.postCat}
-                                    content={post.postTitle}
+                                    text={post.categories}
+                                    content={post.title}
                                     linkColor={"#E46B45"}
                                     headingColor={"white"}
                                     iconColor={"white"}
                                     linkUrl={'/contact'}
                                     editIcon={<AiFillEdit />}
-                                    postAuthor={post.postAuthor}
+                                    postAuthor={post.username}
                                     dateIcon={<FaRegClock />}
-                                    dateText={post.postDate}
+                                    dateText={new Date(post.createdAt).toDateString()}
                                     commentIcon={<FaRegComment />}
                                     commentCounter={'0'}
                                     linkDisplay={'none'}
-                                    imgUrl={post.postImg} />
+                                    imgUrl={post.photo} />
                             </WrapperDiv>
-                        ))}
+                        ))) : (<div style={{ display: "flex", width: "100%", textAlign: "center", marginTop: "100px", justifyContent: "center" }}>No Post Found</div>)}
                     </HomeTopSectionContent>
                 </HomeTopSectionLeft>
 

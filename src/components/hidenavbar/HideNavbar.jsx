@@ -14,7 +14,8 @@ const HideNavbar = ({ children }) => {
         if (
             location.pathname === '/login' ||
             location.pathname === '/reset' ||
-            location.pathname === '/register'
+            location.pathname === '/register' ||
+            location.pathname === '/loader'
         ) {
             setShowNavbar(false);
         } else {
