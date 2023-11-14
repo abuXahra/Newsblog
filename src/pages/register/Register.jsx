@@ -6,6 +6,7 @@ import Links from '../../components/clicks/links/Links';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import { URL } from '../../url';
+import Loader from '../../components/loader/Loader';
 
 
 const Register = () => {
@@ -16,6 +17,7 @@ const Register = () => {
     const [inputName, setInputName] = useState('')
     const [error, setError] = useState(false)
     const nagivate = useNavigate()
+    const [loader, setLoader] = useState(false)
 
 
 
@@ -32,6 +34,7 @@ const Register = () => {
             setRegMes(true)
             setInputName('Password')
         } else {
+            setLoader(true)
             try {
                 const res = await axios.post(URL + '/api/auth/register', {
                     username: username,
@@ -39,6 +42,7 @@ const Register = () => {
                     password: password
                 })
                 setError(false)
+                setLoader(false)
                 res.data && nagivate('/login')
 
                 // res.data && window.location.replace('/login')
@@ -47,6 +51,7 @@ const Register = () => {
                 setPassword('');
             } catch (err) {
                 setError(true)
+                setLoader(false)
             }
 
         }
@@ -58,7 +63,7 @@ const Register = () => {
     return (
         <RegisterWrapper>
             <RegisterConst><Links linkColor="#1c6875" linkText={'Login'} linkUrl={'/login'} /></RegisterConst>
-            <RegisterContent onClick={registerHandler}>
+            {loader ? <Loader /> : <RegisterContent onClick={registerHandler}>
                 <h2>Register</h2>
                 <Input inputType={'text'} inputValue={username} onchangeHandler={(e) => { setUsername(e.target.value) }} placeHolder={'username*'} />
                 <Input inputType={'email'} inputValue={email} onchangeHandler={(e) => { setEmail(e.target.value) }} placeHolder={'email*'} />
@@ -67,6 +72,7 @@ const Register = () => {
                 {regMes && <ErrorStyled>{inputName} required</ErrorStyled>}
                 {error && <ErrorStyled>Something went wrong</ErrorStyled>}
             </RegisterContent>
+            }
         </RegisterWrapper>
     );
 }

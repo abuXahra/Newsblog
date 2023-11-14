@@ -1,6 +1,6 @@
 
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Footer from "./components/footer/Footer";
 import Home from "./pages/home/Home";
 import Category from "./components/category/Category";
@@ -23,9 +23,12 @@ import Loader from './components/loader/Loader';
 
 
 
+
 function App() {
 
   const { user } = useContext(UserContext);
+
+
   return (
     // <UserContextProvider>
     <Router>
@@ -33,10 +36,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/category/:categoryId" element={<Category />} />
-        <Route path="/posts/:postId" element={<SinglePost />} />
+        <Route path="/post/:postId" element={<SinglePost />} />
         <Route path="/reset" element={<Reset />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/write" element={<CreatePost />} />
+        <Route path="/new" element={<CreatePost />} />
         <Route path="/login" element={<Login />} />
         <Route path="/edit/:id" element={<EditPost />} />
         <Route path="/profile/:id" element={<Profile />} />

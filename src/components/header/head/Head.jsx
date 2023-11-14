@@ -8,7 +8,7 @@ import { CgMenuRound } from 'react-icons/cg';
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import HideAdbanner from '../../hideadbanner/hideAdbanner';
 
-const Head = () => {
+const Head = (props) => {
 
     const [isOpen, setisOpen] = useState(false)
     const [spanItem, setspanItem] = useState(<CgMenuRound />)

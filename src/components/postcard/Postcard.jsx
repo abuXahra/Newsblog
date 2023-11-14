@@ -4,7 +4,7 @@ import Content from '../content/Content';
 import { AiFillEdit } from 'react-icons/ai';
 import { FaRegClock, FaRegComment } from 'react-icons/fa';
 
-const Postcard = ({ pl, pb, w, imgUrl, content, size, text, linkColor, headingColor, iconColor, linkUrl, editIcon, postAuthor, dateIcon, dateText, commentIcon, commentCounter, linkDisplay, editIconDisplay, postUrl }) => {
+const Postcard = ({ pl, pb, w, imgUrl, content, size, text, linkColor, headingColor, iconColor, IconTextColor, linkUrl, editIcon, postAuthor, dateIcon, dateText, commentIcon, commentCounter, linkDisplay, editIconDisplay, postUrl }) => {
     return (<Linkstyled to={postUrl}>
         <PostcardStyled imgW={'100%'} imgH={"100%"} w={w}>
             <img src={imgUrl} alt="" />
@@ -17,6 +17,7 @@ const Postcard = ({ pl, pb, w, imgUrl, content, size, text, linkColor, headingCo
                     contentHeader={content}
                     headerColor={headingColor}
                     IconColor={iconColor}
+                    IconTextColor={IconTextColor}
                     linkUrl={linkUrl}
                     editIcon={editIcon}
                     editText={postAuthor}

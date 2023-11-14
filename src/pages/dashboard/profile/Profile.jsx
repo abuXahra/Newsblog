@@ -27,6 +27,7 @@ const Profile = () => {
     const { setUser } = useContext(UserContext)
 
 
+
     const nameHandler = (e) => {
         setName(e.target.value);
     }
@@ -65,11 +66,11 @@ const Profile = () => {
             const res = await axios.get(URL + '/api/auth/logout', { withCredentials: true })
             setUser(null)
             navigate('/login')
-
         } catch (err) {
             console.log(err)
         }
     }
+
     return (
         <ProfileWrapper>
             <ProfileContent>
@@ -167,6 +168,7 @@ const Profile = () => {
                                 btnTxtClr={'white'}
                                 btnPd={"8px 10px"}
                             />
+
                             {user && <span onClick={handleLogout} style={{ cursor: "pointer", color: "white" }}><AiOutlineLogout /></span>}
                         </span>
 

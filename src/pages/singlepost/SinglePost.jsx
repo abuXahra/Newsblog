@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Postcard from '../../components/postcard/Postcard';
 import single from '../../images/single.jpg';
-import { AuthorContainer, AuthorDetail, AutorImage, CommentForm, NextPost, PostCat, PostLink, PostNavigation, PostWriteUp, PreviousPost, RecentComment, RecentLinks, RecentPostCat, RecentPostImg, RecentPosts, RecentPostsContents, ShareIcon, ShareText, SingRecentPost, SinglePostContent, SinglePostImage, SinglePostPost, SinglePostShare, SinglePostSidebar, SinglePostWrapper, SocialLink } from './SinglePost.style';
+import { AuthorContainer, AuthorDetail, AutorImage, CatLink, CommentForm, EdDel, NextPost, PostCat, PostLink, PostNavigation, PostWriteUp, PreviousPost, RecentComment, RecentLinks, RecentPostCat, RecentPostImg, RecentPosts, RecentPostsContents, ShareIcon, ShareText, SingRecentPost, SinglePostContent, SinglePostImage, SinglePostPost, SinglePostShare, SinglePostSidebar, SinglePostWrapper, SocialLink } from './SinglePost.style';
 import { AiFillEdit } from 'react-icons/ai';
-import { FaFacebookF, FaGooglePlusG, FaInstagramSquare, FaRegClock, FaRegComment, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { FaFacebookF, FaGooglePlusG, FaInstagramSquare, FaRegClock, FaRegComment, FaRegEdit, FaTwitter, FaYoutube } from 'react-icons/fa';
 import Sidebar from '../../components/sidebar/Sidebar';
 import innerpostimage from '../../images/innerpostimage.jpg'
 import placeHolder from '../../images/placeholder_image.png'
@@ -14,11 +14,70 @@ import Title from '../../components/section-title/Title';
 import Links from '../../components/clicks/links/Links';
 import Button from '../../components/clicks/button/Button';
 import { DateIconStyled, DateStyled, DateTitledStyled, EditIconStyled, EditStyled, EditTitledStyled, PostIconStyled, PostTitleStyled, RecentPost, RecentPostContent } from '../home/Home.style';
-
-
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { URL, IF } from '../../url';
+import axios from 'axios';
+import { UserContext } from '../../components/context/UserContext';
+import { useContext } from 'react';
+import Loader from '../../components/loader/Loader';
+// 3:54:02
 
 
 const SinglePost = () => {
+    const { postId } = useParams()
+    const [post, setPosts] = useState({})
+    const [postCat, setPostCat] = useState([])
+    const { user } = useContext(UserContext)
+    const navigate = useNavigate()
+    const [loader, setLoader] = useState(false)
+
+
+
+    // fetch post function
+    const fetchPost = async () => {
+        setLoader(true)
+        try {
+            const res = await axios.get(URL + `/api/posts/` + postId);
+            setPosts(res.data)
+            setLoader(false)
+        } catch (err) {
+            console.log(err)
+            setLoader(false)
+        }
+    }
+
+
+    // fetch post function
+    const handleDelete = async () => {
+        setLoader(true)
+        try {
+            const res = await axios.delete(URL + `/api/posts/` + postId, { withCredentials: true });
+            setLoader(false)
+            navigate('/')
+        } catch (err) {
+            console.log(err)
+            setLoader(false)
+        }
+    }
+
+    // // fetch post categories function
+    // const fetchPostCat = async () => {
+    //     try {
+    //         const res = await axios.get(URL + `/api/posts/${postId}/categories`)
+    //         setPostCat(res.data)
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // }
+
+
+    // useEffect
+    useEffect(() => {
+        fetchPost();
+    }, [postId])
+
+
+
     // const [posts, SetPosts] = useState(POSTS)
     const singlePost = {
         id: 1,
@@ -28,29 +87,34 @@ const SinglePost = () => {
         postAuthor: "John Maxwell",
         postDate: new Date().toDateString()
     }
-    return (
+    return (<>{loader ? <Loader /> :
         <SinglePostWrapper>
             <SinglePostImage>
                 <Postcard
                     pl={"100px"}
                     pb={"100px"}
                     w={"100%"}
-                    text={singlePost.postCat}
-                    content={singlePost.postTitle}
+                    text={post.categories}
+                    content={post.title}
                     linkColor={"#E46B45"}
                     headingColor={"white"}
                     iconColor={"white"}
                     linkUrl={'/contact'}
                     editIcon={<AiFillEdit />}
-                    postAuthor={singlePost.postAuthor}
+                    postAuthor={post.username}
                     dateIcon={<FaRegClock />}
-                    dateText={singlePost.postDate}
+                    dateText={new Date(post.createdAt).toDateString()}
                     commentIcon={<FaRegComment />}
                     commentCounter={'0'}
                     linkDisplay={'inline-block'}
-                    imgUrl={singlePost.postImg} />
+                    imgUrl={`http://localhost:5000/images/${post.photo}`} />
+                {user &&
+                    <EdDel>
+                        <span  ><FaRegEdit />Edit</span>
+                        <span onClick={handleDelete}><FaRegEdit />Delete</span>
+                    </EdDel>
+                }
             </SinglePostImage>
-
             <SinglePostContent>
                 <SinglePostPost>
                     <SinglePostShare>
@@ -66,6 +130,7 @@ const SinglePost = () => {
                         </ShareIcon>
                     </SinglePostShare>
                     <PostWriteUp>
+                        <p>{post.desc}</p>
                         <p>Sed posuere consectetur est at lobortis. Sed posuere consectetur est at lobortis. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
                         <p>Donec ullamcorper nulla non metus auctor fringilla. Maecenas faucibus mollis interdum. Vestibulum id ligula porta felis euismod semper. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Curabitur blandit tempus porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Etiam porta sem malesuada magna mollis euismod. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam quis risus eget urna mollis ornare vel eu leo.</p>
                         <h3>Maecenas sed diam eget risus varius</h3>
@@ -120,9 +185,8 @@ const SinglePost = () => {
                     {/* Post Category */}
                     <MarginTop />
                     <PostCat>
-                        <span>{singlePost.postCat}</span>
-                        <span>{singlePost.postCat}</span>
-                        <span>{singlePost.postCat}</span>
+                        {/* {postCat && postCat.map((category, index) => (<CatLink to={''}>{category}</CatLink>))} */}
+                        {post.categories?.map((cat, index) => (<CatLink key={index} to={''}>{cat}</CatLink>))}
                     </PostCat>
 
                     {/* Post Author  */}
@@ -250,10 +314,8 @@ const SinglePost = () => {
 
                 </SinglePostSidebar>
             </SinglePostContent>
-
-
-
-        </SinglePostWrapper >
+        </SinglePostWrapper >}
+    </>
     );
 }
 

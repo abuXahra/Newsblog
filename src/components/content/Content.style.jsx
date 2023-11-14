@@ -30,6 +30,7 @@ span{
     align-items: center;
     p{
         margin-left: 8px;
+        color: ${({ IconTextColor }) => IconTextColor || "grey"};
     }
 }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from '../../components/clicks/button/Button';
 import Links from '../../components/clicks/links/Links';
 import { HomePostSlideSection, HomeTopSection, HomeTopSectionContent, HomeTopSectionLeft, HomeTopSectionRight, HomeTopSectionRightContent, HomeWrapper, PostCategory, RecentPostWrapper, RecentWrapper, WrapperDiv, RecentPost, RecentPostImg, RecentPostContent, PostTitleStyled, PostIconStyled, EditStyled, EditIconStyled, EditTitledStyled, AuthorStyled, AuthorIconStyled, AuthorTitledStyled, DateStyled, DateIconStyled, DateTitledStyled, PostLink, EnternCat, EnterRecent, EnterCat, EntertainCatWrapper, CatWrapper, CategorList, CategoryListItem, MarginTop, FashionCat, FashionCatImag, FashionCatText, Ads, SocialMedia, SocialListItem, Subscibe, SubscibeWrapper, InputStyled } from './Home.style';
@@ -22,12 +22,14 @@ import Title from '../../components/section-title/Title';
 import Adbanner from '../../components/header/adbanner/Adbanner';
 import Sidebar from '../../components/sidebar/Sidebar';
 import axios, { Axios } from 'axios';
-import { URL } from '../../url';
+import { URL, IF } from '../../url';
 import { useLocation } from 'react-router-dom';
 import Loader from '../../components/loader/Loader';
+import { UserContext } from '../../components/context/UserContext';
 
 
 // 3:34:51
+// bvv
 
 
 const Home = () => {
@@ -46,6 +48,9 @@ const Home = () => {
     const [noResults, setNoResults] = useState(false)
 
     const [loader, setLoader] = useState(false) //Loader
+
+    const { user } = useContext(UserContext);
+    console.log(user)
 
     const singlePost = {
         postImg: single,
@@ -73,7 +78,7 @@ const Home = () => {
             setLoader(false)
         } catch (err) {
             console.log(err)
-            setLoader(true)
+            setLoader(false)
         }
     }
 
@@ -112,28 +117,31 @@ const Home = () => {
                         imgUrl={last.photo} /> */}
 
                     <HomeTopSectionContent>
-                        {loader ? <Loader /> : !noResults ? (myposts && myposts.map((post, index) => (
-                            <WrapperDiv key={index}>
-                                <Postcard
-                                    postUrl={'/posts/1'}
-                                    w={"100%"}
-                                    size={'18px'}
-                                    text={post.categories}
-                                    content={post.title}
-                                    linkColor={"#E46B45"}
-                                    headingColor={"white"}
-                                    iconColor={"white"}
-                                    linkUrl={'/contact'}
-                                    editIcon={<AiFillEdit />}
-                                    postAuthor={post.username}
-                                    dateIcon={<FaRegClock />}
-                                    dateText={new Date(post.createdAt).toDateString()}
-                                    commentIcon={<FaRegComment />}
-                                    commentCounter={'0'}
-                                    linkDisplay={'none'}
-                                    imgUrl={post.photo} />
-                            </WrapperDiv>
-                        ))) : (<div style={{ display: "flex", width: "100%", textAlign: "center", marginTop: "100px", justifyContent: "center" }}>No Post Found</div>)}
+                        {loader ? <Loader /> :
+                            !noResults ? (myposts && myposts.map((post, index) => (
+                                <WrapperDiv key={index}>
+                                    {post.photo && <img className='postImg' src={IF + post.photo} alt='profile image' />}
+                                    <Postcard
+                                        postUrl={`/post/${post._id}`}
+                                        w={"100%"}
+                                        size={'18px'}
+                                        text={post.categories}
+                                        content={post.title}
+                                        linkColor={"#E46B45"}
+                                        headingColor={"white"}
+                                        iconColor={"#ffffffc1"}
+                                        IconTextColor={"#ffffffc1"}
+                                        linkUrl={''}
+                                        editIcon={<AiFillEdit />}
+                                        postAuthor={post.username}
+                                        dateIcon={<FaRegClock />}
+                                        dateText={new Date(post.createdAt).toDateString()}
+                                        commentIcon={<FaRegComment />}
+                                        commentCounter={'0'}
+                                        linkDisplay={'none'}
+                                        imgUrl={`http://localhost:5000/images/${post.photo}`} />
+                                </WrapperDiv>
+                            ))) : (<div style={{ display: "flex", width: "100%", textAlign: "center", marginTop: "100px", justifyContent: "center" }}>No Post Found</div>)}
                     </HomeTopSectionContent>
                 </HomeTopSectionLeft>
 

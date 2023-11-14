@@ -8,6 +8,7 @@ import { ErrorStyled } from '../register/Register.style';
 import { useNavigate } from 'react-router-dom';
 import { URL } from '../../url';
 import { UserContext } from '../../components/context/UserContext';
+import Loader from '../../components/loader/Loader';
 
 // 3:7:3
 
@@ -19,7 +20,7 @@ const Login = () => {
     const [inputName, setInputName] = useState('')
     const { setUser } = useContext(UserContext) // user context
     const nagivate = useNavigate()
-
+    const [loader, setLoader] = useState(false)
 
 
 
@@ -43,17 +44,21 @@ const Login = () => {
             setInputName('Password required')
         } else {
             setRegMes(false)
+
+            setLoader(true)
             try {
                 const res = await axios.post(URL + '/api/auth/login', { email, password }, { withCredentials: true })
                 console.log(res.status + " \nLOGIN DATA:\n" + res.data + " Login successful")
                 console.log(res.status)
                 setUser(res.data)
+                setLoader(false)
                 nagivate('/')
                 // setEmail('');
                 // setPassword('');
 
             } catch (err) {
                 setError(true)
+                setLoader(false)
                 console.log(err)
             }
 
@@ -65,7 +70,7 @@ const Login = () => {
     return (
         <LoginWrapper>
             <RegisterConst><Links linkColor="#1c6875" linkText={'Register'} linkUrl={'/register'} /></RegisterConst>
-            <LoginContent onClick={loginHandler}>
+            {loader ? <Loader /> : <LoginContent onClick={loginHandler}>
                 <h2>Login</h2>
                 <Input inputType={'email'} inputValue={email} onchangeHandler={emailHandler} placeHolder={'email'} />
                 <Input inputType={'password'} inputValue={password} onchangeHandler={passwordHandler} placeHolder={'password'} />
@@ -74,6 +79,7 @@ const Login = () => {
                 {error && <ErrorStyled>Something went wrong</ErrorStyled>}
                 <Links linkColor="none" linkText={'Forgotten your Password? Reset it here'} linkUrl={'/reset'} linkPd={"0"} />
             </LoginContent>
+            }
         </LoginWrapper>
     );
 }

@@ -22,29 +22,51 @@ const Content = ({
     commentText,
     linkDisplay,
     editIconDisplay,
-    w
+    w,
+    IconTextColor
 }) => {
+
+    const linkFunc = () => {
+        if (Array.isArray(contentLinkText)) {
+            return (
+                <span>
+                    {contentLinkText.map((clt, index) => (
+                        <Links key={index}
+                            linkDisplay={linkDisplay}
+                            linkColor={contentLinkColor}
+                            linkText={clt}
+                            linkUrl={linkUrl}
+                        />
+                    ))}
+                </span>
+            )
+        } else {
+            return <Links
+                linkDisplay={linkDisplay}
+                linkColor={contentLinkColor}
+                linkText={contentLinkText}
+                linkUrl={linkUrl}
+            />
+        }
+    }
+
+
     return (
         <ContentWrapper w={w}>
             <div>
-                <Links
-                    linkDisplay={linkDisplay}
-                    linkColor={contentLinkColor}
-                    linkText={contentLinkText}
-                    linkUrl={linkUrl}
-                />
+                {linkFunc()}
             </div>
             <ContentHeader
                 size={size}
                 headerColor={headerColor}>
                 {contentHeader}
             </ContentHeader>
-            <ContentIcons editIconDisplay={editIconDisplay} IconColor={IconColor}>
+            <ContentIcons editIconDisplay={editIconDisplay} IconColor={IconColor} IconTextColor={IconTextColor}>
                 <span>{editIcon}<p>{editText}</p> </span>
                 <span>{dateIcon}<p>{dateText}</p> </span>
                 <span>{commentIcon}<p>{commentText}</p> </span>
             </ContentIcons>
-            
+
         </ContentWrapper>
     );
 }

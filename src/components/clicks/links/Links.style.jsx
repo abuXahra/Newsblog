@@ -12,6 +12,6 @@ export const LinkWrapper = styled(Link)`
     cursor: pointer;
     font-size: 14px;
     text-decoration: none;
-    margin-top: 10px;
+    margin: 10px 5px;
     display: ${({ linkDisplay }) => linkDisplay || "inline-block"} ;
 `

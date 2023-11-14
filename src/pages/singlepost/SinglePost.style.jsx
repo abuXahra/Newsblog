@@ -12,6 +12,30 @@ export const SinglePostImage = styled.div`
        width: 100%;
 `
 
+export const EdDel = styled.div`
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    width: 100%;
+    justify-content: end;
+    padding-top: 10px;
+    padding-right: 20px;
+
+    span{
+        display: flex;
+        gap: 3px;
+        cursor: pointer;
+    }
+
+    span:nth-child(1){
+        color: green
+    }
+
+    span:nth-child(2){
+        color: red
+    }
+`
+
 export const SinglePostContent = styled.div`
     width: 90%;
     margin-left: auto;
@@ -143,15 +167,16 @@ export const PostCat = styled.div`
 width: 100%;
 display: flex;
 gap: 5px;
+`
 
-span{
+
+export const CatLink = styled(Link)`
     padding: 10px;
     background-color: #111112;
     color: white;
     font-size: 12px;
-}
+    text-decoration: none;
 `
-
 
 
 export const AuthorContainer = styled.div`

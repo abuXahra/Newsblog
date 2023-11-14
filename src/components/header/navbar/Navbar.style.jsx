@@ -82,6 +82,8 @@ export const SearchContainer = styled.div`
     border: none;
     border-radius: 50px;
     transition: width 10s ease-in-out;
+    width:200px;
+    margin-left: 20px;
 
     &:focus{
         outline: none;
