@@ -108,6 +108,7 @@ const CreatePost = () => {
         <CreatePostWrapper>
             <h2>Create Post</h2>
             <CreatePostForm onSubmit={handleSubmit}>
+
                 <span>
                     <input type='text' placeHolder={'Title'} value={title} onChange={(e) => { setTitle(e.target.value) }} />
 

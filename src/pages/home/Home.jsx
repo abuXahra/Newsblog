@@ -120,7 +120,6 @@ const Home = () => {
                         {loader ? <Loader /> :
                             !noResults ? (myposts && myposts.map((post, index) => (
                                 <WrapperDiv key={index}>
-                                    {post.photo && <img className='postImg' src={IF + post.photo} alt='profile image' />}
                                     <Postcard
                                         postUrl={`/post/${post._id}`}
                                         w={"100%"}

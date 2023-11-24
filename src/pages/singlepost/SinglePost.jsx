@@ -3,7 +3,7 @@ import Postcard from '../../components/postcard/Postcard';
 import single from '../../images/single.jpg';
 import { AuthorContainer, AuthorDetail, AutorImage, CatLink, CommentForm, EdDel, NextPost, PostCat, PostLink, PostNavigation, PostWriteUp, PreviousPost, RecentComment, RecentLinks, RecentPostCat, RecentPostImg, RecentPosts, RecentPostsContents, ShareIcon, ShareText, SingRecentPost, SinglePostContent, SinglePostImage, SinglePostPost, SinglePostShare, SinglePostSidebar, SinglePostWrapper, SocialLink } from './SinglePost.style';
 import { AiFillEdit } from 'react-icons/ai';
-import { FaFacebookF, FaGooglePlusG, FaInstagramSquare, FaRegClock, FaRegComment, FaRegEdit, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { FaFacebookF, FaGooglePlusG, FaInstagramSquare, FaRegClock, FaRegComment, FaRegEdit, FaTrashAlt, FaTwitter, FaYoutube } from 'react-icons/fa';
 import Sidebar from '../../components/sidebar/Sidebar';
 import innerpostimage from '../../images/innerpostimage.jpg'
 import placeHolder from '../../images/placeholder_image.png'
@@ -33,12 +33,14 @@ const SinglePost = () => {
 
 
 
+
     // fetch post function
     const fetchPost = async () => {
         setLoader(true)
         try {
             const res = await axios.get(URL + `/api/posts/` + postId);
             setPosts(res.data)
+            console.log(res.data)
             setLoader(false)
         } catch (err) {
             console.log(err)
@@ -47,7 +49,7 @@ const SinglePost = () => {
     }
 
 
-    // fetch post function
+    // delete post function
     const handleDelete = async () => {
         setLoader(true)
         try {
@@ -110,8 +112,8 @@ const SinglePost = () => {
                     imgUrl={`http://localhost:5000/images/${post.photo}`} />
                 {user &&
                     <EdDel>
-                        <span  ><FaRegEdit />Edit</span>
-                        <span onClick={handleDelete}><FaRegEdit />Delete</span>
+                        <span onClick={() => { navigate(`/edit/${post._id}`) }}><FaRegEdit />Edit</span>
+                        <span onClick={handleDelete}><FaTrashAlt />Delete</span>
                     </EdDel>
                 }
             </SinglePostImage>

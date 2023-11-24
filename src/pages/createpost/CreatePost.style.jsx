@@ -11,6 +11,27 @@ export const CreatePostWrapper = styled.div`
     gap: 20px;
 `
 
+export const DeletCat = styled.div`
+display: flex;
+gap: 10px;
+
+span{
+    display: flex;
+    gap: 5px;
+    background-color: red;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+@media (max-width: 786px) {
+    flex-wrap: wrap;
+    span{ 
+        width: 30%;
+    }
+}
+`
+
 export const CreatePostForm = styled.form`
 width: 100%;
 display: flex;
