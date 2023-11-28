@@ -69,7 +69,6 @@ const Home = () => {
         try {
             const res = await axios.get(URL + "/api/posts" + search)
             setMyPosts(res.data)
-
             if (res.data.length === 0) { //if search result not dund
                 setNoResults(true)
             } else {

@@ -14,6 +14,9 @@ export const CreatePostWrapper = styled.div`
 export const DeletCat = styled.div`
 display: flex;
 gap: 10px;
+width: 100%;
+flex-wrap: wrap;
+
 
 span{
     display: flex;
@@ -22,7 +25,10 @@ span{
     color: white;
     padding: 10px;
     border-radius: 10px;
+    cursor: pointer;
 }
+
+
 
 @media (max-width: 786px) {
     flex-wrap: wrap;

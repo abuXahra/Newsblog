@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Postcard from '../../components/postcard/Postcard';
 import single from '../../images/single.jpg';
-import { AuthorContainer, AuthorDetail, AutorImage, CatLink, CommentForm, EdDel, NextPost, PostCat, PostLink, PostNavigation, PostWriteUp, PreviousPost, RecentComment, RecentLinks, RecentPostCat, RecentPostImg, RecentPosts, RecentPostsContents, ShareIcon, ShareText, SingRecentPost, SinglePostContent, SinglePostImage, SinglePostPost, SinglePostShare, SinglePostSidebar, SinglePostWrapper, SocialLink } from './SinglePost.style';
+import { AuthorContainer, AuthorDetail, AutorImage, CatLink, CommentForm, EdDel, NextPost, PostCat, PostLink, PostNavigation, PostWriteUp, PreviousPost, RecentComment, RecentCommentAuthorandDate, RecentCommentContentAuthor, RecentCommentContents, RecentCommentImg, RecentCommentReply, RecentLinks, RecentPostCat, RecentPostContentWrapper, RecentPostContents, RecentPostImg, RecentPosts, RecentPostsContents, ShareIcon, ShareText, SingRecentPost, SinglePostContent, SinglePostImage, SinglePostPost, SinglePostShare, SinglePostSidebar, SinglePostWrapper, SocialLink } from './SinglePost.style';
 import { AiFillEdit } from 'react-icons/ai';
-import { FaFacebookF, FaGooglePlusG, FaInstagramSquare, FaRegClock, FaRegComment, FaRegEdit, FaTrashAlt, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { FaFacebookF, FaGooglePlusG, FaInstagramSquare, FaRegClock, FaRegComment, FaRegEdit, FaReply, FaTrashAlt, FaTwitter, FaYoutube } from 'react-icons/fa';
 import Sidebar from '../../components/sidebar/Sidebar';
 import innerpostimage from '../../images/innerpostimage.jpg'
 import placeHolder from '../../images/placeholder_image.png'
@@ -30,8 +30,15 @@ const SinglePost = () => {
     const { user } = useContext(UserContext)
     const navigate = useNavigate()
     const [loader, setLoader] = useState(false)
+    const [comments, setComments] = useState([])
 
+    // comment form variables
+    const [comment, setComment] = useState('');
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [website, setWebsite] = useState('')
 
+    console.log("c:" + comment + 'name:' + name + "email:" + email + "websiste:" + website)
 
 
     // fetch post function
@@ -48,6 +55,10 @@ const SinglePost = () => {
         }
     }
 
+    // useEffect
+    useEffect(() => {
+        fetchPost();
+    }, [postId])
 
     // delete post function
     const handleDelete = async () => {
@@ -73,10 +84,48 @@ const SinglePost = () => {
     // }
 
 
+
+
+    // post comment functions
+    const handlePostComment = async (e) => {
+        const newComment = {
+            comment: comment,
+            email: email,
+            author: name,
+            website: website,
+            postId: postId,
+            userId: user._id
+        }
+
+        try {
+
+            const res = await axios.post(URL + '/api/comments/create', newComment, { withCredentials: true })
+            navigate(`/edit/${postId}`)
+            console.log("res data: " + res.data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+
+
+    // fetch post comment function
+    const fetchPostComment = async () => {
+        try {
+            const res = await axios.get(URL + '/api/comments/post/' + postId)
+            setComments(res.data)
+            console.log(comments)
+        } catch (error) {
+
+        }
+    }
+
+
     // useEffect
     useEffect(() => {
-        fetchPost();
+        fetchPostComment()
     }, [postId])
+
 
 
 
@@ -248,16 +297,45 @@ const SinglePost = () => {
                         </RecentPosts>
                     </SingRecentPost>
 
-                    {/* Comments */}
+
+                    <MarginTop />
+                    <RecentComment>
+                        <RecentCommentImg>
+                            <img src={placeHolder} alt="" />
+                        </RecentCommentImg>
+                        <RecentPostContentWrapper>
+                            <RecentCommentAuthorandDate>
+                                <RecentCommentContentAuthor>
+                                    <h5>John Maxwell</h5>
+                                    <span>
+                                        <FaRegClock />
+                                        <p>December 8, 2015 at 9:41 am</p>
+                                    </span>
+                                </RecentCommentContentAuthor>
+                                <RecentCommentReply>
+                                    <span><FaReply /> Reply</span>
+                                </RecentCommentReply>
+                            </RecentCommentAuthorandDate>
+
+                            <RecentCommentContents>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit.? Soluta nihil eos quidem veritatis voluptate sunt fugit velit, in illum repudiandae pariatur similique ad beatae laboriosam provident nisi omnis quas dolorem doloremque tempore. Repellat quo possimus laudantium qui inventore, at nam odio quaerat quam facere tempore commodi soluta voluptatum! Aspernatur accusantium iusto eius dolore illo earum maxime rem non ut harum itaque deleniti odit quae aperiam expedita laboriosam quasi voluptate, adipisci tenetur nulla aliquam porro corrupti. A at est deserunt velit. Corrupti quia suscipit nostrum.
+                            </RecentCommentContents>
+
+                        </RecentPostContentWrapper>
+                    </RecentComment>
+                    {/* End of Recent Comment */}
+
+
+                    {/* Comments Form*/}
                     <MarginTop mt={"30px"} />
                     <CommentForm>
                         <h4>LEAVE A COMMENT</h4>
-                        <form action="">
-                            <textarea name="" id="" cols="30" rows="10" placeholder='Add comment'></textarea>
+                        <form onSubmit={handlePostComment}>
+                            <textarea value={comment} onChange={(e) => { setComment(e.target.value) }} name="" id="" cols="30" rows="10" placeholder='Add comment'></textarea>
                             <span>
-                                <input type="name" name="" id="" placeholder='name*' />
-                                <input type="email" name="" id="" placeholder='email*' />
-                                <input type="text" name="" id="" placeholder='website*' />
+                                <input value={name} type="name" onChange={(e) => { setName(e.target.value) }} name="" id="" placeholder='name*' />
+                                <input value={email} type="email" onChange={(e) => { setEmail(e.target.value) }} name="" id="" placeholder='email*' />
+                                <input value={website} type="text" onChange={(e) => { setWebsite(e.target.value) }} name="" id="" placeholder='website' />
                             </span>
                             <input type="checkbox" name="" id="" />
                             <MarginTop mt={"10px"} />
@@ -274,46 +352,6 @@ const SinglePost = () => {
                 </SinglePostPost>
                 <SinglePostSidebar>
                     <Sidebar fxTp={"0"} />
-
-                    {/* RECENT COMMENT */}
-                    <MarginTop />
-                    <RecentComment>
-                        <Title title={'RECENT COMMENTS'} mb={"8px"} />
-
-                        <PostLink to='/contact'>
-                            <RecentPost pdtop={singlePost.id === 1 && "0"} lastItemBorder={singlePost.id === singlePost.length && "0"}>
-                                <RecentPostImg>
-                                    <img src={singlePost.postImg} alt="" />
-                                </RecentPostImg>
-
-                                <RecentPostContent>
-                                    <PostTitleStyled>Magna Dapibus Sollicitudin Consectetur Lorem</PostTitleStyled>
-                                    <PostIconStyled>
-                                        <EditStyled>
-                                            <EditIconStyled>
-                                                {<AiFillEdit />}
-                                            </EditIconStyled>
-                                            <EditTitledStyled>
-                                                {singlePost.postAuthor}
-                                            </EditTitledStyled>
-                                        </EditStyled>
-
-                                        <DateStyled>
-                                            <DateIconStyled>
-                                                {<FaRegClock />}
-                                            </DateIconStyled>
-                                            <DateTitledStyled>
-                                                {singlePost.postDate}
-                                            </DateTitledStyled>
-                                        </DateStyled>
-                                    </PostIconStyled>
-                                </RecentPostContent>
-                            </RecentPost>
-                        </PostLink>
-                    </RecentComment>
-                    {/* End of Recent Comment */}
-
-
                 </SinglePostSidebar>
             </SinglePostContent>
         </SinglePostWrapper >}

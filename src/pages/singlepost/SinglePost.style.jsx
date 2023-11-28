@@ -271,6 +271,7 @@ height: auto;
 display: flex;
 flex-direction: column;
 gap: 10px;
+margin-bottom: 40px;
 
 form{
 width: 100%;
@@ -318,8 +319,13 @@ export const SinglePostSidebar = styled.div`
 
 export const RecentComment = styled.div`
 width: 100%;
+gap: 20px;
 display: flex;
-flex-direction: column;
+font-size:13px;
+color: grey;
+padding-bottom: 20px;
+margin-bottom: 30px;
+border-bottom: 1px solid #C5C5C5;
 `
 
 export const RecentPostImg = styled.div`
@@ -330,3 +336,56 @@ export const RecentPostImg = styled.div`
          }     
         `
 
+
+export const RecentPostContentWrapper = styled.div`
+display: flex;
+width: 100%;
+flex-direction: column;
+`
+
+
+export const RecentCommentAuthorandDate = styled.div`
+width: 100%;
+display: flex;
+justify-content: space-between;
+`
+
+export const RecentCommentContentAuthor = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    span{
+        display: flex;    
+        gap: 5px
+    }
+
+    h5{
+        color: black
+    }
+
+`
+
+
+export const RecentCommentReply = styled.div`
+    span{
+        display: flex;
+    gap: 10px; 
+    cursor: pointer;
+    }
+`
+
+
+export const RecentCommentImg = styled.div`
+img{
+    width: 70px;
+    height: 70px;
+    border-radius: 10px;
+}
+`
+
+export const RecentCommentContents = styled.div`
+    width: 100%;
+    margin-top: 20px;
+    line-height: 20px;
+`
