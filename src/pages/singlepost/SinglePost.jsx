@@ -86,7 +86,7 @@ const SinglePost = () => {
 
 
 
-    // post comment functions
+    // post new comment functions
     const handlePostComment = async (e) => {
         const newComment = {
             comment: comment,
@@ -98,8 +98,7 @@ const SinglePost = () => {
         }
 
         try {
-
-            const res = await axios.post(URL + '/api/comments/create', newComment, { withCredentials: true })
+            const res = await axios.post(`${URL}/api/posts/${postId}/comment`, newComment, { withCredentials: true })
             navigate(`/edit/${postId}`)
             console.log("res data: " + res.data)
         } catch (err) {
@@ -108,13 +107,11 @@ const SinglePost = () => {
     }
 
 
-
     // fetch post comment function
     const fetchPostComment = async () => {
         try {
-            const res = await axios.get(URL + '/api/comments/post/' + postId)
+            const res = await axios.get(`${URL}/api/posts/${postId}/comments`)
             setComments(res.data)
-            console.log(comments)
         } catch (error) {
 
         }
@@ -299,30 +296,35 @@ const SinglePost = () => {
 
 
                     <MarginTop />
-                    <RecentComment>
-                        <RecentCommentImg>
-                            <img src={placeHolder} alt="" />
-                        </RecentCommentImg>
-                        <RecentPostContentWrapper>
-                            <RecentCommentAuthorandDate>
-                                <RecentCommentContentAuthor>
-                                    <h5>John Maxwell</h5>
-                                    <span>
-                                        <FaRegClock />
-                                        <p>December 8, 2015 at 9:41 am</p>
-                                    </span>
-                                </RecentCommentContentAuthor>
-                                <RecentCommentReply>
-                                    <span><FaReply /> Reply</span>
-                                </RecentCommentReply>
-                            </RecentCommentAuthorandDate>
+                    {
+                        comments.map((c, i) => (
+                            <RecentComment>
+                                <RecentCommentImg>
+                                    <img src={placeHolder} alt="" />
+                                </RecentCommentImg>
+                                <RecentPostContentWrapper>
+                                    <RecentCommentAuthorandDate>
+                                        <RecentCommentContentAuthor>
+                                            <h3>{c.author}</h3>
+                                            <span>
+                                                <FaRegClock />
+                                                <p>{new Date(c.createdAt).toDateString()}</p>
+                                            </span>
+                                        </RecentCommentContentAuthor>
+                                        <RecentCommentReply>
+                                            {/* <span><FaReply /> Reply</span> */}
+                                        </RecentCommentReply>
+                                    </RecentCommentAuthorandDate>
 
-                            <RecentCommentContents>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit.? Soluta nihil eos quidem veritatis voluptate sunt fugit velit, in illum repudiandae pariatur similique ad beatae laboriosam provident nisi omnis quas dolorem doloremque tempore. Repellat quo possimus laudantium qui inventore, at nam odio quaerat quam facere tempore commodi soluta voluptatum! Aspernatur accusantium iusto eius dolore illo earum maxime rem non ut harum itaque deleniti odit quae aperiam expedita laboriosam quasi voluptate, adipisci tenetur nulla aliquam porro corrupti. A at est deserunt velit. Corrupti quia suscipit nostrum.
-                            </RecentCommentContents>
+                                    <RecentCommentContents>
+                                        {c.comment}
+                                    </RecentCommentContents>
 
-                        </RecentPostContentWrapper>
-                    </RecentComment>
+                                </RecentPostContentWrapper>
+                            </RecentComment>
+                        ))
+                    }
+
                     {/* End of Recent Comment */}
 
 

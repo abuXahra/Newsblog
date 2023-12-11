@@ -360,7 +360,7 @@ export const RecentCommentContentAuthor = styled.div`
         gap: 5px
     }
 
-    h5{
+    h3{
         color: black
     }
 
