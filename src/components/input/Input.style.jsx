@@ -9,7 +9,7 @@ export const InputWrapper = styled.div`
     border: 2px solid #fff;
     width: 100%;
     background-color: transparent;
-    color:white;
+    color:${({ inputColor }) => inputColor || "#fff"};
 
     &:focus{
         outline: none;

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { ProfileContent, ProfileCredentials, ProfileData, ProfilePicture, ProfilePost, ProfileWrapper } from './Profile.style';
 import { CategoryPosts, CategoryPostsImag, CategoryPostsText } from '../../../components/category/Category.style';
 import { DateIconStyled, DateStyled, DateTitledStyled, EditIconStyled, EditStyled, EditTitledStyled, PostIconStyled, PostLink, PostTitleStyled } from '../../home/Home.style';
@@ -9,9 +9,12 @@ import placeHolder from '../../../images/placeholder_image.png'
 import { MarginTop } from '../../../components/sidebar/Sidebar.style';
 import Input from '../../../components/input/Input';
 import Button from '../../../components/clicks/button/Button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { UserContext } from '../../../components/context/UserContext';
 import axios from 'axios';
+import { URL } from '../../../url';
+import Links from '../../../components/clicks/links/Links';
+import Loader from '../../../components/loader/Loader';
 
 const Profile = () => {
 
@@ -24,10 +27,14 @@ const Profile = () => {
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
     const { user } = useContext(UserContext);
-    const { setUser } = useContext(UserContext)
+    const { setUser } = useContext(UserContext);
+    const [loader, setLoader] = useState(false)
 
 
 
+
+
+    // Inputs  variable vinctions
     const nameHandler = (e) => {
         setName(e.target.value);
     }
@@ -41,27 +48,46 @@ const Profile = () => {
         setPassword(e.target.value);
     }
 
-    const updateHandler = (e) => {
-        e.preventDefault();
 
-        setName('');
-        setEmail('');
-        setPassword('');
+
+    // User Update Fuction
+    const updateHandler = async () => {
+        const userUpdate = {
+            username: name,
+            email: email,
+            userId: user._id,
+            password: password,
+        }
+        setLoader(true)
+        try {
+            const res = await axios.put(`${URL}/api/users/${user._id}`, userUpdate, { withCredentials: true })
+            console.log(res.data)
+            setLoader(false)
+        } catch (err) {
+            console.log(err)
+        }
+
     }
 
 
-    const deleteHandler = (e) => {
-        e.preventDefault();
 
-        setName('');
-        setEmail('');
-        setPassword('');
+
+    // User Delete Fuction
+    const deleteHandler = async (e) => {
+        try {
+            const res = await axios.delete(`${URL}/api/users/${user._id}`, { withCredentials: true })
+            navigate('/register')
+        } catch (err) {
+            console.log(err)
+        }
     }
+
 
 
 
     // Logout function
     const handleLogout = async () => {
+
         try {
             const res = await axios.get(URL + '/api/auth/logout', { withCredentials: true })
             setUser(null)
@@ -71,9 +97,44 @@ const Profile = () => {
         }
     }
 
+
+    // fetch profile data
+    const fetchProfile = async () => {
+        try {
+            const res = await axios.get(URL + '/api/users/' + user._id)
+            setName(res.data.username)
+            setEmail(res.data.email)
+            setPassword(res.data.password)
+            console.log(res.data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    useEffect(() => {
+        fetchProfile();
+    }, [user._id])
+
+
+
+
+
+
+    // fetch user post function
+    // const fetchUserPost = async () => {
+    //     try {
+    //         const res = await axios.get(`${URL}/api/posts/user/${user._id}`)
+    //         console.log(`user post are ${res}`)
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // }
+
+
     return (
-        <ProfileWrapper>
+        <ProfileWrapper> {loader ? <Loader /> :
             <ProfileContent>
+                {/* USER POSTS */}
                 <ProfilePost>
                     <h3>Your Posts</h3>
                     {
@@ -114,67 +175,62 @@ const Profile = () => {
                         ))
 
                     }
-
                 </ProfilePost>
 
+                {/* INPUT FORM CONTAINER */}
                 <ProfileData onSubmit={updateHandler}>
                     <h3>Profile</h3>
                     <ProfilePicture>
                         <img src={placeHolder} alt="" srcset="" />
                     </ProfilePicture>
                     <MarginTop mt={"20px"} />
-                    <ProfileCredentials>
+                    {/* INPUT FORM */}
+                    <ProfileCredentials onSubmit={updateHandler}>
                         <Input
                             inputType={'text'}
                             inputValue={name}
-                            inputColor={'#000'}
+                            inputColor={"#000"}
                             onchangeHandler={nameHandler}
                             placeHolder={'username'}
                         />
                         <Input
                             inputType={'email'}
                             inputValue={email}
-                            inputColor={'black'}
+                            inputColor={'#000'}
                             onchangeHandler={emailHandler}
                             placeHolder={'email'}
                         />
                         <Input
                             inputType={'password'}
                             inputValue={password}
-                            inputColor={'black'}
+                            inputColor={'#000'}
                             onchangeHandler={passwordHandler}
                             placeHolder={'password'}
                         />
-                        <span>
-                            <Button
-                                btnBorder={"none"}
-                                btnColor={"green"}
-                                btnText={'UPDATE'}
-                                btnTxtClr={'white'}
-                                btnPd={"8px 10px"}
-                            />
-                            <Button
-                                btnBorder={"none"}
-                                btnColor={"red"}
-                                btnText={'DELETE'}
-                                btnTxtClr={'white'}
-                                btnPd={"8px 10px"}
-                            />
-                            <Button
-                                onClick={handleLogout}
-                                btnBorder={"none"}
-                                btnColor={"black"}
-                                btnText={'LOGOUT'}
-                                btnTxtClr={'white'}
-                                btnPd={"8px 10px"}
-                            />
+                        {
+                            user &&
+                            <span>
 
-                            {user && <span onClick={handleLogout} style={{ cursor: "pointer", color: "white" }}><AiOutlineLogout /></span>}
-                        </span>
+                                <Button
+                                    btnBorder={"none"}
+                                    btnColor={"green"}
+                                    btnText={'UPDATE'}
+                                    btnTxtClr={'white'}
+                                    btnPd={"8px 10px"}
+                                />
 
+
+                                <div onClick={deleteHandler}>
+                                    DELETE
+                                </div>
+                                <div onClick={handleLogout}>
+                                    <AiOutlineLogout /> LOGOUT
+                                </div>
+                            </span>
+                        }
                     </ProfileCredentials>
                 </ProfileData>
-            </ProfileContent>
+            </ProfileContent>}
         </ProfileWrapper>
     );
 }

@@ -67,11 +67,34 @@ width: 100%;
 display: flex;
 flex-direction: column;
 gap: 20px;
+padding: 20px 0;
 
 span{
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    gap: 20px;
+    justify-content: flex-start;
+    gap: 10px;
+   
+    align-items: center;
+
+    div{
+      padding:16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 20px;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    div:nth-child(2){
+      background-color: red;
+      color: white;
+    }
+
+    div:nth-child(3){
+      background-color: black;
+      color: white;
+    }
 }
 `
