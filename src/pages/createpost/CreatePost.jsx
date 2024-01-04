@@ -6,7 +6,7 @@
 // - Decription
 
 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa';
 import { CreateCatOptions, CreateCatOptionsWrapper, CreatePostCat, CreatePostForm, CreatePostWrapper, PostPicture } from './CreatePost.style';
 import { AiFillPicture } from 'react-icons/ai';
@@ -22,7 +22,7 @@ const CreatePost = () => {
 
 
     const [showCat, setShowCat] = useState(false);
-    const [category, setCategory] = useState(CATEGORY);
+    const [category, setCategory] = useState('');
     const [arroIcon, setArroIcon] = useState(<FaArrowDown />)
     const [title, setTitle] = useState('')
     const [desc, setDesc] = useState('')
@@ -59,7 +59,7 @@ const CreatePost = () => {
         }
     }
 
-    console.log(checkedValues);
+    console.log(checkedValues._d);
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -100,7 +100,20 @@ const CreatePost = () => {
 
 
 
+    const fetchCategory = async () => {
+        try {
+            const res = await axios.get(`${URL}/api/categories/`)
+            console.log('=========================== categoriess==================================\n');
+            console.log(res.data);
+            setCategory(res.data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
+    useEffect(() => {
+        fetchCategory();
+    }, [])
 
 
     return (<> {
@@ -120,14 +133,16 @@ const CreatePost = () => {
                 <CreatePostCat onClick={handleShowCat}>Category {arroIcon}</CreatePostCat>
                 <CreateCatOptionsWrapper>
                     {
-                        showCat && category.map((ct) => (
-                            <CreateCatOptions key={ct.id}>
+                        showCat && category?.map((ct) => (
+                            <CreateCatOptions key={ct._id}>
                                 <input type='checkbox'
                                     value={ct.title}
                                     onChange={handleChange}
                                     id='cat1'
                                 />
                                 <label>{ct.title}</label>
+
+
                             </CreateCatOptions>
                         ))
                     }

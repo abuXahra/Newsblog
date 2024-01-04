@@ -20,6 +20,7 @@ import axios from 'axios';
 import { UserContext } from '../../components/context/UserContext';
 import { useContext } from 'react';
 import Loader from '../../components/loader/Loader';
+import { Controller } from 'swiper/modules';
 // 3:54:02
 
 
@@ -37,8 +38,6 @@ const SinglePost = () => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [website, setWebsite] = useState('')
-
-    console.log("c:" + comment + 'name:' + name + "email:" + email + "websiste:" + website)
 
 
     // fetch post function
@@ -94,7 +93,7 @@ const SinglePost = () => {
             author: name,
             website: website,
             postId: postId,
-            userId: user._id
+            userId: user?._id
         }
 
         try {
@@ -135,6 +134,11 @@ const SinglePost = () => {
         postAuthor: "John Maxwell",
         postDate: new Date().toDateString()
     }
+
+
+
+
+
     return (<>{loader ? <Loader /> :
         <SinglePostWrapper>
             <SinglePostImage>
@@ -156,7 +160,9 @@ const SinglePost = () => {
                     commentCounter={'0'}
                     linkDisplay={'inline-block'}
                     imgUrl={`http://localhost:5000/images/${post.photo}`} />
-                {user &&
+
+                {
+                    user && user._id === post.userId &&
                     <EdDel>
                         <span onClick={() => { navigate(`/edit/${post._id}`) }}><FaRegEdit />Edit</span>
                         <span onClick={handleDelete}><FaTrashAlt />Delete</span>

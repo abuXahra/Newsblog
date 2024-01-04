@@ -39,11 +39,13 @@ height: 100vh;
     width: 30%;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+   
         background-color: #0000ff14;
         padding: 20px;
 
-
+        div{
+          color: green
+        }
          
     @media (max-width: 768px) {
     width: 100%;

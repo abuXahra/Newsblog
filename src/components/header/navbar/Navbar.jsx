@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { NavbarWrapper, NavbarContent, NavMenu, MenuItems, Search, MenuLink, SearchContainer } from './Navbar.style';
 import { Link, useLocation } from 'react-router-dom'
 import { FaDAndD, FaDAndDBeyond, FaSearch } from 'react-icons/fa';
@@ -16,6 +16,7 @@ const Navbar = ({ isOpen, handleIsOpen, }) => {
     const [prompt, setPrompt] = useState('')
     const path = useLocation().pathname
     const [searchIcon, setSearchIcon] = useState(< FaSearch />)
+    const [category, setCategory] = useState([])
 
     console.log(prompt)
     const dispHandler = () => {
@@ -39,16 +40,37 @@ const Navbar = ({ isOpen, handleIsOpen, }) => {
     }
 
 
+    const fetchCategory = async () => {
+        try {
+            const res = await axios.get(`${URL}/api/categories/`)
+            console.log('=========================== categoriess==================================\n');
+            console.log(res.data);
+            setCategory(res.data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    useEffect(() => {
+        fetchCategory();
+    }, [])
+
+
     return (
         <NavbarWrapper isOpen={isOpen} >
             <NavbarContent>
                 <NavMenu onClick={handleIsOpen}>
                     <MenuItems>
-                        <MenuLink to={'/'}>HOME</MenuLink>
+                        <MenuLink to={`/`}>HOME</MenuLink>
                     </MenuItems>
-                    <MenuItems>
-                        <MenuLink to={'/category/1'}>BUSINESS</MenuLink>
-                    </MenuItems>
+                    {
+                        category?.map((cat) => (
+                            <MenuItems>
+                                <MenuLink to={`/category/${cat._id}`}><span style={{ textTransform: 'uppercase' }}>{cat.title}</span></MenuLink>
+                            </MenuItems>
+                        ))
+                    }
+                    {/* 
                     <MenuItems>
                         <MenuLink to={'/category/2'}>ENTERTAINMENT</MenuLink>
                     </MenuItems>
@@ -66,7 +88,7 @@ const Navbar = ({ isOpen, handleIsOpen, }) => {
                     </MenuItems>
                     <MenuItems>
                         <MenuLink to={'/category/7'}>TRAVEL</MenuLink>
-                    </MenuItems>
+                    </MenuItems> */}
                     <MenuItems>
                         {user ? <MenuLink to={'/new'}>WRITE</MenuLink> : <MenuLink to={'/login'}>LOGIN</MenuLink>}
                     </MenuItems>

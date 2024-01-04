@@ -3,31 +3,31 @@ import { AddCategoryContent, AddCategoryWrapper } from './AddCategory.style';
 import Input from '../../components/input/Input';
 import Button from '../../components/clicks/button/Button';
 
-const AddCategory = () => {
+const AddCategory = ({ value, placeHolder, sumbitHandler, onchange }) => {
 
-    const [category, setCategory] = useState('')
+    // const [category, setCategory] = useState('')
 
-    const categoryHandler = (e) => {
-        setCategory(e.target.value);
-    }
+    // const categoryHandler = (e) => {
+    //     setCategory(e.target.value);
+    // }
 
-    const addHandler = (e) => {
-        e.preventDefault();
+    // const addHandler = (e) => {
+    //     e.preventDefault();
 
-        setCategory('');
+    //     setCategory('');
 
-    }
+    // }
 
 
     return (
         <AddCategoryWrapper>
-            <AddCategoryContent onSubmit={addHandler}>
+            <AddCategoryContent onSubmit={sumbitHandler}>
                 <h3>Add Category</h3>
                 <input
                     type={'text'}
-                    value={category}
-                    onchange={categoryHandler}
-                    placeHolder={''}
+                    value={value}
+                    onChange={onchange}
+                    placeHolder={placeHolder}
                 />
                 <div>
                     <Button

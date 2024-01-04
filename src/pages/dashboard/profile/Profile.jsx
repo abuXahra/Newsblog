@@ -15,6 +15,7 @@ import axios from 'axios';
 import { URL } from '../../../url';
 import Links from '../../../components/clicks/links/Links';
 import Loader from '../../../components/loader/Loader';
+import AddCategory from "../../add-category/AddCategory";
 
 const Profile = () => {
 
@@ -29,7 +30,9 @@ const Profile = () => {
     const { user } = useContext(UserContext);
     const { setUser } = useContext(UserContext);
     const [loader, setLoader] = useState(false)
-
+    const [userUpdated, setUserUpdated] = useState(false)
+    const [userPost, setUserPost] = useState('')
+    const [category, setCategory] = useState('')
 
 
 
@@ -59,11 +62,14 @@ const Profile = () => {
             password: password,
         }
         setLoader(true)
+        setUserUpdated(false)
         try {
             const res = await axios.put(`${URL}/api/users/${user._id}`, userUpdate, { withCredentials: true })
             console.log(res.data)
+            setUserUpdated(true)
             setLoader(false)
         } catch (err) {
+            setUserUpdated(false)
             console.log(err)
         }
 
@@ -71,12 +77,12 @@ const Profile = () => {
 
 
 
-
     // User Delete Fuction
     const deleteHandler = async (e) => {
         try {
             const res = await axios.delete(`${URL}/api/users/${user._id}`, { withCredentials: true })
-            navigate('/register')
+            setUser(null)
+            navigate('/')
         } catch (err) {
             console.log(err)
         }
@@ -113,7 +119,7 @@ const Profile = () => {
 
     useEffect(() => {
         fetchProfile();
-    }, [user._id])
+    }, [user?._id])
 
 
 
@@ -121,28 +127,48 @@ const Profile = () => {
 
 
     // fetch user post function
-    // const fetchUserPost = async () => {
-    //     try {
-    //         const res = await axios.get(`${URL}/api/posts/user/${user._id}`)
-    //         console.log(`user post are ${res}`)
-    //     } catch (err) {
-    //         console.log(err)
-    //     }
-    // }
+    const fetchUserPost = async () => {
+        try {
+            const res = await axios.get(`${URL}/api/posts/user/${user._id}`)
+            console.log(`user post are" ${res.data}`)
+            setUserPost(res.data)
 
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    useEffect(() => {
+        fetchUserPost()
+    }, [user?._id])
+
+
+    console.log(userPost)
+
+
+    const postCategory = async () => {
+
+        try {
+            const res = await axios.post(`${URL}/api/categories/create`, { title: category }, { withCredentials: true })
+            console.log(res.data)
+            setCategory('')
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
     return (
         <ProfileWrapper> {loader ? <Loader /> :
             <ProfileContent>
                 {/* USER POSTS */}
                 <ProfilePost>
-                    <h3>Your Posts</h3>
+                    <h3>My Posts</h3>
                     {
-                        fashion && fashion.map((post) => (
-                            <CategoryPosts>
+                        userPost && userPost?.map((post) => (
+                            <CategoryPosts key={post._id}>
                                 <CategoryPostsImag>
-                                    <PostLink to={'/contact'}>
-                                        <img src={post.postImg} alt="" />
+                                    <PostLink to={`/post/${post._id}`}>
+                                        <img src={`${URL}/images/${post.photo}`} alt="" />
                                     </PostLink>
                                 </CategoryPostsImag>
 
@@ -154,7 +180,7 @@ const Profile = () => {
                                                 {<AiFillEdit />}
                                             </EditIconStyled>
                                             <EditTitledStyled>
-                                                {post.postAuthor}
+                                                {post.username}
                                             </EditTitledStyled>
                                         </EditStyled>
 
@@ -163,14 +189,22 @@ const Profile = () => {
                                                 {<FaRegClock />}
                                             </DateIconStyled>
                                             <DateTitledStyled>
-                                                {post.postDate}
+                                                {new Date(post.createdAt).toDateString()}
                                             </DateTitledStyled>
                                         </DateStyled>
                                     </PostIconStyled>
-                                    <PostLink to={'/contact'}>
-                                        <PostTitleStyled fnt={"25px"} lingHeight={"30px"}>{post.postTitle}</PostTitleStyled>     </PostLink>
-                                    <p>{post.postBody}</p>
+                                    <PostLink to={`/post/${post._id}`}>
+                                        <PostTitleStyled fnt={"14px"} lingHeight={"30px"}>{post.title}</PostTitleStyled>     </PostLink>
+                                    <p>{post.desc.substring(0, 230)}</p>
+                                    {
+                                        post.categories?.map((cat, index) => (
+                                            <span key={index}>
+                                                <PostLink>{cat}</PostLink>
+                                            </span>
+                                        ))
+                                    }
                                 </CategoryPostsText>
+
                             </CategoryPosts>
                         ))
 
@@ -229,6 +263,22 @@ const Profile = () => {
                             </span>
                         }
                     </ProfileCredentials>
+                    {userUpdated && <div>fghfghjhk jkhkjh jkhk hk hk jh k</div>}
+
+                    <AddCategory
+                        value={category}
+                        placeHolder={'Add Category'}
+                        onchange={(e) => (setCategory(e.target.value))}
+                        sumbitHandler={postCategory}
+                    />
+
+                    {/* <div>
+                        {
+                            category?.map((cat) => {
+                                <div key={cat._id}>{cat.title}</div>
+                            })
+                        }
+                    </div> */}
                 </ProfileData>
             </ProfileContent>}
         </ProfileWrapper>

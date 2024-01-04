@@ -18,7 +18,7 @@ const EditPost = () => {
     const [desc, setDesc] = useState('')
     const [file, setFile] = useState('')
     const [checkedValues, setValues] = useState([]); // category
-    const [category, setCategory] = useState(CATEGORY);
+    const [category, setCategory] = useState([]);
     const [showCat, setShowCat] = useState(false);
     const [arroIcon, setArroIcon] = useState(<FaArrowDown />)
     const postId = useParams().id
@@ -128,6 +128,24 @@ const EditPost = () => {
         }
     }
 
+
+    const fetchCategory = async () => {
+        try {
+            const res = await axios.get(`${URL}/api/categories/`)
+            console.log('=========================== categoriess==================================\n');
+            console.log(res.data);
+            setCategory(res.data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    useEffect(() => {
+        fetchCategory();
+    }, [])
+
+
+
     return (<>{loader ? <Loader /> :
         <CreatePostWrapper>
             <h1>Edit Post</h1>
@@ -152,7 +170,7 @@ const EditPost = () => {
                 <CreatePostCat onClick={handleShowCat}>Category {arroIcon}</CreatePostCat>
                 <CreateCatOptionsWrapper>
                     {
-                        showCat && category.map((ct) => (
+                        showCat && category?.map((ct) => (
                             <CreateCatOptions key={ct.id}>
                                 <input type='checkbox'
                                     value={ct.title}

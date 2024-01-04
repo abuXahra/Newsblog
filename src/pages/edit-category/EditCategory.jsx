@@ -17,6 +17,11 @@ const EditCategory = () => {
         setCategory('');
     }
 
+
+
+   
+
+
     return (
         <EditCategoryWrapper>
 

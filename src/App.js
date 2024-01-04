@@ -19,6 +19,7 @@ import Head from "./components/header/head/Head"
 import SearchResult from './pages/sear-result/SearchResult';
 import { useContext } from 'react';
 import Loader from './components/loader/Loader';
+import { useEffect } from 'react';
 
 
 
@@ -26,12 +27,14 @@ import Loader from './components/loader/Loader';
 
 function App() {
 
-  const { user } = useContext(UserContext);
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     // <UserContextProvider>
     <Router>
+
       <HideNavbar><Head /></HideNavbar>  {/*hide header for login page */}
       <Routes>
         <Route path="/" element={<Home />} />

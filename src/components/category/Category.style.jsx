@@ -43,13 +43,14 @@ export const CategoryPosts = styled.div`
 width: 100%;
 display: flex;
 align-items: center;
-gap: 30px;
+gap: 10px;
+
 `
 
 
 
 export const CategoryPostsImag = styled.div`
-    width: 35%;
+    width: 30%;
     img{
         width: 100%
     }
@@ -59,12 +60,23 @@ export const CategoryPostsText = styled.div`
     width: 60%;
     display: flex;
     flex-direction: column;
+    gap: 10px;
     height: 100%;
-    justify-content: space-evenly;
+    justify-content:center;
 
     p{
         color: grey;
+        font-size: 12px;
+        font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     }
+
+    span{
+        background-color: grey;
+        color: white;
+        padding: 10px;
+        width: 100px;
+    }
+
 `
 
 

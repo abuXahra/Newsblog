@@ -114,7 +114,7 @@ const Home = () => {
                         commentCounter={'0'}
                         linkDisplay={'inline-block'}
                         imgUrl={last.photo} /> */}
-                    hbjhbjvjhvjj uhghgjkgjhgjhjgk hjgkjgjhgjhk gjh hg
+
                     <HomeTopSectionContent>
                         {loader ? <Loader /> :
                             !noResults ? (myposts && myposts.map((post, index) => (

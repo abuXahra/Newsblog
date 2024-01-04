@@ -12,6 +12,8 @@ import Loader from '../../components/loader/Loader';
 
 // 3:7:3
 
+// login function
+
 const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
