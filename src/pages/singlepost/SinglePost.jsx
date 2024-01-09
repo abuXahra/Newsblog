@@ -21,6 +21,7 @@ import { UserContext } from '../../components/context/UserContext';
 import { useContext } from 'react';
 import Loader from '../../components/loader/Loader';
 import { Controller } from 'swiper/modules';
+import Content from '../../components/content/Content';
 // 3:54:02
 
 
@@ -46,6 +47,7 @@ const SinglePost = () => {
         try {
             const res = await axios.get(URL + `/api/posts/` + postId);
             setPosts(res.data)
+            console.log('===============post==============')
             console.log(res.data)
             setLoader(false)
         } catch (err) {
@@ -239,8 +241,10 @@ const SinglePost = () => {
                     {/* Post Category */}
                     <MarginTop />
                     <PostCat>
-                        {/* {postCat && postCat.map((category, index) => (<CatLink to={''}>{category}</CatLink>))} */}
-                        {post.categories?.map((cat, index) => (<CatLink key={index} to={''}>{cat}</CatLink>))}
+                        {post.categories?.map((cat) =>
+                        (<CatLink key={cat._id} to={`/category/${cat._id}`}>
+                            {cat.title}
+                        </CatLink>))}
                     </PostCat>
 
                     {/* Post Author  */}

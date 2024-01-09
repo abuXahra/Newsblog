@@ -10,6 +10,7 @@ import Sidebar from '../sidebar/Sidebar';
 const Category = () => {
     const [fashion, setFashion] = useState(FASHION)
     const [posts, setPosts] = useState(POSTS)
+
     return (
         <CategoryWraper>
             <CategoryTitle>

@@ -23,6 +23,7 @@ const CreatePost = () => {
 
     const [showCat, setShowCat] = useState(false);
     const [category, setCategory] = useState('');
+    const [selectedCategories, setSelectedCategories] = useState([]);
     const [arroIcon, setArroIcon] = useState(<FaArrowDown />)
     const [title, setTitle] = useState('')
     const [desc, setDesc] = useState('')
@@ -46,20 +47,9 @@ const CreatePost = () => {
 
     }
 
-    // handle check values
-    const handleChange = (e) => {
-        const { value, checked } = e.target
 
-        if (checked) {
-            setValues(prev => [...prev, value])
-        } else {
-            setValues(prev => {
-                return [...prev.filter(preValue => preValue !== value)]
-            })
-        }
-    }
 
-    console.log(checkedValues._d);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -68,7 +58,7 @@ const CreatePost = () => {
             desc,
             username: user.username,
             userId: user._id,
-            categories: checkedValues
+            categories: selectedCategories
         }
 
         if (file) {
@@ -99,7 +89,7 @@ const CreatePost = () => {
     }
 
 
-
+    // fetch category function
     const fetchCategory = async () => {
         try {
             const res = await axios.get(`${URL}/api/categories/`)
@@ -115,6 +105,28 @@ const CreatePost = () => {
         fetchCategory();
     }, [])
 
+
+    // handle check values
+    const handleCategoryChange = (categoryId) => {
+        // Update selected categories based on checkbox selection
+        const updatedSelected = [...selectedCategories];
+        if (updatedSelected.includes(categoryId)) {
+            updatedSelected.splice(updatedSelected.indexOf(categoryId), 1);
+        } else {
+            updatedSelected.push(categoryId);
+        }
+        setSelectedCategories(updatedSelected);
+    };
+
+
+    // const handleCategoryChanges = (categoryId) => {
+    //     const isSelected = selectedCategories.includes(categoryId);
+    //     setSelectedCategories((prevSelected) =>
+    //         isSelected
+    //             ? prevSelected.filter((id) => id !== categoryId)
+    //             : [...prevSelected, categoryId]
+    //     );
+    // };
 
     return (<> {
         user &&
@@ -133,14 +145,13 @@ const CreatePost = () => {
                 <CreatePostCat onClick={handleShowCat}>Category {arroIcon}</CreatePostCat>
                 <CreateCatOptionsWrapper>
                     {
-                        showCat && category?.map((ct) => (
-                            <CreateCatOptions key={ct._id}>
+                        showCat && category?.map((cat) => (
+                            <CreateCatOptions key={cat._id}>
                                 <input type='checkbox'
-                                    value={ct.title}
-                                    onChange={handleChange}
-                                    id='cat1'
+                                    value={cat._id}
+                                    onChange={() => handleCategoryChange(cat._id)}
                                 />
-                                <label>{ct.title}</label>
+                                <label htmlFor={cat._id}>{cat.title}</label>
 
 
                             </CreateCatOptions>

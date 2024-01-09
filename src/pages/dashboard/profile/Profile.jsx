@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { ProfileContent, ProfileCredentials, ProfileData, ProfilePicture, ProfilePost, ProfileWrapper } from './Profile.style';
+import { CategorySpan, PostLinks, ProfileContent, ProfileCredentials, ProfileData, ProfilePicture, ProfilePost, ProfileWrapper } from './Profile.style';
 import { CategoryPosts, CategoryPostsImag, CategoryPostsText } from '../../../components/category/Category.style';
 import { DateIconStyled, DateStyled, DateTitledStyled, EditIconStyled, EditStyled, EditTitledStyled, PostIconStyled, PostLink, PostTitleStyled } from '../../home/Home.style';
 import { AiFillEdit, AiOutlineLogout } from 'react-icons/ai';
@@ -196,14 +196,18 @@ const Profile = () => {
                                     <PostLink to={`/post/${post._id}`}>
                                         <PostTitleStyled fnt={"14px"} lingHeight={"30px"}>{post.title}</PostTitleStyled>     </PostLink>
                                     <p>{post.desc.substring(0, 230)}</p>
-                                    {
-                                        post.categories?.map((cat, index) => (
-                                            <span key={index}>
-                                                <PostLink>{cat}</PostLink>
-                                            </span>
-                                        ))
-                                    }
+
+                                    <CategorySpan>
+                                        {
+                                            post.categories.map((cat) => (
+                                                <div key={cat._id}>
+                                                    <PostLinks to={`/category/${cat._id}`} linkColor='white'>{cat.title}</PostLinks>
+                                                </div>
+                                            ))
+                                        }
+                                    </CategorySpan>
                                 </CategoryPostsText>
+
 
                             </CategoryPosts>
                         ))

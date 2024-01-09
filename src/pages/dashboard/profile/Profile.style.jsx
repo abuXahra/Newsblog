@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 
@@ -76,7 +77,7 @@ span{
     display: flex;
     justify-content: flex-start;
     gap: 10px;
-   
+  
     align-items: center;
 
     div{
@@ -99,4 +100,22 @@ span{
       color: white;
     }
 }
+`
+
+
+
+
+export const CategorySpan = styled.div`
+display:flex;
+gap: 5px;
+`
+
+
+export const PostLinks = styled(Link)`
+background-color: grey;
+color: white;
+font-size: 12px;
+padding: 3px;
+border-radius: 5px;
+text-decoration: none;
 `

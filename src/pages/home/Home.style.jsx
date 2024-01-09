@@ -213,6 +213,7 @@ margin-left: 10px;
 `
 export const PostLink = styled(Link)`
     text-decoration: none;
+    font-size:  ${({ linkFontSize }) => linkFontSize || "13px"}  ;
     color: ${({ linkColor }) => linkColor || "blue"} ;
 `
 

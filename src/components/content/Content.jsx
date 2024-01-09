@@ -30,12 +30,12 @@ const Content = ({
         if (Array.isArray(contentLinkText)) {
             return (
                 <span>
-                    {contentLinkText.map((clt, index) => (
-                        <Links key={index}
+                    {contentLinkText.map((clt) => (
+                        <Links key={clt._id}
                             linkDisplay={linkDisplay}
                             linkColor={contentLinkColor}
-                            linkText={clt}
-                            linkUrl={linkUrl}
+                            linkText={clt.title}
+                            linkUrl={`/category/${clt._id}`}
                         />
                     ))}
                 </span>

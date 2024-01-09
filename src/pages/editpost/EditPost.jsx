@@ -17,8 +17,8 @@ const EditPost = () => {
     const [title, setTitle] = useState('')
     const [desc, setDesc] = useState('')
     const [file, setFile] = useState('')
-    const [checkedValues, setValues] = useState([]); // category
-    const [category, setCategory] = useState([]);
+    const [category, setCategory] = useState('');
+    const [selectedCategories, setSelectedCategories] = useState([]);
     const [showCat, setShowCat] = useState(false);
     const [arroIcon, setArroIcon] = useState(<FaArrowDown />)
     const postId = useParams().id
@@ -37,7 +37,7 @@ const EditPost = () => {
             setTitle(res.data.title)
             setFile(res.data.photo)
             setDesc(res.data.desc)
-            setValues(res.data.categories)
+            setCategory(res.data.categories)
             setLoader(false)
         } catch (err) {
             console.log(err)
@@ -63,19 +63,16 @@ const EditPost = () => {
 
 
     // Handle checked value options
-    const handleChange = (e) => {
-        const { value, checked } = e.target
-        if (checked) {
-            setValues(prev => [...prev, value])
+    const handleCategoryChange = (categoryId) => {
+        // Update selected categories based on checkbox selection
+        const updatedSelected = [...selectedCategories];
+        if (updatedSelected.includes(categoryId)) {
+            updatedSelected.splice(updatedSelected.indexOf(categoryId), 1);
         } else {
-            setValues(pre => {
-                return [...pre.filter(preValue => preValue !== value)]
-            })
+            updatedSelected.push(categoryId);
         }
-    }
-
-    console.log(checkedValues);
-
+        setSelectedCategories(updatedSelected);
+    };
 
     // Post Update Function
     const handleUpdate = async (e) => {
@@ -85,7 +82,7 @@ const EditPost = () => {
             desc,
             username: user.username,
             userId: user._id,
-            categories: checkedValues
+            categories: selectedCategories
         }
 
         if (file) {
@@ -152,8 +149,8 @@ const EditPost = () => {
             picture: <img src={`${URL}/images/${file}`} alt="" srcset="" />
 
             <DeletCat>
-                {post.categories?.map((cat, i) => (
-                    <span onClick={handleDelete} key={i}><FaTrashAlt /><p>{cat}</p></span>
+                {post.categories?.map((cat) => (
+                    <span onClick={handleDelete} key={cat._id}><FaTrashAlt /><p>{cat.title}</p></span>
                 ))
                 }
 
@@ -170,14 +167,14 @@ const EditPost = () => {
                 <CreatePostCat onClick={handleShowCat}>Category {arroIcon}</CreatePostCat>
                 <CreateCatOptionsWrapper>
                     {
-                        showCat && category?.map((ct) => (
-                            <CreateCatOptions key={ct.id}>
+                        showCat && category?.map((cat) => (
+                            <CreateCatOptions key={cat._id}>
                                 <input type='checkbox'
-                                    value={ct.title}
-                                    onChange={handleChange}
-                                    id='cat1'
+                                    value={cat._id}
+                                    onChange={() => handleCategoryChange(cat._id)}
                                 />
-                                <label>{ct.title}</label>
+                                <label htmlFor={cat._id}>{cat.title}</label>
+
                             </CreateCatOptions>
                         ))
                     }
