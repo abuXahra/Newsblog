@@ -4,7 +4,6 @@ import { FaArrowDown, FaArrowUp, FaRegEdit, FaTrashAlt } from 'react-icons/fa';
 import { CreateCatOptions, CreateCatOptionsWrapper, CreatePostCat, CreatePostForm, CreatePostWrapper, DeletCat, PostPicture } from '../createpost/CreatePost.style';
 import { AiFillPicture } from 'react-icons/ai';
 import { CATEGORY } from '../../data/Category'
-import { set } from 'mongoose';
 import Button from '../../components/clicks/button/Button';
 import { useNavigate, useParams } from 'react-router-dom';
 import { URL } from '../../url';
