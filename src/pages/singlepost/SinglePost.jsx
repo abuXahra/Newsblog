@@ -161,7 +161,7 @@ const SinglePost = () => {
                     commentIcon={<FaRegComment />}
                     commentCounter={'0'}
                     linkDisplay={'inline-block'}
-                    imgUrl={`http://localhost:5000/images/${post.photo}`} />
+                    imgUrl={`${IF}/${post.photo}`} />
 
                 {
                     user && user._id === post.userId &&
