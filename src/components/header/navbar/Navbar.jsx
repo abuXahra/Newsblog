@@ -3,7 +3,6 @@ import { NavbarWrapper, NavbarContent, NavMenu, MenuItems, Search, MenuLink, Sea
 import { Link, useLocation } from 'react-router-dom'
 import { FaDAndD, FaDAndDBeyond, FaSearch } from 'react-icons/fa';
 import { UserContext } from '../../context/UserContext';
-import { URL } from '../../../url';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineLogout } from 'react-icons/ai';
@@ -30,7 +29,7 @@ const Navbar = ({ isOpen, handleIsOpen, }) => {
     // Logout function
     const handleLogout = async () => {
         try {
-            const res = await axios.get(URL + '/api/auth/logout', { withCredentials: true })
+            const res = await axios.get(process.env.REACT_APP_URL + '/api/auth/logout', { withCredentials: true })
             setUser(null)
             navigate('/login')
 
@@ -42,7 +41,7 @@ const Navbar = ({ isOpen, handleIsOpen, }) => {
 
     const fetchCategory = async () => {
         try {
-            const res = await axios.get(`${URL}/api/categories/`)
+            const res = await axios.get(`${process.env.REACT_APP_URL}/api/categories/`)
             console.log('=========================== categoriess==================================\n');
             console.log(res.data);
             setCategory(res.data)

@@ -15,7 +15,6 @@ import Links from '../../components/clicks/links/Links';
 import Button from '../../components/clicks/button/Button';
 import { DateIconStyled, DateStyled, DateTitledStyled, EditIconStyled, EditStyled, EditTitledStyled, PostIconStyled, PostTitleStyled, RecentPost, RecentPostContent } from '../home/Home.style';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { URL, IF } from '../../url';
 import axios from 'axios';
 import { UserContext } from '../../components/context/UserContext';
 import { useContext } from 'react';
@@ -45,7 +44,7 @@ const SinglePost = () => {
     const fetchPost = async () => {
         setLoader(true)
         try {
-            const res = await axios.get(URL + `/api/posts/` + postId);
+            const res = await axios.get(process.env.REACT_APP_URL + `/api/posts/` + postId);
             setPosts(res.data)
             console.log('===============post==============')
             console.log(res.data)
@@ -65,7 +64,7 @@ const SinglePost = () => {
     const handleDelete = async () => {
         setLoader(true)
         try {
-            const res = await axios.delete(URL + `/api/posts/` + postId, { withCredentials: true });
+            const res = await axios.delete(process.env.REACT_APP_URL + `/api/posts/` + postId, { withCredentials: true });
             setLoader(false)
             navigate('/')
         } catch (err) {
@@ -99,7 +98,7 @@ const SinglePost = () => {
         }
 
         try {
-            const res = await axios.post(`${URL}/api/posts/${postId}/comment`, newComment, { withCredentials: true })
+            const res = await axios.post(`${process.env.REACT_APP_URL}/api/posts/${postId}/comment`, newComment, { withCredentials: true })
             navigate(`/edit/${postId}`)
             console.log("res data: " + res.data)
         } catch (err) {
@@ -111,7 +110,7 @@ const SinglePost = () => {
     // fetch post comment function
     const fetchPostComment = async () => {
         try {
-            const res = await axios.get(`${URL}/api/posts/${postId}/comments`)
+            const res = await axios.get(`${process.env.REACT_APP_URL}/api/posts/${postId}/comments`)
             setComments(res.data)
         } catch (error) {
 
@@ -161,7 +160,7 @@ const SinglePost = () => {
                     commentIcon={<FaRegComment />}
                     commentCounter={'0'}
                     linkDisplay={'inline-block'}
-                    imgUrl={`${IF}/${post.photo}`} />
+                    imgUrl={`${process.env.REACT_APP_URL}/images/${post.photo}`} />
 
                 {
                     user && user._id === post.userId &&

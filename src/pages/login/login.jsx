@@ -6,7 +6,6 @@ import Links from '../../components/clicks/links/Links';
 import axios from 'axios'
 import { ErrorStyled } from '../register/Register.style';
 import { useNavigate } from 'react-router-dom';
-import { URL } from '../../url';
 import { UserContext } from '../../components/context/UserContext';
 import Loader from '../../components/loader/Loader';
 
@@ -49,7 +48,7 @@ const Login = () => {
 
             setLoader(true)
             try {
-                const res = await axios.post(URL + '/api/auth/login', { email, password }, { withCredentials: true })
+                const res = await axios.post(process.env.REACT_APP_URL + '/api/auth/login', { email, password }, { withCredentials: true })
                 console.log(res.status + " \nLOGIN DATA:\n" + res.data + " Login successful")
                 console.log(res.status)
                 setUser(res.data)

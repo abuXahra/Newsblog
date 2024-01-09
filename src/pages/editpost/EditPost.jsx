@@ -6,7 +6,6 @@ import { AiFillPicture } from 'react-icons/ai';
 import { CATEGORY } from '../../data/Category'
 import Button from '../../components/clicks/button/Button';
 import { useNavigate, useParams } from 'react-router-dom';
-import { URL } from '../../url';
 import axios from 'axios';
 import { UserContext } from '../../components/context/UserContext';
 import Loader from '../../components/loader/Loader';
@@ -31,7 +30,7 @@ const EditPost = () => {
     const fetchPost = async () => {
         setLoader(true)
         try {
-            const res = await axios.get(URL + `/api/posts/` + postId);
+            const res = await axios.get(process.env.REACT_APP_URL + `/api/posts/` + postId);
             setPost(res.data)
             setTitle(res.data.title)
             setFile(res.data.photo)
@@ -93,7 +92,7 @@ const EditPost = () => {
 
             // img upload
             try {
-                const imgUpload = await axios.post(URL + '/api/upload', data)
+                const imgUpload = await axios.post(process.env.REACT_APP_URL + '/api/upload', data)
                 console.log(imgUpload.data)
             } catch (err) {
                 console.log(err)
@@ -102,7 +101,7 @@ const EditPost = () => {
 
         // post update
         try {
-            const res = await axios.put(`${URL}/api/posts/${postId}`, updatedPost, { withCredentials: true })
+            const res = await axios.put(`${process.env.REACT_APP_URL}/api/posts/${postId}`, updatedPost, { withCredentials: true })
             navigate(`/post/${postId}`)
         } catch (error) {
 
@@ -127,7 +126,7 @@ const EditPost = () => {
 
     const fetchCategory = async () => {
         try {
-            const res = await axios.get(`${URL}/api/categories/`)
+            const res = await axios.get(`${process.env.REACT_APP_URL}/api/categories/`)
             console.log('=========================== categoriess==================================\n');
             console.log(res.data);
             setCategory(res.data)
@@ -145,7 +144,7 @@ const EditPost = () => {
     return (<>{loader ? <Loader /> :
         <CreatePostWrapper>
             <h1>Edit Post</h1>
-            picture: <img src={`${URL}/images/${file}`} alt="" srcset="" />
+            picture: <img src={`${process.env.REACT_APP_URL}/images/${file}`} alt="" srcset="" />
 
             <DeletCat>
                 {post.categories?.map((cat) => (

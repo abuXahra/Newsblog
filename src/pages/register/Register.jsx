@@ -5,7 +5,6 @@ import Button from '../../components/clicks/button/Button';
 import Links from '../../components/clicks/links/Links';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
-import { URL } from '../../url';
 import Loader from '../../components/loader/Loader';
 
 
@@ -36,7 +35,7 @@ const Register = () => {
         } else {
             setLoader(true)
             try {
-                const res = await axios.post(URL + '/api/auth/register', {
+                const res = await axios.post(process.env.REACT_APP_URL + '/api/auth/register', {
                     username: username,
                     email: email,
                     password: password

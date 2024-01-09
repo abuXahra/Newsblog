@@ -22,7 +22,7 @@ import Title from '../../components/section-title/Title';
 import Adbanner from '../../components/header/adbanner/Adbanner';
 import Sidebar from '../../components/sidebar/Sidebar';
 import axios, { Axios } from 'axios';
-import { URL, IF } from '../../url';
+// import { URL, IF } from '../../url';
 import { useLocation } from 'react-router-dom';
 import Loader from '../../components/loader/Loader';
 import { UserContext } from '../../components/context/UserContext';
@@ -67,7 +67,7 @@ const Home = () => {
         setLoader(true)
 
         try {
-            const res = await axios.get(URL + "/api/posts" + search)
+            const res = await axios.get(process.env.REACT_APP_URL + "/api/posts" + search)
             setMyPosts(res.data)
             if (res.data.length === 0) { //if search result not dund
                 setNoResults(true)
@@ -137,7 +137,7 @@ const Home = () => {
                                         commentIcon={<FaRegComment />}
                                         commentCounter={'0'}
                                         linkDisplay={'none'}
-                                        imgUrl={`http://localhost:5000/images/${post.photo}`} />
+                                        imgUrl={`${process.env.REACT_APP_URL}/images/${post.photo}`} />
                                 </WrapperDiv>
                             ))) : (<div style={{ display: "flex", width: "100%", textAlign: "center", marginTop: "100px", justifyContent: "center" }}>No Post Found</div>)}
                     </HomeTopSectionContent>
