@@ -14,7 +14,6 @@ import { CATEGORY } from '../../data/Category'
 import Button from '../../components/clicks/button/Button';
 import axios from 'axios';
 import { UserContext } from '../../components/context/UserContext';
-import { URL } from '../../url';
 import { useNavigate } from 'react-router-dom';
 
 const CreatePost = () => {
@@ -69,7 +68,7 @@ const CreatePost = () => {
 
             // img upload
             try {
-                const imgUpload = await axios.post(URL + '/api/upload', data)
+                const imgUpload = await axios.post(process.env.REACT_APP_URL + '/api/upload', data)
                 console.log(imgUpload.data)
             } catch (err) {
                 console.log(err)
@@ -78,7 +77,7 @@ const CreatePost = () => {
 
         // post creation
         try {
-            const res = await axios.post(URL + '/api/posts/create', post, { withCredentials: true })
+            const res = await axios.post(process.env.REACT_APP_URL + '/api/posts/create', post, { withCredentials: true })
             navigate(`/post/${res.data._id}`)
             console.log(res.data)
 
@@ -91,7 +90,7 @@ const CreatePost = () => {
     // fetch category function
     const fetchCategory = async () => {
         try {
-            const res = await axios.get(`${URL}/api/categories/`)
+            const res = await axios.get(`${process.env.REACT_APP_URL}/api/categories/`)
             console.log('=========================== categoriess==================================\n');
             console.log(res.data);
             setCategory(res.data)

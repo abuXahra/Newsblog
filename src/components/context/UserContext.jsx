@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
 import { createContext } from "react";
-import { URL } from "../../url";
 import { useEffect } from "react";
 
 
@@ -19,7 +18,7 @@ export function UserContextProvider({ children }) {
     const getUser = async () => { // to keep user login when browser refresh
 
         try {
-            const res = await axios.get(URL + "/api/auth/refetch", { withCredentials: true })
+            const res = await axios.get(process.env.REACT_APP_URL + "/api/auth/refetch", { withCredentials: true })
             setUser(res.data)
             //console.log(res.data)
         } catch (err) {

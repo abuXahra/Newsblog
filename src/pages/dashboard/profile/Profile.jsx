@@ -12,7 +12,6 @@ import Button from '../../../components/clicks/button/Button';
 import { useNavigate, useParams } from 'react-router-dom';
 import { UserContext } from '../../../components/context/UserContext';
 import axios from 'axios';
-import { URL } from '../../../url';
 import Links from '../../../components/clicks/links/Links';
 import Loader from '../../../components/loader/Loader';
 import AddCategory from "../../add-category/AddCategory";
@@ -64,7 +63,7 @@ const Profile = () => {
         setLoader(true)
         setUserUpdated(false)
         try {
-            const res = await axios.put(`${URL}/api/users/${user._id}`, userUpdate, { withCredentials: true })
+            const res = await axios.put(`${process.env.REACT_APP_URL}/api/users/${user._id}`, userUpdate, { withCredentials: true })
             console.log(res.data)
             setUserUpdated(true)
             setLoader(false)
@@ -80,7 +79,7 @@ const Profile = () => {
     // User Delete Fuction
     const deleteHandler = async (e) => {
         try {
-            const res = await axios.delete(`${URL}/api/users/${user._id}`, { withCredentials: true })
+            const res = await axios.delete(`${process.env.REACT_APP_URL}/api/users/${user._id}`, { withCredentials: true })
             setUser(null)
             navigate('/')
         } catch (err) {
@@ -95,7 +94,7 @@ const Profile = () => {
     const handleLogout = async () => {
 
         try {
-            const res = await axios.get(URL + '/api/auth/logout', { withCredentials: true })
+            const res = await axios.get(process.env.REACT_APP_URL + '/api/auth/logout', { withCredentials: true })
             setUser(null)
             navigate('/login')
         } catch (err) {
@@ -107,7 +106,7 @@ const Profile = () => {
     // fetch profile data
     const fetchProfile = async () => {
         try {
-            const res = await axios.get(URL + '/api/users/' + user._id)
+            const res = await axios.get(process.env.REACT_APP_URL + '/api/users/' + user._id)
             setName(res.data.username)
             setEmail(res.data.email)
             setPassword(res.data.password)
@@ -129,7 +128,7 @@ const Profile = () => {
     // fetch user post function
     const fetchUserPost = async () => {
         try {
-            const res = await axios.get(`${URL}/api/posts/user/${user._id}`)
+            const res = await axios.get(`${process.env.REACT_APP_URL}/api/posts/user/${user._id}`)
             console.log(`user post are" ${res.data}`)
             setUserPost(res.data)
 
@@ -149,7 +148,7 @@ const Profile = () => {
     const postCategory = async () => {
 
         try {
-            const res = await axios.post(`${URL}/api/categories/create`, { title: category }, { withCredentials: true })
+            const res = await axios.post(`${process.env.REACT_APP_URL}/api/categories/create`, { title: category }, { withCredentials: true })
             console.log(res.data)
             setCategory('')
         } catch (err) {
@@ -168,7 +167,7 @@ const Profile = () => {
                             <CategoryPosts key={post._id}>
                                 <CategoryPostsImag>
                                     <PostLink to={`/post/${post._id}`}>
-                                        <img src={`${URL}/images/${post.photo}`} alt="" />
+                                        <img src={`${process.env.REACT_APP_URL}/images/${post.photo}`} alt="" />
                                     </PostLink>
                                 </CategoryPostsImag>
 

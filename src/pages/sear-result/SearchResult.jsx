@@ -4,7 +4,6 @@ import Postcard from '../../components/postcard/Postcard';
 import { AiFillEdit } from 'react-icons/ai';
 import { FaRegClock, FaRegComment } from 'react-icons/fa';
 import axios, { Axios } from 'axios';
-import { URL } from '../../url';
 import { useLocation } from 'react-router-dom';
 
 
@@ -20,7 +19,7 @@ const SearchResult = () => {
     const fetchPost = async () => {
         try {
 
-            const res = await axios.get(URL + "/api/posts" + search)
+            const res = await axios.get(process.env.REACT_APP_URL + "/api/posts" + search)
             setMyPosts(res.data)
         } catch (err) {
             console.log(err)
