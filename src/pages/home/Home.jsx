@@ -67,7 +67,8 @@ const Home = () => {
         setLoader(true)
 
         try {
-            const res = await axios.get(process.env.REACT_APP_URL + "/api/posts" + search)
+            const res = await axios.get("https://pblog-api.onrender.com/api/posts" + search)
+            // const res = await axios.get(process.env.REACT_APP_URL + "/api/posts" + search)
             setMyPosts(res.data)
             if (res.data.length === 0) { //if search result not dund
                 setNoResults(true)
