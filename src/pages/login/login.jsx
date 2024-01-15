@@ -50,7 +50,6 @@ const Login = () => {
             try {
                 const res = await axios.post(process.env.REACT_APP_URL + '/api/auth/login', { email, password }, { withCredentials: true })
                 console.log(res.status + " \nLOGIN DATA:\n" + res.data + " Login successful")
-                console.log(res.status)
                 setUser(res.data)
                 setLoader(false)
                 nagivate('/')

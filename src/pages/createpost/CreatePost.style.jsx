@@ -9,6 +9,10 @@ export const CreatePostWrapper = styled.div`
     margin-right: auto;
     flex-direction:column;
     gap: 20px;
+
+    img{
+        width: 300px;
+    }
 `
 
 export const DeletCat = styled.div`
@@ -121,6 +125,10 @@ gap: 20px;
 input{
     width: 20px;
     height: 20px;
+}
+
+label{
+    text-transform: uppercase;
 }
 `
 

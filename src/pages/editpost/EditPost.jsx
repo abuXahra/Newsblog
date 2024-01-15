@@ -10,12 +10,14 @@ import axios from 'axios';
 import { UserContext } from '../../components/context/UserContext';
 import Loader from '../../components/loader/Loader';
 
+
 const EditPost = () => {
 
     const [title, setTitle] = useState('')
     const [desc, setDesc] = useState('')
     const [file, setFile] = useState('')
-    const [category, setCategory] = useState('');
+    const [category, setCategory] = useState([]);
+    const [dbCategory, setDbCategory] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [showCat, setShowCat] = useState(false);
     const [arroIcon, setArroIcon] = useState(<FaArrowDown />)
@@ -25,6 +27,7 @@ const EditPost = () => {
     const navigate = useNavigate()
     const [loader, setLoader] = useState(false)
     const [post, setPost] = useState({})
+    const [postPic, setPostPic] = useState('')
 
     // Fetch single post function
     const fetchPost = async () => {
@@ -34,6 +37,7 @@ const EditPost = () => {
             setPost(res.data)
             setTitle(res.data.title)
             setFile(res.data.photo)
+            setPostPic(res.data.photo)
             setDesc(res.data.desc)
             setCategory(res.data.categories)
             setLoader(false)
@@ -127,9 +131,10 @@ const EditPost = () => {
     const fetchCategory = async () => {
         try {
             const res = await axios.get(`${process.env.REACT_APP_URL}/api/categories/`)
-            console.log('=========================== categoriess==================================\n');
+            console.log('=========================== our categories==================================\n');
             console.log(res.data);
-            setCategory(res.data)
+            console.log('===========================End  our categories==================================\n');
+            setDbCategory(res.data)
         } catch (err) {
             console.log(err)
         }
@@ -144,7 +149,13 @@ const EditPost = () => {
     return (<>{loader ? <Loader /> :
         <CreatePostWrapper>
             <h1>Edit Post</h1>
-            picture: <img src={`${process.env.REACT_APP_URL}/images/${file}`} alt="" srcset="" />
+            {/* Display Image befor posting to db */}
+            {file ?
+                (<img src={URL.createObjectURL(file)} alt="" srcset="" />) :
+                (<img src={`${process.env.REACT_APP_URL}/images/${postPic}`} alt="" srcset="" />)
+            }
+
+
 
             <DeletCat>
                 {post.categories?.map((cat) => (
@@ -165,7 +176,7 @@ const EditPost = () => {
                 <CreatePostCat onClick={handleShowCat}>Category {arroIcon}</CreatePostCat>
                 <CreateCatOptionsWrapper>
                     {
-                        showCat && category?.map((cat) => (
+                        showCat && dbCategory?.map((cat) => (
                             <CreateCatOptions key={cat._id}>
                                 <input type='checkbox'
                                     value={cat._id}

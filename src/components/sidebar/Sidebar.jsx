@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Ads, CatWrapper, CategorList, CategoryListItem, DateIconStyled, DateStyled, DateTitledStyled, EditIconStyled, EditStyled, EditTitledStyled, InputStyled, MarginTop, PostIconStyled, PostLink, PostTitleStyled, RecentPost, RecentPostContent, RecentPostImg, RecentPostWrapper, SidebarWrapper, SocialListItem, SocialMedia, SubscibeWrapper } from './Sidebar.style';
 import Title from '../section-title/Title';
 import { AiFillEdit } from 'react-icons/ai';
@@ -11,12 +11,44 @@ import { BUSINESS } from '../../data/Posts'
 import { CATEGORY } from '../../data/Category'
 import { FASHION } from '../../data/Posts'
 import { SOCIALMEDIA } from '../../data/SocialMedias'
+import axios from 'axios';
 
 const Sidebar = ({ fxTp }) => {
 
-    const [posts, setPosts] = useState(POSTS)
+    const [posts, setPosts] = useState('')
     const [socialMedia, setSocialMedia] = useState(SOCIALMEDIA)
-    const [category, setCategory] = useState(CATEGORY)
+    const [category, setCategory] = useState([])
+
+
+
+    const fetchRcentPost = async () => {
+        try {
+            const res = await axios.get(process.env.REACT_APP_URL + "/api/posts")
+            setPosts(res.data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+
+    // fetch categories
+    const fetchCategory = async () => {
+        try {
+            const res = await axios.get(process.env.REACT_APP_URL + "/api/categories")
+            setCategory(res.data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    useEffect(() => {
+        fetchRcentPost()
+        fetchCategory()
+    }, [])
+
+
+
+
 
     return (
         <SidebarWrapper>
@@ -25,21 +57,21 @@ const Sidebar = ({ fxTp }) => {
                 <Title title={'Recent Post'} />
                 {
                     posts && posts.map((post, index) => (
-                        <PostLink to='/contact' key={index} >
+                        <PostLink to={`/post/${post._id}`} key={index} >
                             <RecentPost pdtop={post.id === 1 && "0"} lastItemBorder={post.id === posts.length && "0"}>
                                 <RecentPostImg>
-                                    <img src={post.postImg} alt="" />
+                                    <img src={`${process.env.REACT_APP_URL}/images/${post.photo}`} alt="" />
                                 </RecentPostImg>
 
                                 <RecentPostContent>
-                                    <PostTitleStyled>Magna Dapibus Sollicitudin Consectetur Lorem</PostTitleStyled>
+                                    <PostTitleStyled>{post.title}</PostTitleStyled>
                                     <PostIconStyled>
                                         <EditStyled>
                                             <EditIconStyled>
                                                 {<AiFillEdit />}
                                             </EditIconStyled>
                                             <EditTitledStyled>
-                                                {post.postAuthor}
+                                                {post.username}
                                             </EditTitledStyled>
                                         </EditStyled>
 
@@ -48,7 +80,7 @@ const Sidebar = ({ fxTp }) => {
                                                 {<FaRegClock />}
                                             </DateIconStyled>
                                             <DateTitledStyled>
-                                                {post.postDate}
+                                                {post.createdAt}
                                             </DateTitledStyled>
                                         </DateStyled>
                                     </PostIconStyled>
@@ -67,7 +99,7 @@ const Sidebar = ({ fxTp }) => {
                             <CategoryListItem bcolor={cat.color} pdtop={index === 0 && "0"} lastItemBorder={cat.id === category.length && "0"}>
                                 <p> {cat.title}</p>
                                 <div>
-                                    {cat.catCounter}
+                                    {''}
                                 </div>
 
                             </CategoryListItem>
@@ -79,7 +111,7 @@ const Sidebar = ({ fxTp }) => {
                 {/* ADS */}
                 <CatWrapper flDir={"column"} gp={"0px"} fxTp={fxTp}>
                     <Ads>
-                        <img src={posts[0].postImg} alt="" />
+                        {/* <img src={posts[0].postImg} alt="" /> */}
                     </Ads>
                     <MarginTop />
 

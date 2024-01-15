@@ -130,6 +130,8 @@ const CreatePost = () => {
         user &&
         <CreatePostWrapper>
             <h2>Create Post</h2>
+            {/* Display Image befor posting to db */}
+            {file && (<img src={URL.createObjectURL(file)} alt="" srcset="" />)}
             <CreatePostForm onSubmit={handleSubmit}>
 
                 <span>

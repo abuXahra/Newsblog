@@ -115,7 +115,7 @@ export const PostLinks = styled(Link)`
 background-color: grey;
 color: white;
 font-size: 12px;
-padding: 3px;
+padding: 5px;
 border-radius: 5px;
 text-decoration: none;
 `

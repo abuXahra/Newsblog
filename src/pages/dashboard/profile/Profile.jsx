@@ -32,6 +32,7 @@ const Profile = () => {
     const [userUpdated, setUserUpdated] = useState(false)
     const [userPost, setUserPost] = useState('')
     const [category, setCategory] = useState('')
+    const [noResults, setNoResults] = useState(false)
 
 
 
@@ -131,6 +132,11 @@ const Profile = () => {
             const res = await axios.get(`${process.env.REACT_APP_URL}/api/posts/user/${user._id}`)
             console.log(`user post are" ${res.data}`)
             setUserPost(res.data)
+            if (res.data.length === 0) { //if search result not dund
+                setNoResults(true)
+            } else {
+                setNoResults(false)
+            }
 
         } catch (err) {
             console.log(err)
@@ -162,7 +168,7 @@ const Profile = () => {
                 {/* USER POSTS */}
                 <ProfilePost>
                     <h3>My Posts</h3>
-                    {
+                    {!noResults ? (
                         userPost && userPost?.map((post) => (
                             <CategoryPosts key={post._id}>
                                 <CategoryPostsImag>
@@ -209,7 +215,15 @@ const Profile = () => {
 
 
                             </CategoryPosts>
-                        ))
+                        ))) : ((<div style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            width: "100%",
+                            gap: "20px",
+                            marginTop: "100px",
+                            alignItems: "center",
+                            justifyContent: "center"
+                        }}><div>You are yet to make post.</div>  <PostLinks to={'/new'}>Click here to create post </PostLinks> </div>))
 
                     }
                 </ProfilePost>
