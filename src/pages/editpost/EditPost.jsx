@@ -151,7 +151,7 @@ const EditPost = () => {
             <h1>Edit Post</h1>
             {/* Display Image befor posting to db */}
             {file ?
-                (<img src={URL.createObjectURL(file)} alt="" srcset="" />) :
+                (<img src={`${process.env.REACT_APP_URL}/images/${postPic}`} alt="" srcset="" />) :
                 (<img src={`${process.env.REACT_APP_URL}/images/${postPic}`} alt="" srcset="" />)
             }
 
@@ -162,7 +162,6 @@ const EditPost = () => {
                     <span onClick={handleDelete} key={cat._id}><FaTrashAlt /><p>{cat.title}</p></span>
                 ))
                 }
-
             </DeletCat>
 
             <CreatePostForm onSubmit={handleUpdate}>
@@ -195,6 +194,4 @@ const EditPost = () => {
     </>
     );
 }
-
-
 export default EditPost;
