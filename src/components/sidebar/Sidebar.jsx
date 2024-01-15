@@ -99,7 +99,7 @@ const Sidebar = ({ fxTp }) => {
                             <CategoryListItem bcolor={cat.color} pdtop={index === 0 && "0"} lastItemBorder={cat.id === category.length && "0"}>
                                 <p> {cat.title}</p>
                                 <div>
-                                    {''}
+                                    {cat.posts.lenght}
                                 </div>
 
                             </CategoryListItem>

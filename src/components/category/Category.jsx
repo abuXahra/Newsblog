@@ -62,7 +62,7 @@ const Category = () => {
                         catPosts && catPosts.map((post) => (
                             <CategoryPosts>
                                 <CategoryPostsImag>
-                                    <PostLink to={'/contact'}>
+                                    <PostLink to={`/post/${post._id}`}>
                                         <img src={`${process.env.REACT_APP_URL}/images/${post.photo}`} alt="" />
                                     </PostLink>
                                 </CategoryPostsImag>

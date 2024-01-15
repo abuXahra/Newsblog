@@ -24,4 +24,10 @@ input{
     border: none;
     background-color: #80808036;
 }
+
+input:nth-child(2){
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+}
     `

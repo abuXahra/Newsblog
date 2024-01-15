@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { CategorySpan, PostLinks, ProfileContent, ProfileCredentials, ProfileData, ProfilePicture, ProfilePost, ProfileWrapper } from './Profile.style';
+import { CatStyled, CategorySpan, PostLinks, ProfileContent, ProfileCredentials, ProfileData, ProfilePicture, ProfilePost, ProfileWrapper } from './Profile.style';
 import { CategoryPosts, CategoryPostsImag, CategoryPostsText } from '../../../components/category/Category.style';
 import { DateIconStyled, DateStyled, DateTitledStyled, EditIconStyled, EditStyled, EditTitledStyled, PostIconStyled, PostLink, PostTitleStyled } from '../../home/Home.style';
 import { AiFillEdit, AiOutlineLogout } from 'react-icons/ai';
-import { FaRegClock } from 'react-icons/fa';
+import { FaRegClock, FaRegEdit, FaTrash, FaTrashAlt } from 'react-icons/fa';
 import { FASHION } from '../../../data/Posts'
 import placeHolder from '../../../images/placeholder_image.png'
 import { MarginTop } from '../../../components/sidebar/Sidebar.style';
@@ -32,7 +32,9 @@ const Profile = () => {
     const [userUpdated, setUserUpdated] = useState(false)
     const [userPost, setUserPost] = useState('')
     const [category, setCategory] = useState('')
+    const [dbCat, setDbCat] = useState([])
     const [noResults, setNoResults] = useState(false)
+    const [catColor, setCatColor] = useState()
 
 
 
@@ -117,15 +119,6 @@ const Profile = () => {
         }
     }
 
-    useEffect(() => {
-        fetchProfile();
-    }, [user?._id])
-
-
-
-
-
-
     // fetch user post function
     const fetchUserPost = async () => {
         try {
@@ -144,23 +137,41 @@ const Profile = () => {
     }
 
     useEffect(() => {
-        fetchUserPost()
+        fetchProfile();
+        fetchUserPost();
     }, [user?._id])
 
 
-    console.log(userPost)
-
-
-    const postCategory = async () => {
-
+    // Fetch category function
+    const fetchCat = async () => {
         try {
-            const res = await axios.post(`${process.env.REACT_APP_URL}/api/categories/create`, { title: category }, { withCredentials: true })
-            console.log(res.data)
+            const res = await axios.get(`${process.env.REACT_APP_URL}/api/categories`)
+            setDbCat(res.data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    useEffect(() => {
+        fetchCat()
+    }, [])
+
+
+
+
+
+
+    // create category function
+    const postCategory = async () => {
+        try {
+            const res = await axios.post(`${process.env.REACT_APP_URL}/api/categories/create`,
+                { title: category, color: catColor }, { withCredentials: true })
             setCategory('')
         } catch (err) {
             console.log(err)
         }
     }
+
+
 
     return (
         <ProfileWrapper> {loader ? <Loader /> :
@@ -287,15 +298,23 @@ const Profile = () => {
                         placeHolder={'Add Category'}
                         onchange={(e) => (setCategory(e.target.value))}
                         sumbitHandler={postCategory}
+                        valueColor={catColor}
+                        onchangeColor={(e) => (setCatColor(e.target.value))}
                     />
 
-                    {/* <div>
+                    <div>
                         {
-                            category?.map((cat) => {
-                                <div key={cat._id}>{cat.title}</div>
-                            })
+                            dbCat.map((cat) => (
+                                <CatStyled edCl={cat.color} key={cat._id}>
+                                    <span>{cat.title}</span>
+                                    <div>
+                                        <span onClick={() => (navigate(`/editcategory/${cat._id}`))}><FaRegEdit /></span>
+                                        <span><FaTrashAlt /></span>
+                                    </div>
+                                </CatStyled>
+                            ))
                         }
-                    </div> */}
+                    </div>
                 </ProfileData>
             </ProfileContent>}
         </ProfileWrapper>

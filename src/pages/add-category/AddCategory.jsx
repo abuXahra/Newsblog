@@ -3,7 +3,7 @@ import { AddCategoryContent, AddCategoryWrapper } from './AddCategory.style';
 import Input from '../../components/input/Input';
 import Button from '../../components/clicks/button/Button';
 
-const AddCategory = ({ value, placeHolder, sumbitHandler, onchange }) => {
+const AddCategory = ({ value, placeHolder, sumbitHandler, onchange, valueColor, onchangeColor }) => {
 
     // const [category, setCategory] = useState('')
 
@@ -23,12 +23,21 @@ const AddCategory = ({ value, placeHolder, sumbitHandler, onchange }) => {
         <AddCategoryWrapper>
             <AddCategoryContent onSubmit={sumbitHandler}>
                 <h3>Add Category</h3>
-                <input
-                    type={'text'}
-                    value={value}
-                    onChange={onchange}
-                    placeHolder={placeHolder}
-                />
+                <div>
+                    <input
+                        type={'text'}
+                        value={value}
+                        onChange={onchange}
+                        placeHolder={placeHolder}
+                    />
+                    <input
+                        type={'color'}
+                        value={valueColor}
+                        onChange={onchangeColor}
+                    />
+                </div>
+
+
                 <div>
                     <Button
                         btnBorder={"none"}

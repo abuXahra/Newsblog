@@ -34,9 +34,6 @@ export const ProfilePost = styled.div`
 `
 
 export const ProfileData = styled.div`
-position: sticky;
-top: 0;
-height: 100vh;
     width: 30%;
     display: flex;
     flex-direction: column;
@@ -118,4 +115,25 @@ font-size: 12px;
 padding: 5px;
 border-radius: 5px;
 text-decoration: none;
+`
+
+
+
+export const CatStyled = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  span{
+    color: black;
+    cursor: pointer;
+  }
+
+  div>span:nth-child(1){
+    margin-right: 20px;
+    color: ${({ edCl }) => edCl || ""};
+  }
+
+  div>span:nth-child(2){
+    color: red;
+  }
 `
