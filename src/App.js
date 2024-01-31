@@ -17,9 +17,10 @@ import EditCategory from "./pages/edit-category/EditCategory";
 import { UserContext, UserContextProvider } from "./components/context/UserContext";
 import Head from "./components/header/head/Head"
 import SearchResult from './pages/sear-result/SearchResult';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import Loader from './components/loader/Loader';
 import { useEffect } from 'react';
+import ScrollToTop from './components/context/ScrollToTop';
 
 
 
@@ -27,31 +28,32 @@ import { useEffect } from 'react';
 
 function App() {
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+
+
+
 
   return (
     // <UserContextProvider>
     <Router>
-
-      <HideNavbar><Head /></HideNavbar>  {/*hide header for login page */}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/category/:categoryId" element={<Category />} />
-        <Route path="/post/:postId" element={<SinglePost />} />
-        <Route path="/reset" element={<Reset />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/new" element={<CreatePost />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/edit/:id" element={<EditPost />} />
-        <Route path="/profile/:id" element={<Profile />} />
-        <Route path="/addcategory" element={<AddCategory />} />
-        <Route path="/editcategory/:id" element={<EditCategory />} />
-        <Route path="/result" element={<SearchResult />} />
-        <Route path="/loader" element={<Loader />} />
-      </Routes>
-      <HideNavbar><Footer /></HideNavbar> {/*hide footer for login page */}
+      <ScrollToTop>
+        <HideNavbar><Head /></HideNavbar>  {/*hide header for login page */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/category/:categoryId" element={<Category />} />
+          <Route path="/post/:postId" element={<SinglePost />} />
+          <Route path="/reset" element={<Reset />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/new" element={<CreatePost />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/edit/:id" element={<EditPost />} />
+          <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/addcategory" element={<AddCategory />} />
+          <Route path="/editcategory/:id" element={<EditCategory />} />
+          <Route path="/result" element={<SearchResult />} />
+          <Route path="/loader" element={<Loader />} />
+        </Routes>
+        <HideNavbar><Footer /></HideNavbar> {/*hide footer for login page */}
+      </ScrollToTop>
     </Router>
     // </UserContextProvider>
   );

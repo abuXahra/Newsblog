@@ -54,7 +54,6 @@ const Profile = () => {
     }
 
 
-
     // User Update Fuction
     const updateHandler = async () => {
         const userUpdate = {
@@ -78,17 +77,6 @@ const Profile = () => {
     }
 
 
-
-    // User Delete Fuction
-    const deleteHandler = async (e) => {
-        try {
-            const res = await axios.delete(`${process.env.REACT_APP_URL}/api/users/${user._id}`, { withCredentials: true })
-            setUser(null)
-            navigate('/')
-        } catch (err) {
-            console.log(err)
-        }
-    }
 
 
 
@@ -157,6 +145,16 @@ const Profile = () => {
 
 
 
+    // Delete User
+    const deleteHandler = async (e) => {
+        try {
+            const res = await axios.delete(`${process.env.REACT_APP_URL}/api/users/${user._id}`, { withCredentials: true })
+            setUser(null)
+            navigate('/')
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
 
 
@@ -171,6 +169,17 @@ const Profile = () => {
         }
     }
 
+
+
+    // User Delete Fuction
+    const deleteCat = async (categoryId) => {
+        try {
+            const res = await axios.delete(`${process.env.REACT_APP_URL}/api/categories/${categoryId}`, { withCredentials: true })
+            nav(`/profile/${user._id}`)
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
 
     return (
@@ -300,6 +309,7 @@ const Profile = () => {
                         sumbitHandler={postCategory}
                         valueColor={catColor}
                         onchangeColor={(e) => (setCatColor(e.target.value))}
+                        btnText={"Add Category"}
                     />
 
                     <div>
@@ -309,7 +319,7 @@ const Profile = () => {
                                     <span>{cat.title}</span>
                                     <div>
                                         <span onClick={() => (navigate(`/editcategory/${cat._id}`))}><FaRegEdit /></span>
-                                        <span><FaTrashAlt /></span>
+                                        <span onClick={() => { deleteCat(cat._id) }}><FaTrashAlt /></span>
                                     </div>
                                 </CatStyled>
                             ))

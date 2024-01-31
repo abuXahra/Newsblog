@@ -23,7 +23,8 @@ const Content = ({
     linkDisplay,
     editIconDisplay,
     w,
-    IconTextColor
+    IconTextColor,
+    fs
 }) => {
 
     const linkFunc = () => {
@@ -42,6 +43,7 @@ const Content = ({
             )
         } else {
             return <Links
+                fs={fs}
                 linkDisplay={linkDisplay}
                 linkColor={contentLinkColor}
                 linkText={contentLinkText}

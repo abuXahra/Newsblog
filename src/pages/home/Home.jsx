@@ -2,8 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import Button from '../../components/clicks/button/Button';
 import Links from '../../components/clicks/links/Links';
 import { HomePostSlideSection, HomeTopSection, HomeTopSectionContent, HomeTopSectionLeft, HomeTopSectionRight, HomeTopSectionRightContent, HomeWrapper, PostCategory, RecentPostWrapper, RecentWrapper, WrapperDiv, RecentPost, RecentPostImg, RecentPostContent, PostTitleStyled, PostIconStyled, EditStyled, EditIconStyled, EditTitledStyled, AuthorStyled, AuthorIconStyled, AuthorTitledStyled, DateStyled, DateIconStyled, DateTitledStyled, PostLink, EnternCat, EnterRecent, EnterCat, EntertainCatWrapper, CatWrapper, CategorList, CategoryListItem, MarginTop, FashionCat, FashionCatImag, FashionCatText, Ads, SocialMedia, SocialListItem, Subscibe, SubscibeWrapper, InputStyled } from './Home.style';
-import BlogHeader from '../../components/blogheader/BlogHeader';
-import { Container } from '../../components/blogheader/BlogHeader.style';
 import Postcard from '../../components/postcard/Postcard';
 import { AiFillEdit } from 'react-icons/ai';
 import { FaFacebookF, FaRegClock, FaRegComment } from 'react-icons/fa';
@@ -22,14 +20,10 @@ import Title from '../../components/section-title/Title';
 import Adbanner from '../../components/header/adbanner/Adbanner';
 import Sidebar from '../../components/sidebar/Sidebar';
 import axios, { Axios } from 'axios';
-// import { URL, IF } from '../../url';
 import { useLocation } from 'react-router-dom';
 import Loader from '../../components/loader/Loader';
 import { UserContext } from '../../components/context/UserContext';
-
-
-// 3:34:51
-// bvv
+import BlogHeaderr from '../../components/blogheader/BlogHeaderr';
 
 
 const Home = () => {
@@ -69,6 +63,8 @@ const Home = () => {
         try {
             const res = await axios.get(process.env.REACT_APP_URL + "/api/posts" + search)
             setMyPosts(res.data)
+            console.log('=====homepage===post')
+            console.log(res.data)
             if (res.data.length === 0) { //if search result not dund
                 setNoResults(true)
             } else {
@@ -89,10 +85,36 @@ const Home = () => {
 
 
 
+    // Categories
+
+    // SPORTS
+    const fetchSportCatPost = async () => {
+
+        setLoader(true)
+
+        try {
+            const res = await axios.get(process.env.REACT_APP_URL + "/api/posts/")
+            setMyPosts(res.data)
+            console.log('=====homepage===post')
+            console.log(res.data)
+            if (res.data.length === 0) { //if search result not dund
+                setNoResults(true)
+            } else {
+                setNoResults(false)
+            }
+            setLoader(false)
+        } catch (err) {
+            console.log(err)
+            setLoader(false)
+        }
+    }
+
+
     return (
         <HomeWrapper>
             {/* Homepage Header-section */}
-            <BlogHeader />
+            <BlogHeaderr />
+
             {/* Homepage Top-section */}
             <HomeTopSection>
                 {/* Left Content */}
@@ -134,13 +156,14 @@ const Home = () => {
                                         dateIcon={<FaRegClock />}
                                         dateText={new Date(post.createdAt).toDateString()}
                                         commentIcon={<FaRegComment />}
-                                        commentCounter={'0'}
+                                        commentCounter={post.comments?.length}
                                         linkDisplay={'none'}
                                         imgUrl={`${process.env.REACT_APP_URL}/images/${post.photo}`} />
                                 </WrapperDiv>
                             ))) : (<div style={{ display: "flex", width: "100%", textAlign: "center", marginTop: "100px", justifyContent: "center" }}>No Post Found</div>)}
                     </HomeTopSectionContent>
                 </HomeTopSectionLeft>
+
 
                 {/* right content */}
                 <HomeTopSectionRight>

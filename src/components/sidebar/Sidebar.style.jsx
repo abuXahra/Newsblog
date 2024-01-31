@@ -29,9 +29,10 @@ export const CategorList = styled.div`
 export const CategoryListItem = styled.div`
     border-bottom: ${({ lastItemBorder }) => lastItemBorder || "1px"}  solid #80808078;
     gap: 20px;
+    cursor: pointer;
     padding-top: ${({ pdtop }) => pdtop || "10px"};
     padding-bottom: 10px;
-    display: flex;
+    display: ${({ disp }) => disp || 'flex'};
     width:  100%;
     justify-content: space-between;
     align-items: center;

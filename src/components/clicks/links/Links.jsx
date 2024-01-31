@@ -1,10 +1,10 @@
 import React from 'react';
 import { LinkWrapper } from './Links.style';
 
-const Links = ({ linkColor, linkText, linkUrl, linkDisplay, linkPd }) => {
+const Links = ({ linkColor, linkText, linkUrl, linkDisplay, linkPd, fs }) => {
 
     return (
-        <LinkWrapper linkDisplay={linkDisplay} to={linkUrl} linkColor={linkColor} linkPd={linkPd}>
+        <LinkWrapper fs={fs} linkDisplay={linkDisplay} to={linkUrl} linkColor={linkColor} linkPd={linkPd}>
             {linkText}
         </LinkWrapper>
     )

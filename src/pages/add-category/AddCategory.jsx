@@ -3,7 +3,7 @@ import { AddCategoryContent, AddCategoryWrapper } from './AddCategory.style';
 import Input from '../../components/input/Input';
 import Button from '../../components/clicks/button/Button';
 
-const AddCategory = ({ value, placeHolder, sumbitHandler, onchange, valueColor, onchangeColor }) => {
+const AddCategory = ({ value, placeHolder, sumbitHandler, onchange, valueColor, onchangeColor, btnText }) => {
 
     // const [category, setCategory] = useState('')
 
@@ -42,7 +42,7 @@ const AddCategory = ({ value, placeHolder, sumbitHandler, onchange, valueColor, 
                     <Button
                         btnBorder={"none"}
                         btnColor={"black"}
-                        btnText={'ADD CATEGORY'}
+                        btnText={btnText}
                         btnTxtClr={'white'}
                         btnPd={"10px 20px"}
                     />

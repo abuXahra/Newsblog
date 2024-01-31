@@ -10,7 +10,7 @@ export const LinkWrapper = styled(Link)`
     color: white;
     border: none;
     cursor: pointer;
-    font-size: 14px;
+    font-size: ${({ fs }) => fs || "14px"} ;
     text-decoration: none;
     margin: 10px 5px;
     display: ${({ linkDisplay }) => linkDisplay || "inline-block"} ;

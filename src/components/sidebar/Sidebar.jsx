@@ -4,23 +4,20 @@ import Title from '../section-title/Title';
 import { AiFillEdit } from 'react-icons/ai';
 import { FaRegClock } from 'react-icons/fa';
 import Button from '../clicks/button/Button';
-import { POSTS } from '../../data/Posts';
-import { ENTERNAINMENT } from '../../data/Posts';
-import { TECH } from '../../data/Posts'
-import { BUSINESS } from '../../data/Posts'
-import { CATEGORY } from '../../data/Category'
-import { FASHION } from '../../data/Posts'
 import { SOCIALMEDIA } from '../../data/SocialMedias'
 import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const Sidebar = ({ fxTp }) => {
+const Sidebar = ({ fxTp, catId }) => {
 
     const [posts, setPosts] = useState('')
     const [socialMedia, setSocialMedia] = useState(SOCIALMEDIA)
     const [category, setCategory] = useState([])
+    const navigate = useNavigate()
+    const [postLength, setPostLength] = useState()
 
 
-
+    // fetch recent posts
     const fetchRcentPost = async () => {
         try {
             const res = await axios.get(process.env.REACT_APP_URL + "/api/posts")
@@ -29,6 +26,8 @@ const Sidebar = ({ fxTp }) => {
             console.log(err)
         }
     }
+
+
 
 
     // fetch categories
@@ -47,6 +46,22 @@ const Sidebar = ({ fxTp }) => {
     }, [])
 
 
+
+
+
+
+    // // fetch category pots
+    const fetchCotegoryPosts = async () => {
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_URL}/api/categories/${catId}/posts`)
+            setPostLength("dvddgdgdgdg" + res.data.length)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    useEffect(() => {
+        fetchCotegoryPosts()
+    }, [catId])
 
 
 
@@ -96,8 +111,8 @@ const Sidebar = ({ fxTp }) => {
                 <CategorList>
                     {
                         category && category.map((cat, index) => (
-                            <CategoryListItem bcolor={cat.color} pdtop={index === 0 && "0"} lastItemBorder={cat.id === category.length && "0"}>
-                                <p> {cat.title}</p>
+                            <CategoryListItem disp={catId === cat._id ? "none" : "flex"} onClick={() => (navigate(`/category/${cat._id}`))} bcolor={cat.color} pdtop={index === 0 && "0"} lastItemBorder={cat.id === category.length && "0"}>
+                                <p style={{ textTransform: "uppercase" }}> {cat.title}</p>
                                 <div>
                                     {cat.posts.lenght}
                                 </div>

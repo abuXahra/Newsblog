@@ -9,12 +9,11 @@ import Sidebar from '../sidebar/Sidebar';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-const Category = () => {
+const Category = ({ setCatId }) => {
     const [fashion, setFashion] = useState(FASHION)
     const [catPosts, setCatPosts] = useState('')
     const [catTitle, setCatTitle] = useState('')
     const { categoryId } = useParams()
-
 
 
 
@@ -101,7 +100,7 @@ const Category = () => {
 
                 {/* ============Category sidebar============= */}
                 <CategorySidbar>
-                    <Sidebar />
+                    <Sidebar catId={categoryId} />
                 </CategorySidbar>
             </CategoryContent>
         </CategoryWraper>

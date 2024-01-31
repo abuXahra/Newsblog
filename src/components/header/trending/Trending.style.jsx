@@ -73,7 +73,8 @@ export const TrendingDate = styled.div`
 
        p{
         color: #03e574;
-            
+            margin-right: 5px;
+            cursor: pointer;
        }
         span{
         
@@ -93,7 +94,6 @@ export const TrendingDate = styled.div`
 
 
 @media (max-width: 768px) {
-   
     div{
         color:white;
         display: flex;
@@ -103,7 +103,7 @@ export const TrendingDate = styled.div`
         margin-top: 5px;
 
         span{
-     display: none
+     display: flex
     }
         }
 

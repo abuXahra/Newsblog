@@ -158,7 +158,7 @@ const SinglePost = () => {
                     dateIcon={<FaRegClock />}
                     dateText={new Date(post.createdAt).toDateString()}
                     commentIcon={<FaRegComment />}
-                    commentCounter={'0'}
+                    commentCounter={post.comments?.length}
                     linkDisplay={'inline-block'}
                     imgUrl={`${process.env.REACT_APP_URL}/images/${post.photo}`} />
 

@@ -18,6 +18,12 @@ export const HomeTopSection = styled.div`
     height: auto;
     gap: 30px;
     display: flex;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        width: 100%;
+        background-color: red;
+    }
 `
 export const HomeTopSectionLeft = styled.div`
 width: 70%;
@@ -25,6 +31,11 @@ height: 100%;
 gap: 40px;
 display: flex;
 flex-direction: column;
+
+@media (max-width: 768px) {
+        width: 100%;
+    }
+
 `
 
 
@@ -33,6 +44,11 @@ export const HomeTopSectionContent = styled.div`
     width: 100%;
    flex-wrap: wrap;
    gap: 38.4px;
+
+   @media (max-width: 768px) {
+        flex-direction: column;
+        width: 100%;
+    }
   `
 
 export const WrapperDiv = styled.div`
@@ -47,6 +63,10 @@ export const WrapperDiv = styled.div`
          margin: 10px 0;
          width: 100%;
         }
+
+        @media (max-width: 768px) {
+        width: 100%;
+    }
     `
 
 
@@ -59,6 +79,10 @@ hr{
     border: 1.5px solid #000;
     margin-top: 5px;
 }
+
+@media (max-width: 768px) {
+        width: 100%;
+    }
 `
 
 

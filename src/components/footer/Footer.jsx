@@ -1,14 +1,31 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FooterAbout, FooterContent, FooterCopyright, FooterRecentPost, FooterWrapper, PostLink, SocialIcons } from './Footer.style'
 import logo from '../../images/newsstand-logo-2.png'
 import { MarginTop } from '../../pages/home/Home.style'
 import { FaArrowRight, FaFacebookF, FaGooglePlusG, FaInstagram, FaPinterest, FaTwitter } from 'react-icons/fa'
 import Title from '../section-title/Title'
 import { POSTS } from '../../data/Posts'
+import axios from 'axios'
 
 function Footer() {
 
     const [posts, setPosts] = useState(POSTS)
+
+    const fetchPost = async () => {
+        try {
+            const res = await axios.get(process.env.REACT_APP_URL + "/api/posts")
+            setPosts(res.data)
+
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+
+    useEffect(() => {
+        fetchPost()
+    }, [])
+
     return (
         <FooterWrapper>
             <FooterContent>
@@ -29,8 +46,8 @@ function Footer() {
                 <FooterRecentPost>
                     <Title title={"RECENT POST"} hrLB={"0px"} tColor={"#e1e1e1"} />
                     <ul>
-                        {posts && posts.map((post, index) => (
-                            <li key={index}><FaArrowRight /> <PostLink to={'/'}>{post.postTitle}</PostLink> </li>
+                        {posts && posts.map((post) => (
+                            <li key={post._id}><FaArrowRight /> <PostLink to={`/post/${post._id}`}>{post.title}</PostLink> </li>
                         ))}
                     </ul>
                 </FooterRecentPost>

@@ -22,12 +22,12 @@ const Postslide = ({ slides }) => {
     return (
         <Swiper
             modules={[Navigation, Pagination, Scrollbar,]}
-            spaceBetween={0}
+            spaceBetween={10}
             navigation={true}
             loop={true}
             pagination={{ clickable: true }}
             scrollbar={{ draggable: true }}
-            slidesPerView={4}
+            slidesPerView={3}
             onSlideChange={() => console.log('slide change')}
             onSwiper={(swiper) => console.log(swiper)}
 
