@@ -13,5 +13,5 @@ export const LinkWrapper = styled(Link)`
     font-size: ${({ fs }) => fs || "14px"} ;
     text-decoration: none;
     margin: 10px 5px;
-    display: ${({ linkDisplay }) => linkDisplay || "inline-block"} ;
+    display: ${({ linkDisplay }) => linkDisplay || "inline-block"};
 `

@@ -15,6 +15,11 @@ export const ContentHeader = styled.div`
     font-size: ${({ size }) => size || "25px"};
     font-weight: bold;
     color: ${({ headerColor }) => headerColor || "white"};
+
+        
+    @media (max-width: 768px) {
+        font-size: ${({ smfs }) => smfs || "25px"};
+    }
 `
 
 
@@ -38,4 +43,16 @@ span{
 span:nth-child(3){
     display: ${({ editIconDisplay }) => editIconDisplay || "flex"} ;
 }
+
+
+@media (max-width: 768px) {
+        span{
+            display: ${({ dps }) => dps || "flex"};
+        }
+        span:nth-child(3){
+    display: ${({ dps }) => dps || "flex"} ;
+}
+    }
+
+
 `

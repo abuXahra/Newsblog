@@ -155,8 +155,6 @@ const EditPost = () => {
                 (<img src={`${process.env.REACT_APP_URL}/images/${postPic}`} alt="" srcset="" />)
             }
 
-
-
             <DeletCat>
                 {post.categories?.map((cat) => (
                     <span onClick={handleDelete} key={cat._id}><FaTrashAlt /><p>{cat.title}</p></span>

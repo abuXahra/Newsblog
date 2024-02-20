@@ -45,11 +45,12 @@ const Category = ({ setCatId }) => {
     }, [categoryId])
 
 
+
     return (
         <CategoryWraper>
             <CategoryTitle>
                 <div>
-                    <h1>{catTitle}</h1>
+                    <h1>{catTitle} {catPosts.length}</h1>
                 </div>
             </CategoryTitle>
             <CategoryContent>

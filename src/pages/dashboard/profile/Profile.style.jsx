@@ -50,7 +50,6 @@ export const ProfileData = styled.div`
     height: auto;
     position: relative;
   }
-
     `
 
 export const ProfilePicture = styled.div`
@@ -137,3 +136,21 @@ export const CatStyled = styled.div`
     color: red;
   }
 `
+export const VidDiv = styled.div`
+width: 100%;
+display: flex;
+gap: 10px;
+
+div{
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+}
+`
+

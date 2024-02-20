@@ -14,7 +14,7 @@ function Footer() {
     const fetchPost = async () => {
         try {
             const res = await axios.get(process.env.REACT_APP_URL + "/api/posts")
-            setPosts(res.data)
+            setPosts(res.data.slice(0, 5))
 
         } catch (err) {
             console.log(err)

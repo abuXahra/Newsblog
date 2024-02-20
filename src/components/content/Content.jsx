@@ -24,7 +24,9 @@ const Content = ({
     editIconDisplay,
     w,
     IconTextColor,
-    fs
+    fs,
+    smfs,
+    dps
 }) => {
 
     const linkFunc = () => {
@@ -59,11 +61,14 @@ const Content = ({
                 {linkFunc()}
             </div>
             <ContentHeader
+                smfs={smfs}
                 size={size}
                 headerColor={headerColor}>
                 {contentHeader}
             </ContentHeader>
-            <ContentIcons editIconDisplay={editIconDisplay} IconColor={IconColor} IconTextColor={IconTextColor}>
+            <ContentIcons 
+            editIconDisplay={editIconDisplay} IconColor={IconColor} IconTextColor={IconTextColor} dps={dps}
+            >
                 <span>{editIcon}<p>{editText}</p> </span>
                 <span>{dateIcon}<p>{dateText}</p> </span>
                 <span>{commentIcon}<p>{commentText}</p> </span>

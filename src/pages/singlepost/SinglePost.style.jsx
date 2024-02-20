@@ -231,6 +231,9 @@ gap: 20px;
 export const RecentPosts = styled.div`
 width: 33%;
 height: auto;
+cursor: pointer;
+display: ${({ dsp }) => dsp || "block"};
+
 p{
     font-size: 13px
 }

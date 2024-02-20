@@ -10,7 +10,8 @@ export const VIDEOPOSTS = [
         postCat: "",
         postTitle: "Condimentum Sit Inceptos Fringilla Lorem",
         postAuthor: "John Maxwell",
-        postDate: new Date().toDateString()
+        postDate: new Date().toDateString(),
+        postUrl: "https://www.youtube.com/watch?v=M6hLXlC0uxA"
     },
     {
         postImg: video2,

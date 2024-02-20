@@ -21,6 +21,8 @@ import { useContext, useState } from 'react';
 import Loader from './components/loader/Loader';
 import { useEffect } from 'react';
 import ScrollToTop from './components/context/ScrollToTop';
+import CreateVideo from './pages/video/create/CreateVideo';
+import EditVideo from './pages/video/editVideo/EditVideo';
 
 
 
@@ -31,7 +33,7 @@ function App() {
 
 
 
-
+  const { user } = useContext(UserContext);
   return (
     // <UserContextProvider>
     <Router>
@@ -51,6 +53,8 @@ function App() {
           <Route path="/editcategory/:id" element={<EditCategory />} />
           <Route path="/result" element={<SearchResult />} />
           <Route path="/loader" element={<Loader />} />
+          <Route path="/video-post" element={<CreateVideo />} />
+          {user && <Route path="/video/edit/:id" element={<EditVideo />} />}
         </Routes>
         <HideNavbar><Footer /></HideNavbar> {/*hide footer for login page */}
       </ScrollToTop>

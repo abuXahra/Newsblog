@@ -53,8 +53,13 @@ export const HomeTopSectionContent = styled.div`
 
 export const WrapperDiv = styled.div`
         width: ${({ w }) => w || "47.4%"};
-        height: auto;
-        display: flex;
+        cursor: pointer;
+        height: ${({ h }) => h || "300px"}; ;
+        display: ${({ dsp }) => dsp || "flex"};
+        background-color: gray;
+        background-image: url(${({ bg }) => bg || "none"});
+        background-position: center;
+        background-size: cover;
         flex-direction: ${({ flDir }) => flDir || "column"} ;
         p{
             color:grey;
@@ -66,6 +71,7 @@ export const WrapperDiv = styled.div`
 
         @media (max-width: 768px) {
         width: 100%;
+        height: ${({ ht }) => ht || "400px"} ;
     }
     `
 
@@ -113,12 +119,21 @@ display: flex;
 gap: 30px;
 margin-left: auto;
 margin-right: auto;
+
+    @media (max-width: 786px) {
+        flex-direction: column-reverse;
+    }
 `
 
 export const RecentPostWrapper = styled.div`
 display: flex;
 flex-direction: column;
     width: 30%;
+    height: auto;
+
+        @media (max-width: 786px) {
+        width: 100%;
+    }
 `
 export const MarginTop = styled.div`
     width: 100%;
@@ -193,6 +208,7 @@ export const RecentPostContent = styled.div`
 export const PostTitleStyled = styled.div`
     font-size: ${({ fnt }) => fnt || "12px"};
     font-weight: bold;
+    margin: 10px 0;
     color: #010117;
     line-height:  ${({ lingHeight }) => lingHeight || "20px"}  ;
     cursor: pointer;
@@ -239,6 +255,7 @@ export const PostLink = styled(Link)`
     text-decoration: none;
     font-size:  ${({ linkFontSize }) => linkFontSize || "13px"}  ;
     color: ${({ linkColor }) => linkColor || "blue"} ;
+    display: ${({ dsp }) => dsp || "flex"};
 `
 
 /* Recentpost Category styling*/
@@ -246,6 +263,10 @@ export const PostCategory = styled.div`
     width: 70%;
     display: flex;
     flex-direction: column;
+
+    @media (max-width: 786px) {
+      width: 100%;
+    }
 `
 
 export const CatWrapper = styled.div`
@@ -255,14 +276,29 @@ export const CatWrapper = styled.div`
     top: ${({ fxTp }) => fxTp || ""};
     flex-direction: ${({ flDir }) => flDir || "row"};
     gap: ${({ gp }) => gp || "30px"};
-margin-bottom: 30px;
+    margin-bottom: 50px;
+
+    @media (max-width: 786px) {
+        flex-direction: column;
+    }
 `
 export const EnterCat = styled.div`
 width: 50%;
+flex-direction: column;
+
+
+@media (max-width: 786px) {
+        flex-direction: column;
+        width: 100%;
+    }
 `
 
 export const EnterRecent = styled.div`
 width: 50%;
+
+    @media (max-width: 786px) {
+       width: 100%;
+    }
 `
 
 
@@ -288,9 +324,11 @@ export const FashionCatText = styled.div`
     flex-direction: column;
     height: 100%;
     justify-content: space-evenly;
+    cursor: pointer;
 
     p{
         color: grey;
+        font-size: 13px;
     }
 `
 
@@ -394,3 +432,61 @@ input{
 `
 
 
+
+
+
+export const VideoWrapper = styled.div`
+width: 100%;
+display: flex;
+flex-direction: column;
+gap: 5px;
+margin-bottom: 20px;
+cursor: pointer;
+`
+
+export const VideoTitle = styled.span`
+    font-size: 13px;
+    font-weight: bold;
+`
+
+export const VideoOverlay = styled.div`
+background-color: #000000a7;
+  position: relative;
+  height: 100%;
+  width: 100%;
+`
+
+export const VideoCover = styled.div`
+background-image: url(${({ bg }) => bg});
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+display: flex;
+width: 100%;
+height: 250px;
+`
+
+
+export const VideoPlayIcon = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff6d;
+    font-size: 50px;
+`
+
+export const VideoAuthor = styled.div`
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    font-size: 11px;
+
+    div{
+           align-items: center; 
+           display: flex;
+           gap: 5px;
+    }
+
+`

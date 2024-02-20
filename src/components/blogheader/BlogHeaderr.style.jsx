@@ -16,7 +16,7 @@ export const BlogHeaderWrapper = styled.div`
 `
 
 export const Overlay = styled.div`
-  background-image: linear-gradient(180deg, #00000045, #000000df);
+  background-image: linear-gradient(180deg, #00000019, #000000df);
   position: relative;
   height: 100%;
   width: 100%;

@@ -21,7 +21,7 @@ const Sidebar = ({ fxTp, catId }) => {
     const fetchRcentPost = async () => {
         try {
             const res = await axios.get(process.env.REACT_APP_URL + "/api/posts")
-            setPosts(res.data)
+            setPosts(res.data.slice(0, 6))
         } catch (err) {
             console.log(err)
         }
@@ -44,25 +44,6 @@ const Sidebar = ({ fxTp, catId }) => {
         fetchRcentPost()
         fetchCategory()
     }, [])
-
-
-
-
-
-
-    // // fetch category pots
-    const fetchCotegoryPosts = async () => {
-        try {
-            const res = await axios.get(`${process.env.REACT_APP_URL}/api/categories/${catId}/posts`)
-            setPostLength("dvddgdgdgdg" + res.data.length)
-        } catch (err) {
-            console.log(err)
-        }
-    }
-    useEffect(() => {
-        fetchCotegoryPosts()
-    }, [catId])
-
 
 
     return (
@@ -114,7 +95,7 @@ const Sidebar = ({ fxTp, catId }) => {
                             <CategoryListItem disp={catId === cat._id ? "none" : "flex"} onClick={() => (navigate(`/category/${cat._id}`))} bcolor={cat.color} pdtop={index === 0 && "0"} lastItemBorder={cat.id === category.length && "0"}>
                                 <p style={{ textTransform: "uppercase" }}> {cat.title}</p>
                                 <div>
-                                    {cat.posts.lenght}
+                                    {cat.posts?.length}
                                 </div>
 
                             </CategoryListItem>

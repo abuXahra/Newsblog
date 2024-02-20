@@ -64,7 +64,7 @@ const Navbar = ({ isOpen, handleIsOpen, }) => {
                     </MenuItems>
                     {
                         category?.map((cat) => (
-                            <MenuItems>
+                            <MenuItems key={cat._id}>
                                 <MenuLink to={`/category/${cat._id}`}><span style={{ textTransform: 'uppercase' }}>{cat.title}</span></MenuLink>
                             </MenuItems>
                         ))
@@ -89,8 +89,12 @@ const Navbar = ({ isOpen, handleIsOpen, }) => {
                         <MenuLink to={'/category/7'}>TRAVEL</MenuLink>
                     </MenuItems> */}
                     <MenuItems>
+                        <MenuLink to={`/video-post`}>VIDEO</MenuLink>
+                    </MenuItems>
+                    <MenuItems>
                         {user ? <MenuLink to={'/new'}>WRITE</MenuLink> : <MenuLink to={'/login'}>LOGIN</MenuLink>}
                     </MenuItems>
+
                     <MenuItems>
                         {user ? <MenuLink to={`/profile/${user._id}`}>PROFILE</MenuLink> : <MenuLink to={'/register'}>REGISTER</MenuLink>}
                     </MenuItems>

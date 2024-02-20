@@ -139,7 +139,7 @@ const BlogHeaderr = () => {
                 </RightContItem>
 
                 {/* Fourth Item */}
-                <RightContItem onClick={() => navigate(`/post/${pcat[4]?._id}`)} bg={`${process.env.REACT_APP_URL}/images/${pcat[3]?.photo}`}>
+                <RightContItem onClick={() => navigate(`/post/${pcat[4]?._id}`)} bg={`${process.env.REACT_APP_URL}/images/${pcat[4]?.photo}`}>
                     <Overlay>
                         <CatContentContainer>
                             <CatContent bt={"20px"} lf={"20px"}>

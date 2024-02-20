@@ -27,7 +27,6 @@ import Content from '../../components/content/Content';
 const SinglePost = () => {
     const { postId } = useParams()
     const [post, setPosts] = useState({})
-    const [postCat, setPostCat] = useState([])
     const { user } = useContext(UserContext)
     const navigate = useNavigate()
     const [loader, setLoader] = useState(false)
@@ -38,6 +37,8 @@ const SinglePost = () => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [website, setWebsite] = useState('')
+    const [catId, setCatId] = useState()
+    const [postCats, setPostCats] = useState()
 
 
     // fetch post function
@@ -48,6 +49,7 @@ const SinglePost = () => {
             setPosts(res.data)
             console.log('===============post==============')
             console.log(res.data)
+            setCatId(res.data.categories[0]._id)
             setLoader(false)
         } catch (err) {
             console.log(err)
@@ -138,6 +140,19 @@ const SinglePost = () => {
 
 
 
+    // fetch category pots
+    const fetchCotegoryPosts = async () => {
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_URL}/api/categories/${catId}/posts`)
+            setPostCats(res.data.slice(0, 4))
+            console.log("~~~~~~~~~~: ", res.data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    useEffect(() => {
+        fetchCotegoryPosts()
+    }, [catId])
 
 
     return (<>{loader ? <Loader /> :
@@ -269,42 +284,23 @@ const SinglePost = () => {
 
                     <Title mb="20px" title="RECENT POSTS" />
                     <SingRecentPost>
-                        <RecentPosts>
-                            <RecentPostsContents>
-                                <img src={vehicl} alt="" />
-                                <RecentPostCat>
-                                    <RecentLinks>ENTERTAINMENT</RecentLinks>
-                                </RecentPostCat>
-                            </RecentPostsContents>
-                            <MarginTop mt={"10px"} />
-                            <p>Single Ranking Vertical Style</p>
-                        </RecentPosts>
+                        {
+                            postCats && postCats.map((catpost) => (
+                                <RecentPosts dsp={catpost._id === postId && "none"} key={catpost._id} onClick={() => navigate(`/post/${catpost._id}`)}>
+                                    <RecentPostsContents>
+                                        <img src={`${process.env.REACT_APP_URL}/images/${catpost.photo}`} alt="" />
 
-                        <RecentPosts>
-                            <RecentPostsContents>
-                                <img src={vehicl} alt="" />
-                                <RecentPostCat>
-                                    <RecentLinks>ENTERTAINMENT</RecentLinks>
-                                </RecentPostCat>
-                            </RecentPostsContents>
-                            <MarginTop mt={"10px"} />
-                            <p>Single Ranking Vertical Style</p>
-                        </RecentPosts>
-
-                        <RecentPosts>
-                            <RecentPostsContents>
-                                <img src={vehicl} alt="" />
-                                <RecentPostCat>
-                                    <RecentLinks>ENTERTAINMENT</RecentLinks>
-                                </RecentPostCat>
-                            </RecentPostsContents>
-                            <MarginTop mt={"10px"} />
-                            <p>Single Ranking Vertical Style</p>
-                        </RecentPosts>
+                                    </RecentPostsContents>
+                                    <MarginTop mt={"10px"} />
+                                    <p>{catpost.title}</p>
+                                </RecentPosts>
+                            ))
+                        }
                     </SingRecentPost>
 
 
                     <MarginTop />
+
                     {
                         comments.map((c, i) => (
                             <RecentComment>

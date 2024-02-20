@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { CatStyled, CategorySpan, PostLinks, ProfileContent, ProfileCredentials, ProfileData, ProfilePicture, ProfilePost, ProfileWrapper } from './Profile.style';
+import { CatStyled, CategorySpan, PostLinks, ProfileContent, ProfileCredentials, ProfileData, ProfilePicture, ProfilePost, ProfileWrapper, VidDiv } from './Profile.style';
 import { CategoryPosts, CategoryPostsImag, CategoryPostsText } from '../../../components/category/Category.style';
 import { DateIconStyled, DateStyled, DateTitledStyled, EditIconStyled, EditStyled, EditTitledStyled, PostIconStyled, PostLink, PostTitleStyled } from '../../home/Home.style';
 import { AiFillEdit, AiOutlineLogout } from 'react-icons/ai';
@@ -171,11 +171,11 @@ const Profile = () => {
 
 
 
-    // User Delete Fuction
+    // User Delete category Fuction
     const deleteCat = async (categoryId) => {
         try {
             const res = await axios.delete(`${process.env.REACT_APP_URL}/api/categories/${categoryId}`, { withCredentials: true })
-            nav(`/profile/${user._id}`)
+            window.location.reload()
         } catch (err) {
             console.log(err)
         }
@@ -299,6 +299,10 @@ const Profile = () => {
                                 </div>
                             </span>
                         }
+                        <VidDiv>
+                            <div onClick={() => navigate('/new')}>Add Post</div>
+                            <div onClick={() => navigate('/video')}>Add Video Post</div>
+                        </VidDiv>
                     </ProfileCredentials>
                     {userUpdated && <div>fghfghjhk jkhkjh jkhk hk hk jh k</div>}
 
@@ -312,11 +316,12 @@ const Profile = () => {
                         btnText={"Add Category"}
                     />
 
+
                     <div>
                         {
                             dbCat.map((cat) => (
                                 <CatStyled edCl={cat.color} key={cat._id}>
-                                    <span>{cat.title}</span>
+                                    <span onClick={() => (navigate(`/category/${cat._id}`))}>{cat.title}</span>
                                     <div>
                                         <span onClick={() => (navigate(`/editcategory/${cat._id}`))}><FaRegEdit /></span>
                                         <span onClick={() => { deleteCat(cat._id) }}><FaTrashAlt /></span>

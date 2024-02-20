@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Button from '../../components/clicks/button/Button';
 import Links from '../../components/clicks/links/Links';
-import { HomePostSlideSection, HomeTopSection, HomeTopSectionContent, HomeTopSectionLeft, HomeTopSectionRight, HomeTopSectionRightContent, HomeWrapper, PostCategory, RecentPostWrapper, RecentWrapper, WrapperDiv, RecentPost, RecentPostImg, RecentPostContent, PostTitleStyled, PostIconStyled, EditStyled, EditIconStyled, EditTitledStyled, AuthorStyled, AuthorIconStyled, AuthorTitledStyled, DateStyled, DateIconStyled, DateTitledStyled, PostLink, EnternCat, EnterRecent, EnterCat, EntertainCatWrapper, CatWrapper, CategorList, CategoryListItem, MarginTop, FashionCat, FashionCatImag, FashionCatText, Ads, SocialMedia, SocialListItem, Subscibe, SubscibeWrapper, InputStyled } from './Home.style';
+import { HomePostSlideSection, HomeTopSection, HomeTopSectionContent, HomeTopSectionLeft, HomeTopSectionRight, HomeTopSectionRightContent, HomeWrapper, PostCategory, RecentPostWrapper, RecentWrapper, WrapperDiv, RecentPost, RecentPostImg, RecentPostContent, PostTitleStyled, PostIconStyled, EditStyled, EditIconStyled, EditTitledStyled, AuthorStyled, AuthorIconStyled, AuthorTitledStyled, DateStyled, DateIconStyled, DateTitledStyled, PostLink, EnternCat, EnterRecent, EnterCat, EntertainCatWrapper, CatWrapper, CategorList, CategoryListItem, MarginTop, FashionCat, FashionCatImag, FashionCatText, Ads, SocialMedia, SocialListItem, Subscibe, SubscibeWrapper, InputStyled, VideoWrapper, VideoCover, VideoPlayIcon, VideoOverlay, VideoAuthor, VideoTitle } from './Home.style';
 import Postcard from '../../components/postcard/Postcard';
 import { AiFillEdit } from 'react-icons/ai';
-import { FaFacebookF, FaRegClock, FaRegComment } from 'react-icons/fa';
+import { FaFacebookF, FaPlayCircle, FaRegClock, FaRegComment, FaRegEdit, FaTrashAlt } from 'react-icons/fa';
 import { POSTS } from '../../data/Posts';
 import { ENTERNAINMENT } from '../../data/Posts';
 import { TECH } from '../../data/Posts'
@@ -20,10 +20,12 @@ import Title from '../../components/section-title/Title';
 import Adbanner from '../../components/header/adbanner/Adbanner';
 import Sidebar from '../../components/sidebar/Sidebar';
 import axios, { Axios } from 'axios';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Loader from '../../components/loader/Loader';
 import { UserContext } from '../../components/context/UserContext';
 import BlogHeaderr from '../../components/blogheader/BlogHeaderr';
+import { CatContent, CatContentContainer, Overlay } from '../../components/blogheader/BlogHeaderr.style';
+import { EdDel } from '../singlepost/SinglePost.style';
 
 
 const Home = () => {
@@ -33,10 +35,9 @@ const Home = () => {
     const [tech, setTech] = useState(TECH)
     const [business, setBusiness] = useState(BUSINESS)
     const [fashion, setFashion] = useState(FASHION)
-    const [socialMedia, setSocialMedia] = useState(SOCIALMEDIA)
     const [slides, setSlide] = useState(POSTS)
-    const [category, setCategory] = useState(CATEGORY)
-    const [videoPosts, setVideoPosts] = useState(VIDEOPOSTS)
+
+    const [videoPosts, setVideoPosts] = useState()
 
     const { search } = useLocation(); //for search
     const [noResults, setNoResults] = useState(false)
@@ -44,15 +45,9 @@ const Home = () => {
     const [loader, setLoader] = useState(false) //Loader
 
     const { user } = useContext(UserContext);
+    const navigate = useNavigate();
     console.log(user)
 
-    const singlePost = {
-        postImg: single,
-        postCat: "Sport News",
-        postTitle: "Single Ranking Vertical Style",
-        postAuthor: "John Maxwell",
-        postDate: new Date().toDateString()
-    }
 
 
 
@@ -62,7 +57,7 @@ const Home = () => {
 
         try {
             const res = await axios.get(process.env.REACT_APP_URL + "/api/posts" + search)
-            setMyPosts(res.data)
+            setMyPosts(res.data.slice(0, 7))
             console.log('=====homepage===post')
             console.log(res.data)
             if (res.data.length === 0) { //if search result not dund
@@ -85,32 +80,165 @@ const Home = () => {
 
 
 
-    // Categories
 
-    // SPORTS
-    const fetchSportCatPost = async () => {
 
-        setLoader(true)
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~FETCH HOMEPAGE CATEGORIES~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
+    // =======SPORT=======
+    const [sportCat, setSportCat] = useState([]);
+    const fetchSportCat = async () => {
         try {
-            const res = await axios.get(process.env.REACT_APP_URL + "/api/posts/")
-            setMyPosts(res.data)
-            console.log('=====homepage===post')
-            console.log(res.data)
-            if (res.data.length === 0) { //if search result not dund
-                setNoResults(true)
-            } else {
-                setNoResults(false)
-            }
-            setLoader(false)
+            const res = await axios.get(`${process.env.REACT_APP_URL}/api/categories/65a5229eb91f0bb60c9ee7a3/posts`)
+            setSportCat(res.data)
+            console.log("======= sport CAT:", res.data)
         } catch (err) {
             console.log(err)
-            setLoader(false)
+        }
+    }
+    useEffect(() => {
+        fetchSportCat()
+    }, [`65a5229eb91f0bb60c9ee7a3`])
+
+
+
+    // =======ENTERTAINMENT=======
+    const [entCat, setEntCat] = useState([]);
+    const [entTitle, setEntTitle] = useState();
+    const [entId, setEntId] = useState();
+    const fetchEntCat = async () => {
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_URL}/api/categories/65953b7d32a41da42689c306/posts`)
+            setEntCat(res.data.slice(0, 5))
+            console.log("======= Entertainment CAT:", res.data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    const fectEntCategoryTitle = async () => {
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_URL}/api/categories/65953b7d32a41da42689c306`)
+            setEntTitle(res.data.title)
+            setEntId(res.data._id)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    useEffect(() => {
+        fetchEntCat()
+        fectEntCategoryTitle()
+    }, [`65953b7d32a41da42689c306`])
+
+
+
+
+
+    // =======TECHNOLOGY=======
+    const [techCat, setTechCat] = useState([]);
+    const [techTitle, setTechTitle] = useState();
+    const [techId, setTechId] = useState();
+    const fetchTechCat = async () => {
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_URL}/api/categories/65980dc6546fb7eda488d346/posts`)
+            setTechCat(res.data.slice(0, 5))
+            console.log("======= Entertainment CAT:", res.data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    const fectTechCategoryTitle = async () => {
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_URL}/api/categories/65980dc6546fb7eda488d346`)
+            setTechTitle(res.data.title)
+            setTechId(res.data._id)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    useEffect(() => {
+        fetchTechCat()
+        fectTechCategoryTitle()
+    }, [`65980dc6546fb7eda488d346`])
+
+
+
+
+    // =======BUSINESS=======
+    const [busCat, setBuCat] = useState([]);
+    const [busTitle, setBusTitle] = useState();
+    const [busId, setBusId] = useState();
+    const fetchBusCat = async () => {
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_URL}/api/categories/65980d9c546fb7eda488d33d/posts`)
+            setBuCat(res.data.slice(0, 5))
+            console.log("======= Entertainment CAT:", res.data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    const fectBusCategoryTitle = async () => {
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_URL}/api/categories/65980d9c546fb7eda488d33d`)
+            setBusTitle(res.data.title)
+            setBusId(res.data._id)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    useEffect(() => {
+        fetchBusCat()
+        fectBusCategoryTitle()
+    }, [`65980d9c546fb7eda488d33d`])
+
+
+
+
+
+    // =======EDUCATION=======
+    const [eduCat, setEduCat] = useState([]);
+    const [eduTitle, setEduTitle] = useState();
+    const [EduId, setEduId] = useState();
+    const fetchEduCat = async () => {
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_URL}/api/categories/65bba55151cbd3d6e046563b/posts`)
+            setEduCat(res.data.slice(0, 3))
+            console.log("======= Entertainment CAT:", res.data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    const fectEduCategoryTitle = async () => {
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_URL}/api/categories/65bba55151cbd3d6e046563b`)
+            setEduTitle(res.data.title)
+            setEduId(res.data._id)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    useEffect(() => {
+        fetchEduCat()
+        fectEduCategoryTitle()
+    }, [`65bba55151cbd3d6e046563b`])
+
+
+    // ===================Fetch Video Post ========================
+
+    const fetchVideoPost = async () => {
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_URL}/api/videos`)
+            setVideoPosts(res.data.slice(0, 3))
+        } catch (err) {
+            console.log(err)
         }
     }
 
+    useEffect(() => {
+        fetchVideoPost()
+    }, [])
 
-    return (
+
+
+    return (<> {loader ? <Loader /> :
         <HomeWrapper>
             {/* Homepage Header-section */}
             <BlogHeaderr />
@@ -137,28 +265,36 @@ const Home = () => {
                         imgUrl={last.photo} /> */}
 
                     <HomeTopSectionContent>
-                        {loader ? <Loader /> :
+                        {
                             !noResults ? (myposts && myposts.map((post, index) => (
-                                <WrapperDiv key={index}>
-                                    <Postcard
-                                        postUrl={`/post/${post._id}`}
-                                        w={"100%"}
-                                        size={'18px'}
-                                        text={post.categories}
-                                        content={post.title}
-                                        linkColor={"#E46B45"}
-                                        headingColor={"white"}
-                                        iconColor={"#ffffffc1"}
-                                        IconTextColor={"#ffffffc1"}
-                                        linkUrl={''}
-                                        editIcon={<AiFillEdit />}
-                                        postAuthor={post.username}
-                                        dateIcon={<FaRegClock />}
-                                        dateText={new Date(post.createdAt).toDateString()}
-                                        commentIcon={<FaRegComment />}
-                                        commentCounter={post.comments?.length}
-                                        linkDisplay={'none'}
-                                        imgUrl={`${process.env.REACT_APP_URL}/images/${post.photo}`} />
+                                <WrapperDiv
+                                    onClick={() => navigate(`/post/${post._id}`)}
+                                    bg={`${process.env.REACT_APP_URL}/images/${post.photo}`}
+                                    key={index}
+                                    dsp={myposts[0]._id === post._id ? "none" : "flex"}>
+                                    <Overlay>
+                                        <CatContentContainer>
+                                            <CatContent lf={"20px"} bt={"20px"}>
+                                                <Content
+                                                    contentLinkColor={""}
+                                                    contentLinkText={''}
+                                                    linkDisplay={"none"}
+                                                    contentHeader={post.title}
+                                                    headerColor={"white"}
+                                                    IconColor={"white"}
+                                                    linkUrl={''}
+                                                    editIcon={<AiFillEdit />}
+                                                    editText={post?.username}
+                                                    dateIcon={<FaRegClock />}
+                                                    dateText={new Date(post?.createdAt).toDateString()}
+                                                    commentIcon={<FaRegComment />}
+                                                    commentText={post?.comments.length}
+                                                    link
+                                                />
+                                            </CatContent>
+
+                                        </CatContentContainer>
+                                    </Overlay>
                                 </WrapperDiv>
                             ))) : (<div style={{ display: "flex", width: "100%", textAlign: "center", marginTop: "100px", justifyContent: "center" }}>No Post Found</div>)}
                     </HomeTopSectionContent>
@@ -166,12 +302,41 @@ const Home = () => {
 
 
                 {/* right content */}
+
+
+
+
+
+
                 <HomeTopSectionRight>
                     <h3>VIDEO POSTS</h3>
                     <hr />
-                    <HomeTopSectionRightContent>
-                        {videoPosts && videoPosts.map((post, index) => (
 
+                    {
+                        videoPosts && videoPosts.map((video) => (
+                            <Link to={video.videoUrl}>
+                                <VideoWrapper>
+                                    <VideoCover bg={`${process.env.REACT_APP_URL}/images/${video.photo}`}>
+                                        <VideoOverlay>
+                                            <VideoPlayIcon>
+                                                <FaPlayCircle />
+                                            </VideoPlayIcon>
+                                        </VideoOverlay>
+                                    </VideoCover>
+                                    <VideoTitle>{video.title}</VideoTitle>
+                                    <VideoAuthor>
+                                        <div><AiFillEdit /> {video.username}</div>
+                                        <div><FaRegClock /> {new Date(video.createdAt).toDateString()}</div>
+                                    </VideoAuthor>
+                                </VideoWrapper>
+                            </Link>
+                        ))}
+
+
+
+
+                    {/* <HomeTopSectionRightContent>
+                        {videoPosts && videoPosts.map((post, index) => (
                             <WrapperDiv key={index} w={'100%'}>
                                 <Postcard
                                     w={"100%"}
@@ -193,116 +358,24 @@ const Home = () => {
                                     linkDisplay={'none'} />
                             </WrapperDiv>
                         ))}
-                    </HomeTopSectionRightContent>
+                    </HomeTopSectionRightContent> */}
                 </HomeTopSectionRight>
             </HomeTopSection>
 
             {/* Post Slide */}
             <HomePostSlideSection>
-                <Postslide slides={slides} />
+                <Postslide slides={sportCat} />
             </HomePostSlideSection>
 
 
             {/* RECENT POST & POST CATEGORY SECTION */}
             <RecentWrapper>
                 {/* HomePage Sidebar */}
+
                 <RecentPostWrapper>
-                    <Title title={'Recent Post'} />
-
-                    {
-                        posts && posts.map((post, index) => (
-                            <PostLink to='/contact' key={index} >
-                                <RecentPost pdtop={post.id === 1 && "0"} lastItemBorder={post.id === posts.length && "0"}>
-                                    <RecentPostImg>
-                                        <img src={post.postImg} alt="" />
-                                    </RecentPostImg>
-
-                                    <RecentPostContent>
-                                        <PostTitleStyled>Magna Dapibus Sollicitudin Consectetur Lorem</PostTitleStyled>
-                                        <PostIconStyled>
-                                            <EditStyled>
-                                                <EditIconStyled>
-                                                    {<AiFillEdit />}
-                                                </EditIconStyled>
-                                                <EditTitledStyled>
-                                                    {post.postAuthor}
-                                                </EditTitledStyled>
-                                            </EditStyled>
-
-                                            <DateStyled>
-                                                <DateIconStyled>
-                                                    {<FaRegClock />}
-                                                </DateIconStyled>
-                                                <DateTitledStyled>
-                                                    {post.postDate}
-                                                </DateTitledStyled>
-                                            </DateStyled>
-                                        </PostIconStyled>
-                                    </RecentPostContent>
-                                </RecentPost>
-                            </PostLink>
-                        ))
-                    }
-                    <MarginTop />
-                    <Title title={'CATEGORY'} mb={"-10px"} />
-                    <CategorList>
-                        {
-                            category && category.map((cat, index) => (
-                                <CategoryListItem bcolor={cat.color} pdtop={index === 0 && "0"} lastItemBorder={cat.id === category.length && "0"}>
-                                    <p> {cat.title}</p>
-                                    <div>
-                                        {cat.catCounter}
-                                    </div>
-
-                                </CategoryListItem>
-                            ))
-                        }
-                    </CategorList>
-                    <MarginTop />
-
-                    {/* ADS, SOCIAL MEDI */}
-                    <CatWrapper flDir={"column"} gp={"0px"} fxTp={'0'}>
-                        <Ads>
-                            <img src={posts[0].postImg} alt="" />
-                        </Ads>
-                        <MarginTop />
-
-                        <SocialMedia>
-                            <Title title={'SOCIAL MEDIA'} mb={"8px"} />
-                            {
-                                socialMedia && socialMedia.map((social, index) => (
-                                    <SocialListItem bcolor={social.color} pdtop={index === 0 && "0"} lastItemBorder={social.id === socialMedia.length && "0"}>
-                                        <span>
-                                            {social.icon} <b> {social.catCounter} </b><h3>{social.title}</h3>
-                                        </span>
-                                        <div>
-                                            <PostLink linkColor={social.color} to={"/contact"}>{social.action}</PostLink>
-                                        </div>
-                                    </SocialListItem>
-                                ))
-                            }
-                        </SocialMedia>
-
-                        <MarginTop />
-
-                        <SubscibeWrapper>
-                            <Title title={'SUBSCRIBE'} mb={"8px"} />
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ullamcorper </p>
-                            <form action="">
-
-                                <InputStyled>
-                                    <label htmlFor="email">Email</label>
-                                    <input type="email" />
-                                </InputStyled>
-                                <div><Button btnColor={"#444444"} btnText={"SUBSCRIBE"} /></div>
-
-                            </form>
-                        </SubscibeWrapper>
-
-                    </CatWrapper>
-
-                    <MarginTop />
-
+                    <div>
+                        <Sidebar fxTp={"0"} />
+                    </div>
                 </RecentPostWrapper>
                 {/*================ HomePage Sidebar End*=============/}
 
@@ -315,49 +388,57 @@ const Home = () => {
                     <Title title={'Entertainment'} />
                     <CatWrapper>
                         <EnterCat>
-                            <WrapperDiv w={'100%'}>
-                                <Postcard
-                                    w={"100%"}
-                                    size={'18px'}
-                                    linkUrl={'/contact'}
-                                    imgUrl={entertainment[0].postImg}
-                                    linkDisplay={'inline-block'}
-                                    linkColor={"#8ADEB4"}
-                                    text={entertainment[0].postCat}
+                            <WrapperDiv w={'100%'} h={"280px"}
+                                onClick={() => navigate(``)}
+                                bg={`${process.env.REACT_APP_URL}/images/${entCat[0]?.photo}`}
+                            >
+                                <Overlay>
+                                    <CatContentContainer>
+                                        <CatContent lf={"20px"} bt={"20px"}>
+                                            <Content
+                                                contentLinkColor={'green'}
+                                                contentLinkText={entTitle}
+                                                linkDisplay={"none"}
+                                                contentHeader={''}
+                                                headerColor={"white"}
+                                                IconColor={"white"}
+                                                linkUrl={``}
+                                                editIcon={<AiFillEdit />}
+                                                editText={entCat[0]?.username}
+                                                dateIcon={<FaRegClock />}
+                                                dateText={new Date(entCat[0]?.createdAt).toDateString()}
+                                                commentIcon={<FaRegComment />}
+                                                commentText={entCat[0]?.comments.length}
+                                            />
+                                        </CatContent>
 
-                                />
-                                <Content
-                                    contentHeader={entertainment[0].postTitle}
-                                    size={'25px'}
-                                    headerColor={"black"}
-                                    IconColor={'grey'}
-                                    editIcon={<AiFillEdit />}
-                                    editText={entertainment[0].postAuthor}
-                                    dateIcon={<FaRegClock />}
-                                    dateText={entertainment[0].postDate}
-                                    linkDisplay={'none'} />
-                                <p>{entertainment[0].postBody}</p>
+                                    </CatContentContainer>
+                                </Overlay>
                             </WrapperDiv>
+                            <h4 style={{ marginTop: "10px" }}>{entCat[0]?.title}</h4>
+                            <p style={{ marginTop: "10px", color: "grey", fontSize: "12px" }}>{entCat[0]?.desc.substring(200, 0) + "...Read more"}</p>
                         </EnterCat>
+
+
                         {/* Entertainment RECENT POST */}
                         <EnterRecent>
                             {
-                                entertainment && entertainment.map((post, index) => (
-                                    <PostLink to='/contact' key={index} >
+                                entCat && entCat.map((post, index) => (
+                                    <PostLink to={`/post/${post._id}`} key={index} dsp={post._id === entCat[0]._id ? 'none' : 'flex'} >
                                         <RecentPost pdtop={post.id === 1 && "0"} lastItemBorder={post.id === entertainment.length && "0"}>
                                             <RecentPostImg>
-                                                <img src={post.postImg} alt="" />
+                                                <img src={`${process.env.REACT_APP_URL}/images/${post.photo}`} alt="" />
                                             </RecentPostImg>
 
                                             <RecentPostContent>
-                                                <PostTitleStyled>Magna Dapibus Sollicitudin Consectetur Lorem</PostTitleStyled>
+                                                <PostTitleStyled>{post.title}</PostTitleStyled>
                                                 <PostIconStyled>
                                                     <EditStyled>
                                                         <EditIconStyled>
                                                             {<AiFillEdit />}
                                                         </EditIconStyled>
                                                         <EditTitledStyled>
-                                                            {post.postAuthor}
+                                                            {post.username}
                                                         </EditTitledStyled>
                                                     </EditStyled>
 
@@ -366,7 +447,7 @@ const Home = () => {
                                                             {<FaRegClock />}
                                                         </DateIconStyled>
                                                         <DateTitledStyled>
-                                                            {post.postDate}
+                                                            {new Date(post.createdAt).toDateString()}
                                                         </DateTitledStyled>
                                                     </DateStyled>
                                                 </PostIconStyled>
@@ -382,46 +463,54 @@ const Home = () => {
 
                     {/* TECH & BUSINESS CATEGORY */}
                     <CatWrapper>
-
                         {/* TECHNOLOGY CATEGORY */}
                         <EnterCat>
                             <Title title={'TECHNOLOGY'} />
-                            <WrapperDiv w={'100%'}>
-                                <Postcard
-                                    w={"100%"}
-                                    text={tech[0].postCat}
-                                    content={tech[0].postTitle}
-                                    linkColor={"#E44549"}
-                                    headingColor={"white"}
-                                    iconColor={"white"}
-                                    linkUrl={'/contact'}
-                                    editIcon={<AiFillEdit />}
-                                    postAuthor={tech[0].postAuthor}
-                                    dateIcon={<FaRegClock />}
-                                    dateText={tech[0].postDate}
-                                    commentIcon={<FaRegComment />}
-                                    commentCounter={'0'}
-                                    linkDisplay={'inline-block'}
-                                    imgUrl={tech[0].postImg} />
+                            <WrapperDiv w={'100%'} h={"280px"}
+                                onClick={() => navigate(`/post/${techCat[0]?._id}`)}
+                                bg={`${process.env.REACT_APP_URL}/images/${techCat[0]?.photo}`}
+                            >
+                                <Overlay>
+                                    <CatContentContainer>
+                                        <CatContent lf={"20px"} bt={"20px"}>
+                                            <Content
+                                                contentLinkColor={""}
+                                                contentLinkText={techTitle}
+                                                linkDisplay={"none"}
+                                                contentHeader={techCat[0]?.title}
+                                                headerColor={"white"}
+                                                IconColor={"white"}
+                                                linkUrl={''}
+                                                editIcon={<AiFillEdit />}
+                                                editText={techCat[0]?.username}
+                                                dateIcon={<FaRegClock />}
+                                                dateText={new Date(techCat[0]?.createdAt).toDateString()}
+                                                commentIcon={<FaRegComment />}
+                                                commentText={''}
+                                            />
+                                        </CatContent>
+
+                                    </CatContentContainer>
+                                </Overlay>
                             </WrapperDiv>
 
                             {
-                                tech && tech.map((post, index) => (
-                                    <PostLink to='/contact' key={index} >
-                                        <RecentPost pdtop={post.id === 1 && "20px"} lastItemBorder={post.id === tech.length && "0"}>
+                                techCat && techCat.map((post, index) => (
+                                    <PostLink to={`/post/${post._id}`} key={index} dsp={post._id === techCat[0]._id ? 'none' : 'flex'} >
+                                        <RecentPost pdtop={index === 1 && "20px"} lastItemBorder={index === techCat?.length && "0"}>
                                             <RecentPostImg>
-                                                <img src={post.postImg} alt="" />
+                                                <img src={`${process.env.REACT_APP_URL}/images/${post.photo}`} alt="" />
                                             </RecentPostImg>
 
                                             <RecentPostContent>
-                                                <PostTitleStyled>Magna Dapibus Sollicitudin Consectetur Lorem</PostTitleStyled>
+                                                <PostTitleStyled>{post.title}</PostTitleStyled>
                                                 <PostIconStyled>
                                                     <EditStyled>
                                                         <EditIconStyled>
                                                             {<AiFillEdit />}
                                                         </EditIconStyled>
                                                         <EditTitledStyled>
-                                                            {post.postAuthor}
+                                                            {post.username}
                                                         </EditTitledStyled>
                                                     </EditStyled>
 
@@ -430,7 +519,7 @@ const Home = () => {
                                                             {<FaRegClock />}
                                                         </DateIconStyled>
                                                         <DateTitledStyled>
-                                                            {post.postDate}
+                                                            {new Date(post.createdAt).toDateString()}
                                                         </DateTitledStyled>
                                                     </DateStyled>
                                                 </PostIconStyled>
@@ -444,43 +533,50 @@ const Home = () => {
                         {/* BUSINESS CATEGORY*/}
                         <EnterRecent>
                             <Title title={'BUSINESS'} />
-                            <WrapperDiv w={'100%'}>
-                                <Postcard
-                                    w={"100%"}
-                                    text={business[0].postCat}
-                                    content={business[0].postTitle}
-                                    linkColor={"#E04D79"}
-                                    headingColor={"white"}
-                                    iconColor={"white"}
-                                    linkUrl={'/contact'}
-                                    editIcon={<AiFillEdit />}
-                                    postAuthor={business[0].postAuthor}
-                                    dateIcon={<FaRegClock />}
-                                    dateText={business[0].postDate}
-                                    commentIcon={<FaRegComment />}
-                                    commentCounter={'0'}
-                                    linkDisplay={'inline-block'}
-                                    imgUrl={business[0].postImg} />
+                            <WrapperDiv w={'100%'} h={"280px"}
+                                onClick={() => navigate(`/post/${busCat[0]?._id}`)}
+                                bg={`${process.env.REACT_APP_URL}/images/${busCat[0]?.photo}`}
+                            >
+                                <Overlay>
+                                    <CatContentContainer>
+                                        <CatContent lf={"20px"} bt={"20px"}>
+                                            <Content
+                                                contentLinkColor={""}
+                                                contentLinkText={busTitle}
+                                                linkDisplay={"none"}
+                                                contentHeader={busCat[0]?.title}
+                                                headerColor={"white"}
+                                                IconColor={"white"}
+                                                linkUrl={''}
+                                                editIcon={<AiFillEdit />}
+                                                editText={busCat[0]?.username}
+                                                dateIcon={<FaRegClock />}
+                                                dateText={new Date(busCat[0]?.createdAt).toDateString()}
+                                                commentIcon={<FaRegComment />}
+                                                commentText={''}
+                                            />
+                                        </CatContent>
+
+                                    </CatContentContainer>
+                                </Overlay>
                             </WrapperDiv>
-
-
                             {
-                                business && business.map((post, index) => (
-                                    <PostLink to='/contact' key={index} >
-                                        <RecentPost pdtop={post.id === 1 && "20px"} lastItemBorder={post.id === business.length && "0"}>
+                                busCat && busCat.map((post, index) => (
+                                    <PostLink to={`/post/${post._id}`} key={index} dsp={post._id === busCat[0]._id ? 'none' : 'flex'} >
+                                        <RecentPost pdtop={index === 1 && "20px"} lastItemBorder={index === techCat?.length && "0"}>
                                             <RecentPostImg>
-                                                <img src={post.postImg} alt="" />
+                                                <img src={`${process.env.REACT_APP_URL}/images/${post.photo}`} alt="" />
                                             </RecentPostImg>
 
                                             <RecentPostContent>
-                                                <PostTitleStyled>Magna Dapibus Sollicitudin Consectetur Lorem</PostTitleStyled>
+                                                <PostTitleStyled>{post.title}</PostTitleStyled>
                                                 <PostIconStyled>
                                                     <EditStyled>
                                                         <EditIconStyled>
                                                             {<AiFillEdit />}
                                                         </EditIconStyled>
                                                         <EditTitledStyled>
-                                                            {post.postAuthor}
+                                                            {post.username}
                                                         </EditTitledStyled>
                                                     </EditStyled>
 
@@ -489,7 +585,7 @@ const Home = () => {
                                                             {<FaRegClock />}
                                                         </DateIconStyled>
                                                         <DateTitledStyled>
-                                                            {post.postDate}
+                                                            {new Date(post.createdAt).toDateString()}
                                                         </DateTitledStyled>
                                                     </DateStyled>
                                                 </PostIconStyled>
@@ -502,27 +598,27 @@ const Home = () => {
                     </CatWrapper>
 
 
-                    {/* FASHION CATEGORY */}
+                    {/* EDUCATION CATEGORY */}
                     <CatWrapper flDir={'column'}>
-                        <Title title={'FASHION'} mb={"-10px"} />
+                        <Title title={'EDUCATION'} mb={"-10px"} />
                         {
-                            fashion && fashion.map((post, index) => (
+                            eduCat && eduCat.map((post, index) => (
                                 <FashionCat>
-                                    {/* Fashion Cat Image */}
+                                    {/* Education Cat Image */}
                                     <FashionCatImag>
-                                        <PostLink to={'/contact'}>
-                                            <img src={post.postImg} alt="" />
+                                        <PostLink to={`/post/${post._id}`}>
+                                            <img src={`${process.env.REACT_APP_URL}/images/${post.photo}`} alt="" />
                                         </PostLink>
                                     </FashionCatImag>
-                                    {/* Fashion Cat Content */}
-                                    <FashionCatText>
+                                    {/* Education Cat Content */}
+                                    <FashionCatText onClick={() => navigate(`/post/${post._id}`)}>
                                         <PostIconStyled>
                                             <EditStyled>
                                                 <EditIconStyled>
                                                     {<AiFillEdit />}
                                                 </EditIconStyled>
                                                 <EditTitledStyled>
-                                                    {post.postAuthor}
+                                                    {post.username}
                                                 </EditTitledStyled>
                                             </EditStyled>
 
@@ -531,13 +627,14 @@ const Home = () => {
                                                     {<FaRegClock />}
                                                 </DateIconStyled>
                                                 <DateTitledStyled>
-                                                    {post.postDate}
+                                                    {new Date(post.createdAt).toDateString()}
                                                 </DateTitledStyled>
                                             </DateStyled>
                                         </PostIconStyled>
-                                        <PostLink to={'/contact'}>
-                                            <PostTitleStyled fnt={"25px"} lingHeight={"30px"}>{post.postTitle}</PostTitleStyled>     </PostLink>
-                                        <p>{post.postBody}</p>
+                                        <PostLink to={`/post/${post._id}`}>
+                                            <PostTitleStyled fnt={"14px"} lingHeight={"20px"}>{post.title}</PostTitleStyled>
+                                        </PostLink>
+                                        <p>{post.desc.substring(200, 0) + "...Read More"}</p>
                                     </FashionCatText>
                                 </FashionCat>
                             ))
@@ -550,7 +647,8 @@ const Home = () => {
 
             {/*  Adbanner */}
             <Adbanner pTB={"60px"} />
-        </HomeWrapper >
+        </HomeWrapper >}
+    </>
     );
 }
 
