@@ -46,6 +46,10 @@ const Category = ({ setCatId }) => {
 
 
 
+
+
+
+
     return (
         <CategoryWraper>
             <CategoryTitle>
@@ -96,6 +100,8 @@ const Category = ({ setCatId }) => {
 
                         ))
                     }
+
+
                 </CategoryPostsWrapper>
 
 
@@ -104,6 +110,7 @@ const Category = ({ setCatId }) => {
                     <Sidebar catId={categoryId} />
                 </CategorySidbar>
             </CategoryContent>
+
         </CategoryWraper>
     );
 }

@@ -6,6 +6,8 @@ import { FaArrowRight, FaFacebookF, FaGooglePlusG, FaInstagram, FaPinterest, FaT
 import Title from '../section-title/Title'
 import { POSTS } from '../../data/Posts'
 import axios from 'axios'
+import { InputStyled, SubscibeWrapper } from '../sidebar/Sidebar.style'
+import Button from '../clicks/button/Button'
 
 function Footer() {
 
@@ -51,17 +53,34 @@ function Footer() {
                         ))}
                     </ul>
                 </FooterRecentPost>
+                <FooterRecentPost>
+                    {/* SUBSCRIPTION */}
+                    <SubscibeWrapper>
+                        <Title tColor={"white"} title={'SUBSCRIBE'} mb={"8px"} hrCl={"white"} />
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ullamcorper </p>
+                        <form action="">
+
+                            <InputStyled>
+                                <label htmlFor="email">Email</label>
+                                <input type="email" />
+                            </InputStyled>
+                            <div>
+                                <Button btnColor={"black"} btnText={"SUBSCRIBE"} /></div>
+
+                        </form>
+                    </SubscibeWrapper>
+                </FooterRecentPost>
             </FooterContent>
             <FooterCopyright>
                 <div>
                     <span>
-                        <ul>
-                            <li><PostLink to={'/'}>Home</PostLink></li>
-                            <li><PostLink to={'/'}>Authors</PostLink></li>
-                            <li><PostLink to={'/'}>About</PostLink></li>
-                            <li><PostLink to={'/'}>About</PostLink></li>
-                            <li>Contact</li>
-                        </ul>
+                        <div>
+                            <p><PostLink to={'/'}>Home</PostLink></p>
+                            <p><PostLink to={'/'}>Authors</PostLink></p>
+                            <p><PostLink to={'/'}>About</PostLink></p>
+                            <p><PostLink to={'/'}>About</PostLink></p>
+                            <p><PostLink to={'/'}>Contact</PostLink></p>
+                        </div>
                     </span>
                     <span>Copyright 2023 Newsstand, All Right Reserved</span>
                 </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { InputWrapper } from './Input.style';
 
-const Input = ({ inputType, inputValue, onchangeHandler, placeHolder, inputBg, inputColor, }) => {
+const Input = ({ inputType, inputValue, onchangeHandler, placeHolder, inputBg, inputColor,disabled }) => {
     return (
         <InputWrapper>
             <input
@@ -11,6 +11,7 @@ const Input = ({ inputType, inputValue, onchangeHandler, placeHolder, inputBg, i
                 placeholder={placeHolder}
                 inputBg={inputBg}
                 inputColor={inputColor}
+                disabled={disabled}
             />
         </InputWrapper>
     );

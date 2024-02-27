@@ -20,8 +20,11 @@ export const FooterContent = styled.div`
     margin-right: auto;
     margin: 60px 0;
     height: auto;
-    gap: 30px;
     display: flex;
+
+    @media (max-width: 786px) {
+        flex-direction: column;
+    }
 `
 
 
@@ -29,9 +32,13 @@ export const FooterAbout = styled.div`
     width: 33%;
     display: flex;
     flex-direction: column;
-
     img{
         width: 200px
+    }
+
+    @media (max-width: 786px) {
+        width: 100%;  
+        margin-bottom: 30px;
     }
 `
 
@@ -46,6 +53,8 @@ export const SocialIcons = styled.div`
 
 
 export const FooterRecentPost = styled.div`
+width: 33%;
+padding: 0 30px;
    display: flex;
         flex-direction: column;
     ul{
@@ -57,6 +66,12 @@ export const FooterRecentPost = styled.div`
         padding: 15px 0;
         border-bottom: 1px solid gray;
      }
+    }
+
+    @media (max-width: 786px) {
+        width: 100%; 
+        margin-bottom: 30px;
+        padding: 0;
     }
 `
 export const PostLink = styled(Link)`
@@ -85,12 +100,20 @@ export const FooterCopyright = styled.div`
         span{
             display: flex;
 
-            ul {
+            div {
                 display: flex;
                 list-style: none;
                 gap: 20px;
             }
         }
-        
+       
+    @media (max-width: 786px) {
+        flex-direction: column;
+        justify-content: center;
+        gap: 10px;
+
+        div{
+            flex-direction: row;
     }
+    }}
 `

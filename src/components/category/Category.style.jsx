@@ -28,6 +28,12 @@ export const CategoryContent = styled.div`
     margin-right: auto;
     display: flex;
     gap: 30px;
+
+
+        @media (max-width: 768px) {
+        flex-direction: column;
+        width: 100%;
+    }
 `
 
 export const CategoryPostsWrapper = styled.div`
@@ -36,6 +42,13 @@ export const CategoryPostsWrapper = styled.div`
     flex-direction: column;
     gap: 40px;
     margin: 40px 0;
+
+            @media (max-width: 768px) {
+   
+        width: 100%;
+        padding: 20px;
+  
+    }
 `
 
 
@@ -140,4 +153,10 @@ export const PostTitleStyled = styled.div`
 export const CategorySidbar = styled.div`
     width: 30%;
     padding: 20px 0;
+    @media (max-width: 768px) {
+
+        width: 100%;
+        padding: 20px;
+    }
+
 `

@@ -22,7 +22,6 @@ export const HomeTopSection = styled.div`
     @media (max-width: 768px) {
         flex-direction: column;
         width: 100%;
-        background-color: red;
     }
 `
 export const HomeTopSectionLeft = styled.div`

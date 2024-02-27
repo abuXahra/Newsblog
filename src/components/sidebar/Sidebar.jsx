@@ -35,6 +35,8 @@ const Sidebar = ({ fxTp, catId }) => {
         try {
             const res = await axios.get(process.env.REACT_APP_URL + "/api/categories")
             setCategory(res.data)
+
+            console.log("CAT ITEM ", res.data, "CAT ITEM")
         } catch (err) {
             console.log(err)
         }
@@ -44,6 +46,11 @@ const Sidebar = ({ fxTp, catId }) => {
         fetchRcentPost()
         fetchCategory()
     }, [])
+
+
+
+
+
 
 
     return (
@@ -128,10 +135,10 @@ const Sidebar = ({ fxTp, catId }) => {
                             ))
                         }
                     </SocialMedia>
-                    <MarginTop />
+                    {/* <MarginTop />
 
                     {/* SUBSCRIPTION */}
-                    <SubscibeWrapper>
+                    {/* <SubscibeWrapper>
                         <Title title={'SUBSCRIBE'} mb={"8px"} />
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ullamcorper </p>
                         <form action="">
@@ -144,7 +151,7 @@ const Sidebar = ({ fxTp, catId }) => {
                                 <Button btnColor={"#444444"} btnText={"SUBSCRIBE"} /></div>
 
                         </form>
-                    </SubscibeWrapper>
+                    </SubscibeWrapper> */}
                 </CatWrapper>
 
                 <MarginTop />

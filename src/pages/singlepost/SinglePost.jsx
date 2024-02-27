@@ -21,7 +21,10 @@ import { useContext } from 'react';
 import Loader from '../../components/loader/Loader';
 import { Controller } from 'swiper/modules';
 import Content from '../../components/content/Content';
-// 3:54:02
+
+
+///Pagination tutorial
+//https://www.youtube.com/watch?v=yY1n0sDZPtI
 
 
 const SinglePost = () => {
@@ -162,6 +165,7 @@ const SinglePost = () => {
                     pl={"100px"}
                     pb={"100px"}
                     w={"100%"}
+                    h={"400px"}
                     text={post.categories}
                     content={post.title}
                     linkColor={"#E46B45"}

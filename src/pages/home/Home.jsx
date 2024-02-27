@@ -238,7 +238,7 @@ const Home = () => {
 
 
 
-    return (<> {loader ? <Loader /> :
+    return (<>
         <HomeWrapper>
             {/* Homepage Header-section */}
             <BlogHeaderr />
@@ -265,7 +265,7 @@ const Home = () => {
                         imgUrl={last.photo} /> */}
 
                     <HomeTopSectionContent>
-                        {
+                        {loader ? <Loader /> :
                             !noResults ? (myposts && myposts.map((post, index) => (
                                 <WrapperDiv
                                     onClick={() => navigate(`/post/${post._id}`)}
@@ -296,7 +296,8 @@ const Home = () => {
                                         </CatContentContainer>
                                     </Overlay>
                                 </WrapperDiv>
-                            ))) : (<div style={{ display: "flex", width: "100%", textAlign: "center", marginTop: "100px", justifyContent: "center" }}>No Post Found</div>)}
+                            ))) : (<div style={{ display: "flex", width: "100%", textAlign: "center", marginTop: "100px", justifyContent: "center" }}>No Post Found</div>)
+                        }
                     </HomeTopSectionContent>
                 </HomeTopSectionLeft>
 
@@ -647,7 +648,7 @@ const Home = () => {
 
             {/*  Adbanner */}
             <Adbanner pTB={"60px"} />
-        </HomeWrapper >}
+        </HomeWrapper >
     </>
     );
 }

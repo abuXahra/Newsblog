@@ -5,6 +5,7 @@ export const PostcardStyled = styled.div`
         display: flex;
         position: relative;
         width: ${({ w }) => w || '100%'};
+        height: ${({ h }) => h || ''}; 
         flex-direction: column;
         border-left: ${({ cborder }) => cborder || 'none'} ;
         img{

@@ -43,12 +43,22 @@ export const SinglePostContent = styled.div`
     display: flex;
     gap: 50px;
     margin-bottom: 40px;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        width: 100%;
+    }
 `
 
 export const SinglePostPost = styled.div`
 width: 70%;
 display: flex;
 flex-direction: column;
+
+@media (max-width: 768px) {
+        width: 100%;
+        padding: 20px;
+    }
 `
 
 export const SinglePostShare = styled.div`
@@ -317,6 +327,11 @@ span{
 // side bar
 export const SinglePostSidebar = styled.div`
     width: 30%;
+        @media (max-width: 768px) {
+           width: 100%;
+           padding: 20px;
+  
+    }
 
 `
 

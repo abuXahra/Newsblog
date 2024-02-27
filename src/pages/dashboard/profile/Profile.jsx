@@ -263,6 +263,7 @@ const Profile = () => {
                             inputColor={"#000"}
                             onchangeHandler={nameHandler}
                             placeHolder={'username'}
+
                         />
                         <Input
                             inputType={'email'}
@@ -270,6 +271,7 @@ const Profile = () => {
                             inputColor={'#000'}
                             onchangeHandler={emailHandler}
                             placeHolder={'email'}
+                            disabled={'true'}
                         />
                         <Input
                             inputType={'password'}
