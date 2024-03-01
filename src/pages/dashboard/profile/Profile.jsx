@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { CatStyled, CategorySpan, PostLinks, ProfileContent, ProfileCredentials, ProfileData, ProfilePicture, ProfilePost, ProfileWrapper, VidDiv } from './Profile.style';
+import { CatContainer, CatStyled, CategorySpan, PostLinks, ProfileContent, ProfileCredentials, ProfileData, ProfilePicture, ProfilePost, ProfileWrapper, VidDiv } from './Profile.style';
 import { CategoryPosts, CategoryPostsImag, CategoryPostsText } from '../../../components/category/Category.style';
 import { DateIconStyled, DateStyled, DateTitledStyled, EditIconStyled, EditStyled, EditTitledStyled, PostIconStyled, PostLink, PostTitleStyled } from '../../home/Home.style';
 import { AiFillEdit, AiOutlineLogout } from 'react-icons/ai';
 import { FaRegClock, FaRegEdit, FaTrash, FaTrashAlt } from 'react-icons/fa';
-import { FASHION } from '../../../data/Posts'
 import placeHolder from '../../../images/placeholder_image.png'
 import { MarginTop } from '../../../components/sidebar/Sidebar.style';
 import Input from '../../../components/input/Input';
@@ -15,12 +14,9 @@ import axios from 'axios';
 import Links from '../../../components/clicks/links/Links';
 import Loader from '../../../components/loader/Loader';
 import AddCategory from "../../add-category/AddCategory";
+import Pagination from '../../../components/pagination/Pagination';
 
 const Profile = () => {
-
-
-
-    const [fashion, setFashion] = useState(FASHION)
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
@@ -107,12 +103,21 @@ const Profile = () => {
         }
     }
 
+    // variable for pagination
+    const [page, setPage] = useState(1);
+    const [pages, setPages] = useState(1);
+
     // fetch user post function
     const fetchUserPost = async () => {
+        setLoader(true)
         try {
-            const res = await axios.get(`${process.env.REACT_APP_URL}/api/posts/user/${user._id}`)
+            const res = await axios.get(`${process.env.REACT_APP_URL}/api/posts/user/${user._id}?page=${page}`)
+            const { data, pages: totalPages } = await res.data;
+
+            setPages(totalPages);
+            setUserPost(data)
+            setLoader(false)
             console.log(`user post are" ${res.data}`)
-            setUserPost(res.data)
             if (res.data.length === 0) { //if search result not dund
                 setNoResults(true)
             } else {
@@ -127,7 +132,7 @@ const Profile = () => {
     useEffect(() => {
         fetchProfile();
         fetchUserPost();
-    }, [user?._id])
+    }, [user?._id, page])
 
 
     // Fetch category function
@@ -186,6 +191,7 @@ const Profile = () => {
         <ProfileWrapper> {loader ? <Loader /> :
             <ProfileContent>
                 {/* USER POSTS */}
+
                 <ProfilePost>
                     <h3>My Posts</h3>
                     {!noResults ? (
@@ -246,6 +252,7 @@ const Profile = () => {
                         }}><div>You are yet to make post.</div>  <PostLinks to={'/new'}>Click here to create post </PostLinks> </div>))
 
                     }
+                    <Pagination page={page} pages={pages} changePage={setPage} />
                 </ProfilePost>
 
                 {/* INPUT FORM CONTAINER */}
@@ -319,7 +326,7 @@ const Profile = () => {
                     />
 
 
-                    <div>
+                    <CatContainer>
                         {
                             dbCat.map((cat) => (
                                 <CatStyled edCl={cat.color} key={cat._id}>
@@ -331,7 +338,7 @@ const Profile = () => {
                                 </CatStyled>
                             ))
                         }
-                    </div>
+                    </CatContainer>
                 </ProfileData>
             </ProfileContent>}
         </ProfileWrapper>

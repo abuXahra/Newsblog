@@ -117,6 +117,12 @@ text-decoration: none;
 `
 
 
+export const CatContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+`
+
 
 export const CatStyled = styled.div`
   display: flex;

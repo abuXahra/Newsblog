@@ -15,6 +15,8 @@ import Button from '../../components/clicks/button/Button';
 import axios from 'axios';
 import { UserContext } from '../../components/context/UserContext';
 import { useNavigate } from 'react-router-dom';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'
 
 const CreatePost = () => {
 
@@ -32,6 +34,27 @@ const CreatePost = () => {
     const navigate = useNavigate()
 
     // console.log(user.username)
+
+
+
+
+    // for reach text editor REACT-QUILL:
+    const modules = {
+        toolbar: [
+            [{ 'header': [1, 2, false] }],
+            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+            ['link', 'image'],
+            ['clean']
+        ]
+    }
+
+    const formats = [
+        'header',
+        'bold', 'italic', 'underline', 'strike', 'blockquote',
+        'list', 'bullet', 'indent',
+        'link', 'image'
+    ]
 
 
 
@@ -129,9 +152,23 @@ const CreatePost = () => {
     return (<> {
         user &&
         <CreatePostWrapper>
+
+
             <h2>Create Post</h2>
             {/* Display Image befor posting to db */}
             {file && (<img src={URL.createObjectURL(file)} alt="" srcset="" />)}
+
+            <form onSubmit={''} style={{ backgroundColor: '#80808036' }}>
+                <input type='text' placeHolder={'Title'} value={title} onChange={(e) => { setTitle(e.target.value) }} />
+
+                <label htmlFor="fileInput"><span>Post Picture<AiFillPicture /></span> </label>
+                <PostPicture onChange={(e) => { setFile(e.target.files[0]) }} type="file" id="fileInput" />
+                <div> <ReactQuill modules={modules} formats={formats} value={desc} onChange={setDesc} placeholder='content' /></div>
+            </form>
+
+
+
+
             <CreatePostForm onSubmit={handleSubmit}>
 
                 <span>
@@ -142,6 +179,8 @@ const CreatePost = () => {
 
                 </span>
                 <textarea value={desc} onChange={(e) => { setDesc(e.target.value) }} cols="23" col rows={'23'} placeholder='post'></textarea>
+                <div> <ReactQuill modules={modules} formats={formats} value={desc} onChange={setDesc} placeholder='content' /></div>
+
                 <CreatePostCat onClick={handleShowCat}>Category {arroIcon}</CreatePostCat>
                 <CreateCatOptionsWrapper>
                     {
@@ -167,5 +206,55 @@ const CreatePost = () => {
 }
 
 export default CreatePost;
+
+
+
+
+
+// return (<> {
+//     user &&
+//     <CreatePostWrapper>
+
+//         <form action="" style={{ backgroundColor: '#80808036' }}>
+//             <ReactQuill modules={modules} formats={formats} value={desc} onChange={setDesc} placeholder='content' />
+//         </form>
+//         <h2>Create Post</h2>
+//         {/* Display Image befor posting to db */}
+//         {file && (<img src={URL.createObjectURL(file)} alt="" srcset="" />)}
+//         <CreatePostForm onSubmit={handleSubmit}>
+
+//             <span>
+//                 <input type='text' placeHolder={'Title'} value={title} onChange={(e) => { setTitle(e.target.value) }} />
+
+//                 <label htmlFor="fileInput"><span>Post Picture<AiFillPicture /></span> </label>
+//                 <PostPicture onChange={(e) => { setFile(e.target.files[0]) }} type="file" id="fileInput" />
+
+//             </span>
+//             <textarea value={desc} onChange={(e) => { setDesc(e.target.value) }} cols="23" col rows={'23'} placeholder='post'></textarea>
+//             <CreatePostCat onClick={handleShowCat}>Category {arroIcon}</CreatePostCat>
+//             <CreateCatOptionsWrapper>
+//                 {
+//                     showCat && category?.map((cat) => (
+//                         <CreateCatOptions key={cat._id}>
+//                             <input type='checkbox'
+//                                 value={cat._id}
+//                                 onChange={() => handleCategoryChange(cat._id)}
+//                             />
+//                             <label htmlFor={cat._id}>{cat.title}</label>
+
+
+//                         </CreateCatOptions>
+//                     ))
+//                 }
+//             </CreateCatOptionsWrapper>
+//             <div><Button btnText={'CREATE'} btnPd={'15px 30px'} /></div>
+//         </CreatePostForm>
+//     </CreatePostWrapper>
+// }
+// </>
+// );
+// }
+
+// export default CreatePost;
 
 
