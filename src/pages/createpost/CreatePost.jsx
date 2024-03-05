@@ -8,7 +8,7 @@
 
 import React, { useContext, useEffect, useState } from 'react';
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa';
-import { CreateCatOptions, CreateCatOptionsWrapper, CreatePostCat, CreatePostForm, CreatePostWrapper, PostPicture } from './CreatePost.style';
+import { CreateCatOptions, CreateCatOptionsWrapper, CreatePostCat, CreatePostForm, CreatePostWrapper, NameAndFileInput, PostPicture, TextAreaStyled } from './CreatePost.style';
 import { AiFillPicture } from 'react-icons/ai';
 import { CATEGORY } from '../../data/Category'
 import Button from '../../components/clicks/button/Button';
@@ -158,28 +158,18 @@ const CreatePost = () => {
             {/* Display Image befor posting to db */}
             {file && (<img src={URL.createObjectURL(file)} alt="" srcset="" />)}
 
-            <form onSubmit={''} style={{ backgroundColor: '#80808036' }}>
-                <input type='text' placeHolder={'Title'} value={title} onChange={(e) => { setTitle(e.target.value) }} />
-
-                <label htmlFor="fileInput"><span>Post Picture<AiFillPicture /></span> </label>
-                <PostPicture onChange={(e) => { setFile(e.target.files[0]) }} type="file" id="fileInput" />
-                <div> <ReactQuill modules={modules} formats={formats} value={desc} onChange={setDesc} placeholder='content' /></div>
-            </form>
-
-
-
 
             <CreatePostForm onSubmit={handleSubmit}>
 
-                <span>
+                <NameAndFileInput>
                     <input type='text' placeHolder={'Title'} value={title} onChange={(e) => { setTitle(e.target.value) }} />
 
                     <label htmlFor="fileInput"><span>Post Picture<AiFillPicture /></span> </label>
                     <PostPicture onChange={(e) => { setFile(e.target.files[0]) }} type="file" id="fileInput" />
 
-                </span>
-                <textarea value={desc} onChange={(e) => { setDesc(e.target.value) }} cols="23" col rows={'23'} placeholder='post'></textarea>
-                <div> <ReactQuill modules={modules} formats={formats} value={desc} onChange={setDesc} placeholder='content' /></div>
+                </NameAndFileInput>
+                {/* <textarea value={desc} onChange={(e) => { setDesc(e.target.value) }} cols="23" col rows={'23'} placeholder='post'></textarea> */}
+                <TextAreaStyled><ReactQuill modules={modules} formats={formats} value={desc} onChange={setDesc} placeHolder='post content' /></TextAreaStyled>
 
                 <CreatePostCat onClick={handleShowCat}>Category {arroIcon}</CreatePostCat>
                 <CreateCatOptionsWrapper>

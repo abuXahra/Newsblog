@@ -48,57 +48,49 @@ display: flex;
 flex-direction: column;
 gap: 10px;
 
+&:focus{
+    outline: none;
+}
+
+
+
+`
+
+export const NameAndFileInput = styled.div`
+display: flex;
+justify-content: space-between;
+gap: 20px;
+    
 input{
 border-radius: 2px;
+width: 90%;
 padding: 10px;
 border: none;
 background-color: #80808036;
+
 
 &:focus{
     outline: none;
 }
 }
-
-
-span{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    input:nth-child(1){
-        flex: 6;
-    }
-    
 label{
     background-color: #80808036; 
     border-radius: 2px;
     display: flex;
     align-items: center;
     padding: 0 20px;
-    flex: 1;
+    /* flex: 1; */
     color: grey;
 }
+`
 
-}
-
-
-
-textarea{
-    width: 100%;
-    border-radius: 2px;
+export const TextAreaStyled = styled.div`
+width: 100%;
+border-radius: 2px;
 padding: 10px;
 border: none;
 background-color: #80808036;
-
-
-&:focus{
-    outline: none;
-}
-}
-
-
-
-
+height: auto;
 `
 
 export const PostPicture = styled.input`

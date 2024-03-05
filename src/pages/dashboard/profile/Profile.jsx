@@ -339,6 +339,10 @@ const Profile = () => {
                             ))
                         }
                     </CatContainer>
+
+                    {/* Advert */}
+                    {/* Top Banner */}
+                    {/* SideBar */}
                 </ProfileData>
             </ProfileContent>}
         </ProfileWrapper>

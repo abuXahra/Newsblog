@@ -190,7 +190,7 @@ const Category = ({ setCatId }) => {
         <CategoryWraper>
             <CategoryTitle>
                 <div>
-                    <h1>{catTitle} {catPosts.length}</h1>
+                    <h1>{catTitle ? (catTitle) : ('TITLE')}</h1>
                 </div>
             </CategoryTitle>
             <CategoryContent>

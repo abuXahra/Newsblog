@@ -94,7 +94,6 @@ const Navbar = ({ isOpen, handleIsOpen, }) => {
                     <MenuItems>
                         {user ? <MenuLink to={'/new'}>WRITE</MenuLink> : <MenuLink to={'/login'}>LOGIN</MenuLink>}
                     </MenuItems>
-
                     <MenuItems>
                         {user ? <MenuLink to={`/profile/${user._id}`}>PROFILE</MenuLink> : <MenuLink to={'/register'}>REGISTER</MenuLink>}
                     </MenuItems>
@@ -109,8 +108,6 @@ const Navbar = ({ isOpen, handleIsOpen, }) => {
                         <span onClick={dispHandler}>{searchIcon}</span>
                     </SearchContainer>
                 }
-
-
             </NavbarContent>
         </NavbarWrapper>
     );

@@ -1,7 +1,7 @@
 
 import React, { useContext, useEffect, useState } from 'react';
 import { FaArrowDown, FaArrowUp, FaRegEdit, FaTrashAlt } from 'react-icons/fa';
-import { CreateCatOptions, CreateCatOptionsWrapper, CreatePostCat, CreatePostForm, CreatePostWrapper, DeletCat, PostPicture } from '../createpost/CreatePost.style';
+import { CreateCatOptions, CreateCatOptionsWrapper, CreatePostCat, CreatePostForm, CreatePostWrapper, DeletCat, NameAndFileInput, PostPicture, TextAreaStyled } from '../createpost/CreatePost.style';
 import { AiFillPicture } from 'react-icons/ai';
 import { CATEGORY } from '../../data/Category'
 import Button from '../../components/clicks/button/Button';
@@ -9,6 +9,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { UserContext } from '../../components/context/UserContext';
 import Loader from '../../components/loader/Loader';
+import ReactQuill from 'react-quill';
 
 
 const EditPost = () => {
@@ -146,6 +147,25 @@ const EditPost = () => {
 
 
 
+    // for reach text editor REACT-QUILL:
+    const modules = {
+        toolbar: [
+            [{ 'header': [1, 2, false] }],
+            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+            ['link', 'image'],
+            ['clean']
+        ]
+    }
+
+    const formats = [
+        'header',
+        'bold', 'italic', 'underline', 'strike', 'blockquote',
+        'list', 'bullet', 'indent',
+        'link', 'image'
+    ]
+
+
     return (<>{loader ? <Loader /> :
         <CreatePostWrapper>
             <h1>Edit Post</h1>
@@ -163,13 +183,16 @@ const EditPost = () => {
             </DeletCat>
 
             <CreatePostForm onSubmit={handleUpdate}>
-                <span>
+                <NameAndFileInput>
                     <input type='text' value={title} onChange={(e) => { setTitle(e.target.value) }} />
+
                     <label htmlFor="fileInput"><span>Post Picture<AiFillPicture /></span> </label>
                     <PostPicture onChange={(e) => { setFile(e.target.files[0]) }} type="file" id="fileInput" />
 
-                </span>
-                <textarea value={desc} onChange={(e) => { setDesc(e.target.value) }} cols="23" col rows={'23'} placeholder=''></textarea>
+                </NameAndFileInput>
+
+                {/* <textarea value={desc} onChange={(e) => { setDesc(e.target.value) }} cols="23" col rows={'23'} placeholder=''></textarea> */}
+                <TextAreaStyled><ReactQuill modules={modules} formats={formats} value={desc} onChange={setDesc} placeHolder='post content' /></TextAreaStyled>
                 <CreatePostCat onClick={handleShowCat}>Category {arroIcon}</CreatePostCat>
                 <CreateCatOptionsWrapper>
                     {
