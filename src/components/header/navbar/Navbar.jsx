@@ -91,12 +91,12 @@ const Navbar = ({ isOpen, handleIsOpen, }) => {
                     <MenuItems>
                         <MenuLink to={`/video-post`}>VIDEO</MenuLink>
                     </MenuItems>
-                    <MenuItems>
+                    {/* <MenuItems>
                         {user ? <MenuLink to={'/new'}>WRITE</MenuLink> : <MenuLink to={'/login'}>LOGIN</MenuLink>}
-                    </MenuItems>
-                    <MenuItems>
+                    </MenuItems> */}
+                    {/* <MenuItems>
                         {user ? <MenuLink to={`/profile/${user._id}`}>PROFILE</MenuLink> : <MenuLink to={'/register'}>REGISTER</MenuLink>}
-                    </MenuItems>
+                    </MenuItems> */}
                     <MenuItems>
                         {user && <span onClick={handleLogout} style={{ cursor: "pointer", color: "white" }}><AiOutlineLogout /></span>}
                     </MenuItems>
