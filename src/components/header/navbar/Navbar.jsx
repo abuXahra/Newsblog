@@ -62,41 +62,47 @@ const Navbar = ({ isOpen, handleIsOpen, }) => {
                     <MenuItems>
                         <MenuLink to={`/`}>HOME</MenuLink>
                     </MenuItems>
-                    {
+                    {user ? (
                         category?.map((cat) => (
                             <MenuItems key={cat._id}>
                                 <MenuLink to={`/category/${cat._id}`}><span style={{ textTransform: 'uppercase' }}>{cat.title}</span></MenuLink>
                             </MenuItems>
                         ))
-                    }
-                    {/* 
-                    <MenuItems>
-                        <MenuLink to={'/category/2'}>ENTERTAINMENT</MenuLink>
-                    </MenuItems>
-                    <MenuItems>
-                        <MenuLink to={'/category/3'}>FASHION </MenuLink>
-                    </MenuItems>
-                    <MenuItems>
-                        <MenuLink to={'/category/4'}>LIFESTYLE</MenuLink>
-                    </MenuItems>
-                    <MenuItems>
-                        <MenuLink to={'/category/5'}>SPORT</MenuLink>
-                    </MenuItems>
-                    <MenuItems>
-                        <MenuLink to={'/category/6'}>NEWS</MenuLink>
-                    </MenuItems>
-                    <MenuItems>
-                        <MenuLink to={'/category/7'}>TRAVEL</MenuLink>
-                    </MenuItems> */}
+
+                    ) : (<>
+                        <MenuItems>
+                            <MenuLink to={'/'}>ENTERTAINMENT</MenuLink>
+                        </MenuItems>
+                        <MenuItems>
+                            <MenuLink to={'/'}>FASHION </MenuLink>
+                        </MenuItems>
+                        <MenuItems>
+                            <MenuLink to={'/'}>LIFESTYLE</MenuLink>
+                        </MenuItems>
+                        <MenuItems>
+                            <MenuLink to={'/'}>SPORT</MenuLink>
+                        </MenuItems>
+                        <MenuItems>
+                            <MenuLink to={'/'}>NEWS</MenuLink>
+                        </MenuItems>
+                        <MenuItems>
+                            <MenuLink to={'/'}>TRAVEL</MenuLink>
+                        </MenuItems>
+                    </>
+
+                    )}
+
+
+
                     <MenuItems>
                         <MenuLink to={`/video-post`}>VIDEO</MenuLink>
                     </MenuItems>
-                    {/* <MenuItems>
+                    <MenuItems>
                         {user ? <MenuLink to={'/new'}>WRITE</MenuLink> : <MenuLink to={'/login'}>LOGIN</MenuLink>}
-                    </MenuItems> */}
-                    {/* <MenuItems>
+                    </MenuItems>
+                    <MenuItems>
                         {user ? <MenuLink to={`/profile/${user._id}`}>PROFILE</MenuLink> : <MenuLink to={'/register'}>REGISTER</MenuLink>}
-                    </MenuItems> */}
+                    </MenuItems>
                     <MenuItems>
                         {user && <span onClick={handleLogout} style={{ cursor: "pointer", color: "white" }}><AiOutlineLogout /></span>}
                     </MenuItems>
