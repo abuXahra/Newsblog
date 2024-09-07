@@ -185,14 +185,13 @@ const EditPost = () => {
             <CreatePostForm onSubmit={handleUpdate}>
                 <NameAndFileInput>
                     <input type='text' value={title} onChange={(e) => { setTitle(e.target.value) }} />
-
                     <label htmlFor="fileInput"><span>Post Picture<AiFillPicture /></span> </label>
                     <PostPicture onChange={(e) => { setFile(e.target.files[0]) }} type="file" id="fileInput" />
-
                 </NameAndFileInput>
 
                 {/* <textarea value={desc} onChange={(e) => { setDesc(e.target.value) }} cols="23" col rows={'23'} placeholder=''></textarea> */}
                 <TextAreaStyled><ReactQuill modules={modules} formats={formats} value={desc} onChange={setDesc} placeHolder='post content' /></TextAreaStyled>
+
                 <CreatePostCat onClick={handleShowCat}>Category {arroIcon}</CreatePostCat>
                 <CreateCatOptionsWrapper>
                     {

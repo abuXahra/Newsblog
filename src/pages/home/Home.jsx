@@ -26,6 +26,7 @@ import { UserContext } from '../../components/context/UserContext';
 import BlogHeaderr from '../../components/blogheader/BlogHeaderr';
 import { CatContent, CatContentContainer, Overlay } from '../../components/blogheader/BlogHeaderr.style';
 import { EdDel } from '../singlepost/SinglePost.style';
+import Markdown from 'markdown-to-jsx';
 
 
 const Home = () => {
@@ -332,34 +333,6 @@ const Home = () => {
                                 </VideoWrapper>
                             </Link>
                         ))}
-
-
-
-
-                    {/* <HomeTopSectionRightContent>
-                        {videoPosts && videoPosts.map((post, index) => (
-                            <WrapperDiv key={index} w={'100%'}>
-                                <Postcard
-                                    w={"100%"}
-                                    size={'18px'}
-                                    linkUrl={'/contact'}
-                                    imgUrl={post.postImg}
-                                    linkDisplay={'none'}
-                                />
-
-                                <Content
-                                    contentHeader={post.postTitle}
-                                    size={'14px'}
-                                    headerColor={"grey"}
-                                    IconColor={'grey'}
-                                    editIcon={<AiFillEdit />}
-                                    editText={post.postAuthor}
-                                    dateIcon={<FaRegClock />}
-                                    dateText={post.postDate}
-                                    linkDisplay={'none'} />
-                            </WrapperDiv>
-                        ))}
-                    </HomeTopSectionRightContent> */}
                 </HomeTopSectionRight>
             </HomeTopSection>
 
@@ -417,7 +390,12 @@ const Home = () => {
                                 </Overlay>
                             </WrapperDiv>
                             <h4 style={{ marginTop: "10px" }}>{entCat[0]?.title}</h4>
-                            <p style={{ marginTop: "10px", color: "grey", fontSize: "12px" }}>{entCat[0]?.desc.substring(200, 0) + "...Read more"}</p>
+                            <p style={{ marginTop: "10px", color: "grey", fontSize: "12px" }}>
+                                <Markdown>
+                                {entCat[0]?.desc.substring(200, 0)}
+                                </Markdown> 
+                                <a href='#' style={{fontStyle:'italic'}}> ...Read more</a> 
+                            </p>
                         </EnterCat>
 
 

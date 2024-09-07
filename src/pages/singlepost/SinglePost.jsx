@@ -21,6 +21,7 @@ import { useContext } from 'react';
 import Loader from '../../components/loader/Loader';
 import { Controller } from 'swiper/modules';
 import Content from '../../components/content/Content';
+import Markdown from 'markdown-to-jsx';
 
 
 ///Pagination tutorial
@@ -29,7 +30,7 @@ import Content from '../../components/content/Content';
 
 const SinglePost = () => {
     const { postId } = useParams()
-    const [post, setPosts] = useState({})
+    const [post, setPost] = useState({})
     const { user } = useContext(UserContext)
     const navigate = useNavigate()
     const [loader, setLoader] = useState(false)
@@ -49,7 +50,7 @@ const SinglePost = () => {
         setLoader(true)
         try {
             const res = await axios.get(process.env.REACT_APP_URL + `/api/posts/` + postId);
-            setPosts(res.data)
+            setPost(res.data)
             console.log('===============post==============')
             console.log(res.data)
             setCatId(res.data.categories[0]._id)
@@ -60,10 +61,75 @@ const SinglePost = () => {
         }
     }
 
+const [posts, setPosts] = useState([])
+
+    const fetchAllPosts = async () => {
+        setLoader(true)
+        try {
+            const res = await axios.get(process.env.REACT_APP_URL + "/api/posts")
+            setPosts(res.data)
+            setLoader(false)
+        } catch (err) {
+            console.log(err)
+            setLoader(false)
+        }
+    }
+
+
+    // FOR NEXT AND PREVIOUS POST TITLE
+    const [nextPostTitle, setNextPostTitle] = useState('');
+    const [prevPostTitle, setPrevPostTitle] = useState('');
+
+    const fetchNextAndPrevPostTitle = async()=>{
+        setLoader(true);
+        try {
+            const res = await axios.get(process.env.REACT_APP_URL + "/api/posts/" + postId + "/navigation")
+            setNextPostTitle(res.data.nextPost);
+            setPrevPostTitle(res.data.prevPost);
+            setLoader(false)
+        } catch (err) {
+            console.log(err)
+            setLoader(false)
+        }
+
+    }
+
+
     // useEffect
     useEffect(() => {
         fetchPost();
+        fetchAllPosts();
+        fetchNextAndPrevPostTitle();
     }, [postId])
+
+
+
+
+
+    // FOR NEXT AND PROVIOUS POST Navigation
+    const handleNext = () => {
+        const currentIndex = posts.findIndex(p => p._id === postId);
+        const nextIndex = currentIndex + 1;
+        if (nextIndex < posts.length) {
+            navigate(`/post/${posts[nextIndex]?._id}`);
+        }
+      };
+    
+      const handlePrevious = () => {
+        const currentIndex = posts.findIndex(p => p._id === postId);
+        const previousIndex = currentIndex - 1;
+        if (previousIndex >= 0) {
+            navigate(`/post/${posts[previousIndex]?._id}`);
+        }
+      };
+
+
+
+
+
+
+
+
 
     // delete post function
     const handleDelete = async () => {
@@ -122,6 +188,19 @@ const SinglePost = () => {
         }
     }
 
+
+    // Share Blog Post
+    const [shareUrl, setShareUrl] = useState('');
+    
+    const handleShare = async (platform) => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_URL}/api/share/${platform}/${post._id}`);
+      const { shareUrl } = response.data;
+      window.open(shareUrl, '_blank');
+    } catch (error) {
+      console.error('Error sharing post:', error);
+    }
+  };
 
     // useEffect
     useEffect(() => {
@@ -197,14 +276,16 @@ const SinglePost = () => {
                             <span>SHARES</span>
                         </ShareText>
                         <ShareIcon>
-                            <span><FaFacebookF /></span>
-                            <span><FaInstagramSquare /></span>
-                            <span> <FaTwitter /></span>
-                            <span><FaGooglePlusG /></span>
+                            <span onClick={()=>{handleShare('facebook')}}><FaFacebookF /></span>
+                            <span onClick={()=>{handleShare('twitter')}}> <FaTwitter /></span>
+                            <span onClick={()=>{handleShare('instagram')}}><FaInstagramSquare /></span>
                         </ShareIcon>
                     </SinglePostShare>
                     <PostWriteUp>
-                        <p>{post.desc}</p>
+                        {/* Markdown dependency is used to remove html tags from the fetch post from database (mongoDB) */}
+                            <Markdown> 
+                              {post.desc}  
+                            </Markdown>
                     </PostWriteUp>
                     <MarginTop />
                     <MarginTop />
@@ -228,17 +309,18 @@ const SinglePost = () => {
 
                     {/* Post Nagivation */}
                     <PostNavigation>
-                        <PreviousPost>
+                        <PreviousPost onClick={handlePrevious}>
                             <PostLink>
-                                <h4>Previous Post</h4>
-                                <p>{singlePost.postTitle}</p>
+                                <h5>PREVIOUS POST</h5>
+                                <p>{nextPostTitle}</p>
                             </PostLink>
                         </PreviousPost>
-                        <NextPost>
-                            <PostLink>
-                                <h4>Next Post</h4>
-                                <p>{singlePost.postTitle}</p>
+                        <NextPost onClick={handleNext}>
+                           <PostLink>
+                                <h5>NEXT POST</h5>
+                                <p>{prevPostTitle}</p>
                             </PostLink>
+                    
                         </NextPost>
                     </PostNavigation>
 

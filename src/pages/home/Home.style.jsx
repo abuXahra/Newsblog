@@ -1,3 +1,9 @@
+
+// search with chatgpt
+// how to hide header and footer from dashboard routes in react mern starck
+
+
+
 import styled from 'styled-components'
 import { Link } from 'react-router-dom';
 
@@ -107,6 +113,10 @@ export const HomePostSlideSection = styled.div`
     height: auto;
     img{
        height: 'auto';
+    }
+
+    @media (max-width: 786px) {
+        margin-top: 40px;
     }
 `
 

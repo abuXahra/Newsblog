@@ -56,43 +56,25 @@ const Navbar = ({ isOpen, handleIsOpen, }) => {
 
 
     return (
-        <NavbarWrapper isOpen={isOpen} >
+    <>
+   { category &&
+   
+
+    <NavbarWrapper isOpen={isOpen} >
             <NavbarContent>
                 <NavMenu onClick={handleIsOpen}>
                     <MenuItems>
                         <MenuLink to={`/`}>HOME</MenuLink>
                     </MenuItems>
-                    {user ? (
-                        category?.map((cat) => (
+                    
+                    
+                       { category?.map((cat) => (
                             <MenuItems key={cat._id}>
                                 <MenuLink to={`/category/${cat._id}`}><span style={{ textTransform: 'uppercase' }}>{cat.title}</span></MenuLink>
                             </MenuItems>
-                        ))
+                        )) }
 
-                    ) : (<>
-                        <MenuItems>
-                            <MenuLink to={'/'}>ENTERTAINMENT</MenuLink>
-                        </MenuItems>
-                        <MenuItems>
-                            <MenuLink to={'/'}>FASHION </MenuLink>
-                        </MenuItems>
-                        <MenuItems>
-                            <MenuLink to={'/'}>LIFESTYLE</MenuLink>
-                        </MenuItems>
-                        <MenuItems>
-                            <MenuLink to={'/'}>SPORT</MenuLink>
-                        </MenuItems>
-                        <MenuItems>
-                            <MenuLink to={'/'}>NEWS</MenuLink>
-                        </MenuItems>
-                        <MenuItems>
-                            <MenuLink to={'/'}>TRAVEL</MenuLink>
-                        </MenuItems>
-                    </>
-
-                    )}
-
-
+                   
 
                     <MenuItems>
                         <MenuLink to={`/video-post`}>VIDEO</MenuLink>
@@ -115,7 +97,10 @@ const Navbar = ({ isOpen, handleIsOpen, }) => {
                     </SearchContainer>
                 }
             </NavbarContent>
-        </NavbarWrapper>
+        </NavbarWrapper>    
+    
+            }</>
+       
     );
 }
 

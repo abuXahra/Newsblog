@@ -32,8 +32,9 @@ const Profile = () => {
     const [noResults, setNoResults] = useState(false)
     const [catColor, setCatColor] = useState()
 
+    const [isAdmin, setIsAdmin] = useState(false);
 
-
+    
 
     // Inputs  variable vinctions
     const nameHandler = (e) => {
@@ -89,7 +90,9 @@ const Profile = () => {
         }
     }
 
-
+    // User Role
+    const [userRole, setUserRole] = useState();
+  
     // fetch profile data
     const fetchProfile = async () => {
         try {
@@ -97,11 +100,26 @@ const Profile = () => {
             setName(res.data.username)
             setEmail(res.data.email)
             setPassword(res.data.password)
-            console.log(res.data)
+            setUserRole(res.data.role); 
+             
         } catch (err) {
             console.log(err)
         }
     }
+
+
+console.log('userRole', userRole)
+
+const userRoleFunc = () =>{
+    if (userRole === 'admin') {
+        setIsAdmin(true)
+    }else if(userRole === 'subadmin'){
+        setIsAdmin(true)
+    }else{
+        setIsAdmin(false)
+    }
+}
+
 
     // variable for pagination
     const [page, setPage] = useState(1);
@@ -187,7 +205,7 @@ const Profile = () => {
     }
 
 
-    return (
+    return ( 
         <ProfileWrapper> {loader ? <Loader /> :
             <ProfileContent>
                 {/* USER POSTS */}
@@ -326,7 +344,9 @@ const Profile = () => {
                     />
 
 
-                    <CatContainer>
+                        {/* ADDING AND EDITING CATEGORY ONLY ADMIN/SUBADMIN*/}
+                {userRoleFunc && isAdmin &&
+                 <CatContainer>
                         {
                             dbCat.map((cat) => (
                                 <CatStyled edCl={cat.color} key={cat._id}>
@@ -339,13 +359,13 @@ const Profile = () => {
                             ))
                         }
                     </CatContainer>
-
+                }
                     {/* Advert */}
                     {/* Top Banner */}
                     {/* SideBar */}
                 </ProfileData>
             </ProfileContent>}
-        </ProfileWrapper>
+        </ProfileWrapper> 
     );
 }
 

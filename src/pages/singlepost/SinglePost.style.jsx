@@ -141,6 +141,7 @@ display: flex;
 flex-direction: column;
 width: 50%;
 text-align: left;
+padding-right: 40px;
 gap: 40px;
 `
 
@@ -150,6 +151,7 @@ flex-direction: column;
 gap: 40px;
 width: 50%;
 text-align: right;
+padding-left: 40px;
 border-left: 1px solid #c1bfbf;
 `
 
@@ -158,7 +160,7 @@ color: #828181;
 text-decoration: none;
 font-size: 14px;
 
-h4{
+h5{
     color:#111112;
 }
 

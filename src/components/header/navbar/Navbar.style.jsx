@@ -37,7 +37,7 @@ margin-left: -41px;
 list-style: none;
 display: flex;
 justify-content: flex-start;
-gap: 30px;
+gap: 20px;
 
 @media (max-width:768px) {
        flex-direction: column;
@@ -49,7 +49,7 @@ gap: 30px;
 
 export const MenuItems = styled.li`
     color: #d3d0d0;
-    font-size: 14px;
+    font-size: 12px;
 
 `
 export const MenuLink = styled(Link)`
