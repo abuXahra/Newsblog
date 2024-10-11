@@ -267,7 +267,6 @@ const [posts, setPosts] = useState([])
                         <span onClick={handleDelete}><FaTrashAlt />Delete</span>
                     </EdDel>
                 }
-                 <span><FaTrashAlt />{post.views}view</span>
             </SinglePostImage>
             <SinglePostContent>
                 <SinglePostPost>
