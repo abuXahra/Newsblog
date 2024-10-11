@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 const HideNavbar = ({ children }) => {
 
     const location = useLocation();
+    const hideDashboardUrl = location.pathname.includes('dashboard');
 
     const [showNavbar, setShowNavbar] = useState(false)
 
@@ -15,7 +16,8 @@ const HideNavbar = ({ children }) => {
             location.pathname === '/login' ||
             location.pathname === '/reset' ||
             location.pathname === '/register' ||
-            location.pathname === '/loader'
+            location.pathname === '/loader'||
+            hideDashboardUrl
         ) {
             setShowNavbar(false);
         } else {

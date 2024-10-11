@@ -88,9 +88,13 @@ export const FooterCopyright = styled.div`
     background-color: #1c1c1c;
     height: auto;
     padding: 20px 0;
-    font-size: 13px;
+    font-size: 12px;
 
-    div{
+`
+
+
+export const FooterCopyrightContent = styled.div`
+
         width: 90%;
         display: flex;
         justify-content: space-between;
@@ -99,6 +103,7 @@ export const FooterCopyright = styled.div`
 
         span{
             display: flex;
+            width: 50%;
 
             div {
                 display: flex;
@@ -106,14 +111,27 @@ export const FooterCopyright = styled.div`
                 gap: 20px;
             }
         }
-       
-    @media (max-width: 786px) {
-        flex-direction: column;
-        justify-content: center;
-        gap: 10px;
 
-        div{
-            flex-direction: row;
+        & span:nth-child(2){
+          justify-content: flex-end;
+        }    
+  
+        @media (max-width: 786px) {
+            flex-direction: column;
+            gap: 10px;
+            span{
+                width: 100%;
+            }
+            & span:nth-child(1){
+          
+                justify-content: center;
+                align-items: center;
+            }
+
+            & span:nth-child(2){
+                align-items: center;
+                justify-content: center;
+        } 
     }
-    }}
+
 `

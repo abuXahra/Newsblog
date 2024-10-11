@@ -1,6 +1,9 @@
-
-
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import Footer from "./components/footer/Footer";
 import Home from "./pages/home/Home";
 import Category from "./components/category/Category";
@@ -14,31 +17,30 @@ import EditPost from "./pages/editpost/EditPost";
 import Profile from "./pages/dashboard/profile/Profile";
 import AddCategory from "./pages/add-category/AddCategory";
 import EditCategory from "./pages/edit-category/EditCategory";
-import { UserContext, UserContextProvider } from "./components/context/UserContext";
-import Head from "./components/header/head/Head"
-import SearchResult from './pages/sear-result/SearchResult';
-import { useContext, useState } from 'react';
-import Loader from './components/loader/Loader';
-import { useEffect } from 'react';
-import ScrollToTop from './components/context/ScrollToTop';
-import CreateVideo from './pages/video/create/CreateVideo';
-import EditVideo from './pages/video/editVideo/EditVideo';
-
-
-
-
+import {
+  UserContext,
+  UserContextProvider,
+} from "./components/context/UserContext";
+import Head from "./components/header/head/Head";
+import SearchResult from "./pages/sear-result/SearchResult";
+import { useContext, useState } from "react";
+import Loader from "./components/loader/Loader";
+import { useEffect } from "react";
+import ScrollToTop from "./components/context/ScrollToTop";
+import CreateVideo from "./pages/video/create/CreateVideo";
+import EditVideo from "./pages/video/editVideo/EditVideo";
+import DashboardHome from "./pages/dashboard/amin/home/DashboardHome";
 
 function App() {
-
-
-
-
   const { user } = useContext(UserContext);
   return (
     // <UserContextProvider>
     <Router>
       <ScrollToTop>
-        <HideNavbar><Head /></HideNavbar>  {/*hide header for login page */}
+        <HideNavbar>
+          <Head />
+        </HideNavbar>{" "}
+        {/*hide header for login page */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/category/:categoryId" element={<Category />} />
@@ -54,9 +56,13 @@ function App() {
           <Route path="/result" element={<SearchResult />} />
           <Route path="/loader" element={<Loader />} />
           <Route path="/video-post" element={<CreateVideo />} />
+          <Route path="/dashboard/home" element={<DashboardHome />} />
           {user && <Route path="/video/edit/:id" element={<EditVideo />} />}
         </Routes>
-        <HideNavbar><Footer /></HideNavbar> {/*hide footer for login page */}
+        <HideNavbar>
+          <Footer />
+        </HideNavbar>{" "}
+        {/*hide footer for login page */}
       </ScrollToTop>
     </Router>
     // </UserContextProvider>

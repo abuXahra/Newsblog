@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { FooterAbout, FooterContent, FooterCopyright, FooterRecentPost, FooterWrapper, PostLink, SocialIcons } from './Footer.style'
+import { FooterAbout, FooterContent, FooterCopyright, FooterCopyrightContent, FooterRecentPost, FooterWrapper, PostLink, SocialIcons } from './Footer.style'
 import logo from '../../images/newsstand-logo-2.png'
 import { MarginTop } from '../../pages/home/Home.style'
 import { FaArrowRight, FaFacebookF, FaGooglePlusG, FaInstagram, FaPinterest, FaTwitter } from 'react-icons/fa'
@@ -72,18 +72,19 @@ function Footer() {
                 </FooterRecentPost>
             </FooterContent>
             <FooterCopyright>
-                <div>
+                <FooterCopyrightContent>
                     <span>
                         <div>
                             <p><PostLink to={'/'}>Home</PostLink></p>
                             <p><PostLink to={'/'}>Authors</PostLink></p>
                             <p><PostLink to={'/'}>About</PostLink></p>
                             <p><PostLink to={'/'}>About</PostLink></p>
-                            <p><PostLink to={'/'}>Contact</PostLink></p>
+                            <p><PostLink to={'/'}>Contact</PostLink></p>    
+                            <p><PostLink to={'/login'}>Staff Login</PostLink></p>
                         </div>
                     </span>
                     <span>Copyright 2023 Newsstand, All Right Reserved</span>
-                </div>
+                </FooterCopyrightContent>
             </FooterCopyright>
 
         </FooterWrapper >
