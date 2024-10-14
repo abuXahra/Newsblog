@@ -83,12 +83,12 @@ export const CategoryPostsText = styled.div`
         font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     }
 
-    span{
+    /* span{
         background-color: grey;
         color: white;
         padding: 10px;
         width: 100px;
-    }
+    } */
 
 `
 
