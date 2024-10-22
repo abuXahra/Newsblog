@@ -345,7 +345,7 @@ const userRoleFunc = () =>{
 
 
                         {/* ADDING AND EDITING CATEGORY ONLY ADMIN/SUBADMIN*/}
-                {userRoleFunc && isAdmin &&
+                {userRoleFunc &&
                  <CatContainer>
                         {
                             dbCat.map((cat) => (

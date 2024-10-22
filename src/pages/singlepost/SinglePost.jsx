@@ -61,6 +61,7 @@ const SinglePost = () => {
         }
     }
 
+    
 const [posts, setPosts] = useState([])
 
     const fetchAllPosts = async () => {
@@ -239,10 +240,12 @@ const [posts, setPosts] = useState([])
 
     return (<>{loader ? <Loader /> :
         <SinglePostWrapper>
-            <SinglePostImage>
+            <SinglePostContent>
+                <SinglePostPost>
+                <SinglePostImage>
                 <Postcard
-                    pl={"100px"}
-                    pb={"100px"}
+                    pl={"20px"}
+                    pb={"20px"}
                     w={"100%"}
                     h={"400px"}
                     text={post.categories}
@@ -268,8 +271,6 @@ const [posts, setPosts] = useState([])
                     </EdDel>
                 }
             </SinglePostImage>
-            <SinglePostContent>
-                <SinglePostPost>
                     <SinglePostShare>
                         <ShareText>
                             <h2>0</h2>

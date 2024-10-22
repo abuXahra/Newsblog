@@ -23,12 +23,16 @@ const EditPost = () => {
     const [showCat, setShowCat] = useState(false);
     const [arroIcon, setArroIcon] = useState(<FaArrowDown />)
     const postId = useParams().id
-    console.log(postId)
     const { user } = useContext(UserContext)
     const navigate = useNavigate()
     const [loader, setLoader] = useState(false)
     const [post, setPost] = useState({})
     const [postPic, setPostPic] = useState('')
+
+
+    console.log('User: ', user, '\nUser Id:', user._id, "\npost Id: ",postId)
+
+
 
     // Fetch single post function
     const fetchPost = async () => {

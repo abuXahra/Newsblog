@@ -10,7 +10,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa';
 import { CreateCatOptions, CreateCatOptionsWrapper, CreatePostCat, CreatePostForm, CreatePostWrapper, NameAndFileInput, PostPicture, TextAreaStyled } from './CreatePost.style';
 import { AiFillPicture } from 'react-icons/ai';
-import { CATEGORY } from '../../data/Category'
 import Button from '../../components/clicks/button/Button';
 import axios from 'axios';
 import { UserContext } from '../../components/context/UserContext';

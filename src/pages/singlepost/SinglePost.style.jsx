@@ -6,6 +6,7 @@ export const SinglePostWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 40px;
+    margin: 40px;
 `
 
 export const SinglePostImage = styled.div`
