@@ -271,6 +271,8 @@ const [posts, setPosts] = useState([])
                     </EdDel>
                 }
             </SinglePostImage>
+
+            
                     <SinglePostShare>
                         <ShareText>
                             <h2>0</h2>

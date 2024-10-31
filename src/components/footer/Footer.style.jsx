@@ -75,8 +75,11 @@ padding: 0 30px;
     }
 `
 export const PostLink = styled(Link)`
-color: gray;
+color: ${({linkColor})=> linkColor || 'gray'};
+display: flex;
+align-items: center;
 text-decoration: none;
+gap: 5px;
 &:hover{
    color: #e1e1e1
 }

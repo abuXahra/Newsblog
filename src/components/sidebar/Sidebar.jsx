@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Ads, CatWrapper, CategorList, CategoryListItem, DateIconStyled, DateStyled, DateTitledStyled, EditIconStyled, EditStyled, EditTitledStyled, InputStyled, MarginTop, PostIconStyled, PostLink, PostTitleStyled, RecentPost, RecentPostContent, RecentPostImg, RecentPostWrapper, SidebarWrapper, SocialListItem, SocialMedia, SubscibeWrapper } from './Sidebar.style';
 import Title from '../section-title/Title';
 import { AiFillEdit } from 'react-icons/ai';
-import { FaRegClock } from 'react-icons/fa';
+import { FaLongArrowAltRight, FaRegClock } from 'react-icons/fa';
 import Button from '../clicks/button/Button';
 import { SOCIALMEDIA } from '../../data/SocialMedias'
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import SidebarAds from '../../images/business.jpg'
 
 const Sidebar = ({ fxTp, catId }) => {
 
@@ -14,7 +15,8 @@ const Sidebar = ({ fxTp, catId }) => {
     const [socialMedia, setSocialMedia] = useState(SOCIALMEDIA)
     const [category, setCategory] = useState([])
     const navigate = useNavigate()
-    const [postLength, setPostLength] = useState()
+    const [adverts, setAdverts] = useState([]);
+
 
 
     // fetch recent posts
@@ -42,9 +44,24 @@ const Sidebar = ({ fxTp, catId }) => {
         }
     }
 
+
+    //fetch sidebar ads
+      const fetchAds = async () => {
+        // setLoader(true)
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_URL}/api/adverts`)
+            setAdverts(res.data)
+            // setLoader(false)
+        } catch (err) {
+            console.log(err)
+            // setLoader(false)
+        }
+    }
+
     useEffect(() => {
-        fetchRcentPost()
-        fetchCategory()
+        fetchRcentPost();
+        fetchCategory();
+        fetchAds();
     }, [])
 
 
@@ -102,7 +119,7 @@ const Sidebar = ({ fxTp, catId }) => {
                             <CategoryListItem disp={catId === cat._id ? "none" : "flex"} onClick={() => (navigate(`/category/${cat._id}`))} bcolor={cat.color} pdtop={index === 0 && "0"} lastItemBorder={cat.id === category.length && "0"}>
                                 <p style={{ textTransform: "uppercase" }}> {cat.title}</p>
                                 <div>
-                                    {cat.posts?.length}
+                                    <FaLongArrowAltRight />
                                 </div>
 
                             </CategoryListItem>
@@ -112,11 +129,25 @@ const Sidebar = ({ fxTp, catId }) => {
                 <MarginTop />
 
                 {/* ADS */}
-                <CatWrapper flDir={"column"} gp={"0px"} fxTp={fxTp}>
-                    <Ads>
-                        {/* <img src={posts[0].postImg} alt="" /> */}
-                    </Ads>
-                    <MarginTop />
+                <CatWrapper flDir={"column"} gp={''} fxTp={fxTp}>
+                <Title title={'ADs'} mb={"-10px"} /> 
+
+                {adverts.map((advert)=>(
+                               advert.adType === 'sidebar' ?
+                               (<Ads>
+                                    <a href={advert.adsUrl}>
+                                    <img src={`${process.env.REACT_APP_URL}/images/${advert.photo}`} alt="" srcset="" />
+                                    </a>
+                                   
+                                </Ads>):<></>
+                ))}
+                        {/* <Ads onClick={()=>alert('clicked ads')}>
+                            <img src={SidebarAds} alt="" srcset="" />
+                        </Ads>
+                    <Ads onClick={()=>alert('clicked ads 2')}>
+                        <img src={SidebarAds} alt="" srcset="" />
+                    </Ads> */}
+                <MarginTop />
 
 
                     {/* SOCIAL MEDIA HANDLES */}

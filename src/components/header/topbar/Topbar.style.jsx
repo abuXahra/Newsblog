@@ -1,3 +1,4 @@
+import { FaDotCircle } from "react-icons/fa";
 import { styled } from "styled-components";
 
 export const TopbarWrapper = styled.div`
@@ -43,4 +44,26 @@ export const TopbarMaquee = styled.div`
     @media (max-width: 768px) {
         display: none;
     }
+`
+
+export const MarqueeData = styled.ul`
+    text-decoration: none;
+    display: flex;
+    font-size: 12px;
+    gap: 40px;
+    
+     li{
+        align-items: center;
+        text-decoration: none;
+        list-style: none;
+        padding: 15px 0;
+        border-bottom: 1px solid gray;
+        color: yellow;
+     }
+`
+
+
+export const IconDot = styled(FaDotCircle)`
+    font-size: 10px;
+    color: yellow;
 `

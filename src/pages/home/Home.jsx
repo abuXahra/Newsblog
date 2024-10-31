@@ -613,7 +613,9 @@ const Home = () => {
                                         <PostLink to={`/post/${post._id}`}>
                                             <PostTitleStyled fnt={"14px"} lingHeight={"20px"}>{post.title}</PostTitleStyled>
                                         </PostLink>
-                                        <p>{post.desc.substring(200, 0) + "...Read More"}</p>
+                                        <p> 
+                                            <Markdown>{post.desc.substring(200, 0) + "...Read More"}</Markdown>
+                                       </p>
                                     </FashionCatText>
                                 </FashionCat>
                             ))

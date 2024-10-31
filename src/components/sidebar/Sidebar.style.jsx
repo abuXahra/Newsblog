@@ -156,16 +156,16 @@ width: 50%;
 `
 
 
-export const Ads = styled.div`
+export const Ads = styled.a`
     width: 100%;
     height: auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px;
-    border: 2px solid black;
+    cursor: pointer;
+    /* padding: 40px; */
 
-    img{
+     img{
         width: 100%;
     }
 `
